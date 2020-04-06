@@ -7,6 +7,9 @@
 *.aar
 *.ap_
 *.aab
+local.properties
+**/*.iml
+.idea
 
 # Files for the ART/Dalvik VM
 *.dex
