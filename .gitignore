@@ -3,6 +3,7 @@
 *.aar
 *.ap_
 *.aab
+local.properties
 
 # Files for the ART/Dalvik VM
 *.dex
