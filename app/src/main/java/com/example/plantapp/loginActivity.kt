@@ -139,7 +139,7 @@ class loginActivity : AppCompatActivity() {
         googleBtn.setOnClickListener(View.OnClickListener {
 
                 signIn()
-                FirebaseAuth.getInstance().signOut()
+              //  FirebaseAuth.getInstance().signOut()
         })
 
 
