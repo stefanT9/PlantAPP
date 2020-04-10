@@ -1,4 +1,4 @@
-package com.example.plantapp
+/*package com.example.plantapp
 
 import android.content.Intent
 import android.os.Bundle
@@ -199,3 +199,4 @@ class loginActivity : AppCompatActivity() {
             }
         }
 }
+*/
