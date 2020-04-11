@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="300dp"
+    android:layout_height="match_parent"
+    android:id="@+id/navViewLayout">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/navigation_header_container"
+        android:layout_width="300dp"
+        android:layout_height="?android:actionBarSize"
+        android:background="@color/topNavView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:background="#00FFFFFF"
+            android:src="@drawable/ic_bars_solid"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </androidx.appcompat.widget.AppCompatImageButton>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/nav_view_btns"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/navigation_header_container">
+
+        <Button
+            android:id="@+id/btn_log_in"
+            android:layout_width="200dp"
+            android:layout_height="?android:actionBarSize"
+            android:layout_marginTop="70dp"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/log_in"
+            android:textAllCaps="false"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/nav_view_btns" />
+
+        <Button
+            android:id="@+id/btn_sign_up"
+            android:layout_width="200dp"
+            android:layout_height="?android:actionBarSize"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="70dp"
+            android:backgroundTint="@color/back_topNavView"
+            android:fontFamily="@font/open_sans"
+            android:text="@string/sign_up"
+            android:textAllCaps="false"
+            android:textColor="@color/topNavView"
+            android:textStyle="bold"
+
+            app:layout_constraintBottom_toBottomOf="@id/nav_view_btns"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_log_in"
+            app:strokeColor="@color/topNavView"
+            app:strokeWidth="2dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/nav_view_menu"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/nav_view_btns">
+
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/btn_plants"
+            android:layout_width="200dp"
+            android:layout_height="?android:actionBarSize"
+            android:layout_marginStart="50dp"
+            android:fontFamily="@font/salsa"
+            android:text="@string/plants"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="@color/text_topnavView"
+            app:chipBackgroundColor="@color/back_topNavView"
+            app:chipIcon="@drawable/ic_seedling_solid"
+            app:chipIconSize="13dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/btn_contact"
+            android:layout_width="200dp"
+            android:layout_height="?android:actionBarSize"
+            android:layout_marginStart="50dp"
+            android:text="@string/contact_us"
+            android:textColor="@color/text_topnavView"
+            app:chipBackgroundColor="@color/back_topNavView"
+            app:chipIcon="@drawable/ic_envelope_solid"
+            app:chipIconSize="13dp" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/btn_home"
+            android:layout_width="200dp"
+            android:layout_height="?android:actionBarSize"
+            android:layout_marginStart="50dp"
+            android:text="@string/home"
+            android:textColor="@color/text_topnavView"
+            app:chipBackgroundColor="@color/back_topNavView"
+            app:chipIcon="@drawable/ic_home_solid"
+            app:chipIconSize="13dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/logo_botanicApp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/botanicappgarden"
+        android:textAlignment="center"
+        android:textColor="@color/topNavView"
+        app:layout_constraintBottom_toBottomOf="@id/navViewLayout"
+        app:layout_constraintTop_toBottomOf="@+id/nav_view_menu" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
