@@ -18,9 +18,8 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
-import kotlinx.android.synthetic.main.activity_login.*
 
-class loginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     lateinit var emailID: EditText
     lateinit var password: EditText
@@ -56,10 +55,10 @@ class loginActivity : AppCompatActivity() {
 
                 var user: FirebaseUser? = authent.getCurrentUser()
                 if (user != null) {
-                    Toast.makeText(this@loginActivity, "You are logged in!", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@LoginActivity, "You are logged in!", Toast.LENGTH_SHORT)
                         .show()
                 } else {
-                    Toast.makeText(this@loginActivity, "Please login!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@LoginActivity, "Please login!", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -79,7 +78,7 @@ class loginActivity : AppCompatActivity() {
                 password.setError("Please enter your password")
                 password.requestFocus()
             } else if (email.isEmpty() && pwd.isEmpty()) {
-                Toast.makeText(this@loginActivity, "Fields are empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@LoginActivity, "Fields are empty", Toast.LENGTH_SHORT).show()
             } else if (!(email.isEmpty() && pwd.isEmpty())) {
 
                 authent.signInWithEmailAndPassword(email, pwd)
@@ -87,7 +86,7 @@ class loginActivity : AppCompatActivity() {
                         if (task.isSuccessful) {
                             Log.d("logare", "logat cu success!")
                             Toast.makeText(
-                                this@loginActivity,
+                                this@LoginActivity,
                                 "Login succesfully ...",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -95,7 +94,7 @@ class loginActivity : AppCompatActivity() {
                             // updateUI(user);
                         } else {
                             Toast.makeText(
-                                this@loginActivity,
+                                this@LoginActivity,
                                 "Authentication failed!",
                                 Toast.LENGTH_SHORT
                             ).show()
@@ -137,14 +136,14 @@ class loginActivity : AppCompatActivity() {
                 Log.d(TAG, "signInWithCredential:success")
                 val account = task.getResult(ApiException::class.java)
                 Toast.makeText(
-                    this@loginActivity,
+                    this@LoginActivity,
                     "Signed in with Google Successfully",
                     Toast.LENGTH_SHORT
                 ).show()
                 firebaseAuthWithGoogle(account!!)
             } catch (e: ApiException) {
                 Log.w(TAG, "signInWithCredential:failure", task.exception)
-                Toast.makeText(this@loginActivity, "Auth3tication failed", Toast.LENGTH_SHORT)
+                Toast.makeText(this@LoginActivity, "Auth3tication failed", Toast.LENGTH_SHORT)
                     .show()
                 //  firebaseAuthWithGoogle(null)
             }
@@ -161,7 +160,7 @@ class loginActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithCredential:success")
                     Toast.makeText(
-                        this@loginActivity,
+                        this@LoginActivity,
                         "Signed in with Google Successfully",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -171,7 +170,7 @@ class loginActivity : AppCompatActivity() {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
                     Toast.makeText(
-                        this@loginActivity,
+                        this@LoginActivity,
                         "Authentication failed",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -194,7 +193,7 @@ class loginActivity : AppCompatActivity() {
                 var personId = account.id
                 var personPhoto = account.photoUrl
 
-                Toast.makeText(this@loginActivity, personName + personEmail, Toast.LENGTH_SHORT)
+                Toast.makeText(this@LoginActivity, personName + personEmail, Toast.LENGTH_SHORT)
                     .show()
             }
         }

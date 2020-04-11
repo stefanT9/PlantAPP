@@ -1,7 +1,5 @@
 package com.example.plantapp
 
-import android.content.Intent
-import android.nfc.Tag
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -15,7 +13,7 @@ import android.widget.Toast
 
 
 
-class MainActivity : AppCompatActivity() {
+class RegisterActivity : AppCompatActivity() {
 
 
     lateinit var mRegEmail: EditText
@@ -47,11 +45,11 @@ class MainActivity : AppCompatActivity() {
 
                 var user: FirebaseUser? = mAuth.getCurrentUser()
                 if(user!=null){
-                    Toast.makeText(this@MainActivity, "You are auth!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this@RegisterActivity, "You are auth!", Toast.LENGTH_SHORT).show();
 
                 }
                 else{
-                    Toast.makeText(this@MainActivity, "Please auth!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this@RegisterActivity, "Please auth!", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -77,7 +75,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             else if(email.isEmpty() && pwd.isEmpty() ){
-                Toast.makeText(this@MainActivity, "Fields are empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@RegisterActivity, "Fields are empty", Toast.LENGTH_SHORT).show()
     }
             else if(!(email.isEmpty() && pwd.isEmpty()) ){
                 mAuth.createUserWithEmailAndPassword(email, pwd)
@@ -100,7 +98,7 @@ class MainActivity : AppCompatActivity() {
 
                             Log.w("failed", "createUserWithEmail:failure", task.exception)
 
-                            Toast.makeText(this@MainActivity, "Authentication failed.",
+                            Toast.makeText(this@RegisterActivity, "Authentication failed.",
 
                                 Toast.LENGTH_SHORT).show()
 
