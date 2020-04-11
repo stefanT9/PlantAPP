@@ -1,9 +1,33 @@
 <resources>
+
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">#4CAF50</item>
+        <item name="colorPrimaryDark">#123900</item>
+        <item name="colorAccent">#123900</item>
     </style>
+
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Title."  parent="@android:style/TextAppearance">
+        <item name="android:textSize">30dp</item>
+        <item name="android:textColor">@color/title_color</item>
+    </style>
+
+    <style name="ToolBarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">#EA8D8D</item>
+        <item name="titleTextAppearance">@style/TitleTextAppearance</item>
+        <item name="subtitleTextAppearance">@style/SubTitleTextAppearance</item>
+    </style>
+
+    <style name="TitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#38ADAE</item>
+    </style>
+
+    <style name="SubTitleTextAppearance" parent="TextAppearance.Widget.AppCompat.Toolbar.Subtitle">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#00B7FF</item>
+    </style>
+
+
 </resources>

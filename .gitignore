@@ -4,9 +4,6 @@
 *.ap_
 *.aab
 
-local.properties
-.idea
-
 # Files for the ART/Dalvik VM
 *.dex
 
@@ -86,5 +83,3 @@ lint/generated/
 lint/outputs/
 lint/tmp/
 # lint/reports/
-local.properties
-local.properties
