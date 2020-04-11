@@ -12,32 +12,20 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import android.view.View
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_register.*
 
 
+class RegisterActivity : AppCompatActivity() {
 
-class MainActivity : AppCompatActivity() {
-
-
-    lateinit var mRegEmail: EditText
-    lateinit var mRegPass: EditText
-
-    lateinit var mRegisterbtn: Button
-    lateinit var mRegLoginBtn: TextView
     lateinit var mAuth: FirebaseAuth
     lateinit var listenerState: FirebaseAuth.AuthStateListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_register)
 
         mAuth = FirebaseAuth.getInstance()
 
-        mRegEmail=findViewById(R.id.regEmail)
-       mRegLoginBtn=findViewById(R.id.regLogin)
-        mRegEmail=findViewById(R.id.regEmail)
-        mRegPass=findViewById(R.id.regPassword)
-
-        mRegisterbtn=findViewById(R.id.buttonRegister)
 
 
 
@@ -47,40 +35,36 @@ class MainActivity : AppCompatActivity() {
 
                 var user: FirebaseUser? = mAuth.getCurrentUser()
                 if(user!=null){
-                    Toast.makeText(this@MainActivity, "You are auth!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this@RegisterActivity, "You are auth!", Toast.LENGTH_SHORT).show();
 
                 }
                 else{
-                    Toast.makeText(this@MainActivity, "Please auth!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this@RegisterActivity, "Please auth!", Toast.LENGTH_SHORT).show();
 
                 }
 
             }
 
         };
-        mRegisterbtn.setOnClickListener( View.OnClickListener { it: View? ->
+        btn_Register.setOnClickListener( View.OnClickListener { it: View? ->
 
 
-            var email : String = mRegEmail.text.toString()
-            var pwd :  String = mRegPass.text.toString()
+            var email : String = regEmail.text.toString()
+            var pass :  String = regPassword.text.toString()
 
 
             if(email.isEmpty()){
-                mRegEmail.setError("Please enter email id");
-                mRegEmail.requestFocus();
+                regEmail.setError("Please enter email id");
+                regEmail.requestFocus();
             }
-            else if (pwd.isEmpty()){
+            else if (pass.isEmpty()){
 
-                mRegPass.setError("Please enter your password");
-                mRegPass.requestFocus();
+                regPassword.setError("Please enter your password");
+                regPassword.requestFocus();
 
             }
-
-            else if(email.isEmpty() && pwd.isEmpty() ){
-                Toast.makeText(this@MainActivity, "Fields are empty", Toast.LENGTH_SHORT).show()
-    }
-            else if(!(email.isEmpty() && pwd.isEmpty()) ){
-                mAuth.createUserWithEmailAndPassword(email, pwd)
+            else {
+                mAuth.createUserWithEmailAndPassword(email, pass)
 
                     .addOnCompleteListener(this) { task ->
 
@@ -89,10 +73,10 @@ class MainActivity : AppCompatActivity() {
                             // Sign in success, update UI with the signed-in user's information
 
                             Log.d("create", "createUserWithEmail:success")
+                            Toast.makeText(this@RegisterActivity, "You are auth!", Toast.LENGTH_SHORT).show();
+                            val user  = mAuth.currentUser
 
-                           val user  = mAuth.currentUser
-
-                           // updateUI(user)
+                            // updateUI(user)
 
                         } else {
 
@@ -100,11 +84,11 @@ class MainActivity : AppCompatActivity() {
 
                             Log.w("failed", "createUserWithEmail:failure", task.exception)
 
-                            Toast.makeText(this@MainActivity, "Authentication failed.",
+                            Toast.makeText(this@RegisterActivity, "Authentication failed.",
 
                                 Toast.LENGTH_SHORT).show()
 
-                           // updateUI(null)
+                            // updateUI(null)
 
                         }
 
@@ -116,10 +100,10 @@ class MainActivity : AppCompatActivity() {
 
 
             }
-})
+        })
 
 
-}}
+    }}
 
 
 
