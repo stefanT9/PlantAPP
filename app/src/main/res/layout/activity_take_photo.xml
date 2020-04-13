@@ -6,12 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".takePhotoActivity">
 
-    <!-- TODO Camera live implementation -->
-    <ImageView
+    <io.fotoapparat.view.CameraView
+        android:id="@+id/camera_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/green_plants"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
