@@ -4,9 +4,6 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
-
-
-
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -31,8 +28,6 @@ android {
 }
 
 dependencies {
-
-
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -47,5 +42,3 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
-
-
