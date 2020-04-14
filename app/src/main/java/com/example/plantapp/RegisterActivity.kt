@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -77,7 +78,7 @@ class RegisterActivity : AppCompatActivity() {
                             Log.d("create", "createUserWithEmail:success")
                             Toast.makeText(
                                 this@RegisterActivity,
-                                "You are auth!",
+                                "Signed up successfully!",
                                 Toast.LENGTH_SHORT
                             ).show();
                             val user = mAuth.currentUser
