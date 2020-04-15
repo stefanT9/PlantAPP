@@ -23,8 +23,14 @@
                 
         <activity android:name=".DataVisualisationActivity">
         </activity>
-	
+
 	    <activity android:name=".HomeActivity">
+        </activity>
+
+        <activity android:name=".logged"></activity>
+        <activity android:name=".loggedin" />
+
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,4 +50,5 @@
         </provider>
 
     </application>
+
 </manifest>
