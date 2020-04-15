@@ -20,8 +20,11 @@
 
         <activity android:name=".TakePhotoActivity">
         </activity>
+                
+        <activity android:name=".DataVisualisationActivity">
+        </activity>
 	
-	 <activity android:name=".HomeActivity">
+	    <activity android:name=".HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
