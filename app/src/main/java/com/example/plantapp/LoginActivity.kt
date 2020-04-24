@@ -22,6 +22,7 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -52,9 +53,11 @@ class LoginActivity : AppCompatActivity() {
         lateinit var listenerState: FirebaseAuth.AuthStateListener
 
         //setColor to SIGN IN
-        val mSpannableString = SpannableString("@string/sign_up_text")
-        mSpannableString.setSpan("@color/sign_in_green_color", 23, 31, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val stringText: String = getString(R.string.sign_up_text)
+        val mSpannableString = SpannableString(stringText)
+        mSpannableString.setSpan("@color/sign_in_green_color", 23, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         sign_up_textView.text = mSpannableString
+
 
         //set toolbar
         val toolbar = login_toolbar as Toolbar?
