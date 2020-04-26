@@ -1,4 +1,4 @@
-package com.example.proiectuliaics
+package com.example.plantapp
 
 
 import androidx.appcompat.app.AppCompatActivity
@@ -8,12 +8,12 @@ import org.json.JSONArray
 import java.io.IOException
 import java.io.InputStream
 
-class MainActivity : AppCompatActivity() {
+class DataVisualisationActivity : AppCompatActivity() {
 var arr = arrayListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_data_visualisation)
         read_json()
     }
     fun read_json()
@@ -30,7 +30,7 @@ var arr = arrayListOf<String>()
                 arr.add(jsonobj.getString("kindom"))
             }
             var adpt=ArrayAdapter(this,android.R.layout.simple_list_item_1,arr)
-            json_list.adapter=adpt
+            ///json_list.adapter=adpt
         }
         catch (e:IOException)
         {
