@@ -9,4 +9,5 @@
     <string name="welcome_back">Welcome back!</string>
     <string name="log_in">Log in</string>
     <string name="botanictext">BotanicAppGarden</string>
+    <string name="logged_in_successfully">Logged in successfully</string>
 </resources>

@@ -12,6 +12,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
+
         applicationId "com.example.plantapp"
         minSdkVersion 23
         targetSdkVersion 29
@@ -31,7 +32,9 @@ android {
 }
 
 dependencies {
-
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

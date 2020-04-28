@@ -96,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
 
             // Toast.makeText(this@loginActivity, "Just clicked", Toast.LENGTH_SHORT).show()
 
-
+            message.text= "Logged in successfully" // pentru test, nu incurca
             val email: String = emailID.text.toString()
             val pwd: String = password.text.toString()
 
@@ -119,7 +119,7 @@ class LoginActivity : AppCompatActivity() {
                             Log.d("logare", "logat cu success!")
                             Toast.makeText(
                                 this@LoginActivity,
-                                "Logged in succesfully",
+                                "Logged in successfully",
                                 Toast.LENGTH_SHORT
                             ).show()
                             val user = authent.currentUser
