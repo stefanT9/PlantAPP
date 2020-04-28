@@ -22,9 +22,9 @@ var arr = arrayListOf<String>()
         try {
             val inputStream:InputStream=assets.open("proiect.json")
             json=inputStream.bufferedReader().use{it.readText()}
-            var jsonarr=JSONArray(json)
+            val jsonarr=JSONArray(json)
             var len=jsonarr.length()
-            for ( i in 0..jsonarr.length()-1)
+            for ( i in 0 until jsonarr.length())
             {
                 var jsonobj = jsonarr.getJSONObject(i)
                 arr.add(jsonobj.getString("kindom"))

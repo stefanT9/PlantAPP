@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DataVisualisationActivity"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:elevation="4dp">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/login_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/sign_in_green_color"
+        app:title="details visualisation"
+        app:titleMarginStart="106dp"
+        app:titleTextColor="@color/white"
+        tools:ignore="MissingConstraints" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +24,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="60dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/principallayout"
+        android:elevation="2dp"
         android:orientation="vertical">
 
         <TextView
@@ -76,11 +85,5 @@
             android:stretchColumns="1">
 
         </TableLayout>
-
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar" />
-
     </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

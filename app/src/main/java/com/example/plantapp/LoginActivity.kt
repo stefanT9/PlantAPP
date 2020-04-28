@@ -49,7 +49,6 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
 
 
-        lateinit var authent: FirebaseAuth
         lateinit var listenerState: FirebaseAuth.AuthStateListener
 
         //setColor to SIGN IN
@@ -68,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(applicationContext,"Navigation icon was clicked",Toast.LENGTH_SHORT).show()
         }
 
-        authent = FirebaseAuth.getInstance()
+        val authent: FirebaseAuth = FirebaseAuth.getInstance()
         emailID = email_textView
         password = password_editText
         buttonSignIn = email_login_button
@@ -80,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
 
             fun onAuthStateChanged(fireAuth: FirebaseAuth) {
 
-                var user: FirebaseUser? = authent.currentUser
+                val user: FirebaseUser? = authent.currentUser
                 if (user != null) {
                     Toast.makeText(this@LoginActivity, "You are logged in!", Toast.LENGTH_SHORT)
                         .show()
@@ -98,8 +97,8 @@ class LoginActivity : AppCompatActivity() {
             // Toast.makeText(this@loginActivity, "Just clicked", Toast.LENGTH_SHORT).show()
 
 
-            var email: String = emailID.text.toString()
-            var pwd: String = password.text.toString()
+            val email: String = emailID.text.toString()
+            val pwd: String = password.text.toString()
 
             if (email.isEmpty()) {
                 emailID.error = "Please enter email id"
@@ -219,12 +218,8 @@ class LoginActivity : AppCompatActivity() {
             val account = GoogleSignIn.getLastSignedInAccount(applicationContext)
 
             if (account != null) {
-                var personName = account.displayName
-                var personGivenName = account.givenName
-                var personFamily = account.familyName
-                var personEmail = account.email
-                var personId = account.id
-                var personPhoto = account.photoUrl
+                val personName = account.displayName
+                val personEmail = account.email
 
                 Toast.makeText(this@LoginActivity, personName + personEmail, Toast.LENGTH_SHORT)
                     .show()
