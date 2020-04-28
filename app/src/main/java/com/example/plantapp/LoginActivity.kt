@@ -96,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
 
             // Toast.makeText(this@loginActivity, "Just clicked", Toast.LENGTH_SHORT).show()
 
-
+             // pentru test, nu incurca
             val email: String = emailID.text.toString()
             val pwd: String = password.text.toString()
 
@@ -112,14 +112,15 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this@LoginActivity, "Fields are empty", Toast.LENGTH_SHORT).show()
 
             } else if (!(email.isEmpty() && pwd.isEmpty())) {
-
+                message.text= getString(R.string.logged_in_successfully)
+                message2.text= getString(R.string.auth_failed)
                 authent.signInWithEmailAndPassword(email, pwd)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             Log.d("logare", "logat cu success!")
                             Toast.makeText(
                                 this@LoginActivity,
-                                "Logged in succesfully",
+                                "Logged in successfully",
                                 Toast.LENGTH_SHORT
                             ).show()
                             val user = authent.currentUser
