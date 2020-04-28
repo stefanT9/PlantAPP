@@ -47,6 +47,15 @@ class LoginActivityTest
         onView(withId(R.id.email_login_button)).perform(click())
         onView(withId(R.id.message)).check(matches(withText("Logged in successfully")))
     }
+    @Test
+    fun basic_login_false(){
+        onView(withId(R.id.email_textView)).perform(typeText("dasd@trl.com"))
+        onView(withId(R.id.password_editText)).perform(typeText("123123"))
+        onView(withId(R.id.email_login_button)).perform(click())
+        onView(withId(R.id.message2)).check(matches(withText("Authentication failed!")))
+    }
+
+
 
 
 }
