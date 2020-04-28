@@ -10,6 +10,6 @@ class WikiapiKtTest : TestCase() {
 
     @Test
     fun wikiapi() {
-
+        print(wikiapi("Floarea-soarelui"))
     }
 }
