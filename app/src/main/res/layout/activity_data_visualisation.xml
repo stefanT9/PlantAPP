@@ -32,16 +32,14 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="20dp"
             android:fontFamily="sans-serif"
-            android:text="Zambila, Iacint"
             android:textSize="25dp"
             android:textStyle="bold" />
 
-a        <ImageView
+         <ImageView
             android:id="@+id/plant_image"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:layout_margin="20dp"
-            android:background="" />
+            android:layout_margin="20dp"/>
 
         <TextView
             android:id="@+id/latinname"
@@ -50,7 +48,6 @@ a        <ImageView
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:fontFamily="sans-serif"
-            android:text="Hyacinthus orientalis"
             android:textColor="#00b33c"
             android:textSize="18dp"
             android:textStyle="italic" />
@@ -60,7 +57,6 @@ a        <ImageView
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:text="Hyacintush orientalis (common hyacinth, garden hyacinth or Dutch hyacinth),is a species of flowering plant in the family Asparagaceae,subfamily.."
             android:textSize="18dp"
             android:textStyle="normal" />
 
@@ -78,98 +74,6 @@ a        <ImageView
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:stretchColumns="1">
-
-            <TableRow>
-
-                <TextView
-                    android:layout_gravity="left"
-                    android:text="@string/kindom"
-                    android:textColor="#00b33c"
-                    android:textSize="13dp" />
-
-                <TextView
-                    android:id="@+id/kindom"
-                    android:layout_gravity="center"
-                    android:text="Kindom"
-                    android:textSize="13dp" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_height="match_parent"
-                    android:layout_gravity="left"
-                    android:text="Clade"
-                    android:textColor="#00b33c"
-                    android:textSize="13dp" />
-
-                <TextView
-                    android:id="@+id/clade"
-                    android:layout_gravity="center"
-                    android:text="@string/cladev"
-                    android:textSize="13dp" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_gravity="left"
-                    android:text="Family"
-                    android:textColor="#00b33c"
-                    android:textSize="13dp" />
-
-                <TextView
-                    android:id="@+id/family"
-                    android:layout_gravity="center"
-                    android:text="@string/familyv"
-                    android:textSize="13dp" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_gravity="left"
-                    android:text="Subamily"
-                    android:textColor="#00b33c"
-                    android:textSize="13dp" />
-
-                <TextView
-                    android:id="@+id/subfamily"
-                    android:layout_gravity="center"
-                    android:text="@string/subamilyv"
-                    android:textSize="13dp" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_gravity="left"
-                    android:text="Genus"
-                    android:textColor="#00b33c"
-                    android:textSize="13dp" />
-
-                <TextView
-                    android:id="@+id/genus"
-                    android:layout_gravity="center"
-                    android:text="@string/genusv"
-                    android:textSize="13sp" />
-            </TableRow>
-
-            <TableRow>
-
-                <TextView
-                    android:layout_gravity="left"
-                    android:text="Species"
-                    android:textColor="#00b33c"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/species"
-                    android:layout_gravity="center"
-                    android:text="@string/speciesv"
-                    android:textSize="13sp" />
-            </TableRow>
-
 
         </TableLayout>
 
