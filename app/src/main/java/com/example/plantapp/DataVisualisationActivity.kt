@@ -1,12 +1,12 @@
 package com.example.plantapp
 
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import org.json.JSONArray
-import java.io.IOException
-import java.io.InputStream
+import android.widget.TableRow
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_data_visualisation.*
+
 
 class DataVisualisationActivity : AppCompatActivity() {
 var arr = arrayListOf<String>()
@@ -14,28 +14,26 @@ var arr = arrayListOf<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data_visualisation)
-        read_json()
-    }
-    fun read_json()
-    {
-        var json : String? =null
-        try {
-            val inputStream:InputStream=assets.open("proiect.json")
-            json=inputStream.bufferedReader().use{it.readText()}
-            val jsonarr=JSONArray(json)
-            var len=jsonarr.length()
-            for ( i in 0 until jsonarr.length())
-            {
-                var jsonobj = jsonarr.getJSONObject(i)
-                arr.add(jsonobj.getString("kindom"))
+
+        val extras = intent.extras
+        if (extras != null) {
+            val description = extras.getString("description")
+            val table = extras.getString("table")?.split(',')
+            if (table != null) {
+                for (i in 0..table.size - 1 step 2) {
+                    val row = TableRow(this)
+                    val key = TextView(this)
+                    val value = TextView(this)
+                    key.text = table[i]
+                    value.text = table[i + 1]
+                    row.addView(key)
+                    row.addView(value)
+                    description_table.addView(row)
+                }
+                description_text_view.text = description
+            } else {
+                println("Erroare afisare date")
             }
-            var adpt=ArrayAdapter(this,android.R.layout.simple_list_item_1,arr)
-            ///json_list.adapter=adpt
         }
-        catch (e:IOException)
-        {
-
-        }
-
     }
 }

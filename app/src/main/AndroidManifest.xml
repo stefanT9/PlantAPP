@@ -23,6 +23,7 @@
         </activity>
                 
         <activity android:name=".DataVisualisationActivity">
+
         </activity>
 
 	    <activity android:name=".HomeActivity">

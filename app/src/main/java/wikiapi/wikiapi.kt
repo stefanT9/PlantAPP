@@ -18,13 +18,12 @@ fun wikiapi(name: String): Hashtable<String, Any>? {
         val desc: Element = document.select("table+p").get(0)
         val clade: Elements = document.select("table").get(0).getElementsByTag("tr")
         res["description"] = desc.text()
-        val table =
-            LinkedList<Pair<String, String>>()
+        var table = ""
         for (nume in clade) {
             if (nume.childNodeSize() == 4) {
                 val key: String = nume.text().split(": ").get(0)
                 val value: String = nume.text().split(": ").get(1)
-                table.add(Pair(key, value))
+                table = "$table,$key,$value"
             }
         }
         res["table"] = table
