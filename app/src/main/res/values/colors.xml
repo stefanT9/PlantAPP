@@ -3,9 +3,9 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="sign_in_green_color">#1B5E20</color>
-    <color name="white">#FFFFFF</color>
-    <color name="bckColor">#36A961</color>
-    <color name="text">#FFFFFF</color>
 
+    <color name="topNavView">#36A961</color>
+    <color name="back_topNavView">#FFFFFF</color>
+    <color name="dark_topNavView">#1B5531</color>
+    <color name="text_topnavView">#707070</color>
 </resources>

@@ -1,14 +1,28 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">PlantAPP</string>
-    <string name="Email">Email</string>
-    <string name="password">Password</string>
-    <string name="login_with_google">Log in with Google</string>
-    <string name="sign_up_text">Don\'t have an account? Sign up</string>
-    <string name="or">OR</string>
-    <string name="sign_in">Sign in</string>
-    <string name="welcome_back">Welcome back!</string>
+    <string name="plants">    Plants</string>
+    <string name="contact_us">Contact us</string>
+    <string name="home">Home</string>
+    <string name="openNavView">Navigation view open</string>
+    <string name="closeNavView">Navigation view close</string>
+    <string name="nothing"> </string>
+    <string name="botanicappgarden">BotanicAppGarden</string>
     <string name="log_in">Log in</string>
-    <string name="botanictext">BotanicAppGarden</string>
-     <string name="logged_in_successfully">Logged in successfully</string>
-    <string name="auth_failed">Authentication failed!</string>
+    <string name="sign_up">Sign up</string>
+    <string name="log_out">Log out</string>
+    <string name="username_username">username.username</string>
+    <string name="mail_mail_com">mail@mail.com</string>
+    <string name="title_activity_test">test</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="home_second">Home Second</string>
 </resources>
