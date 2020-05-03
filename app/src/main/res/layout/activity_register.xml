@@ -36,6 +36,7 @@
         app:srcCompat="@drawable/ic_bars_solid"
         />
 
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="114dp"
@@ -48,8 +49,8 @@
         app:layout_constraintEnd_toEndOf="@+id/toolbar"
         app:layout_constraintHorizontal_bias="0.426"
         app:layout_constraintStart_toEndOf="@+id/imageButton"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.64" />
 
     <TextView
         android:id="@+id/textView4"
@@ -128,7 +129,7 @@
         android:id="@+id/btn_Register"
         android:layout_width="198dp"
         android:layout_height="40dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="44dp"
         android:background="@drawable/gradient"
         android:text="Sign Up"
         android:textColor="#FFFFFF"
