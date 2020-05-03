@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TopNavViewActivity"
+    android:id="@+id/topNavView_layoutLogged"
+    >
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/topNavView">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/topNavViewLogged"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                app:collapseIcon="@drawable/ic_bars_solid"
+                app:navigationIcon="@drawable/ic_bars_solid"
+                app:subtitleTextColor="#FFFFFF"
+                app:titleTextColor="#FFFFFF">
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navViewLogged"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/logged_nav_view_drawer"
+
+        app:itemIconTint="@color/text_topnavView"
+        app:itemTextColor="@color/text_topnavView">
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>
+
+    <!--    <androidx.drawerlayout.widget.DrawerLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        tools:context=".TopNavViewActivity"-->
+    <!--        android:id="@+id/l_topNavView_layout">-->
+
+    <!--        <androidx.coordinatorlayout.widget.CoordinatorLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:background="@color/topNavView">-->
+
+    <!--            <com.google.android.material.appbar.AppBarLayout-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content">-->
+
+    <!--                <androidx.appcompat.widget.Toolbar-->
+    <!--                    android:id="@+id/l_topNavView"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="?android:attr/actionBarSize"-->
+    <!--                    app:collapseIcon="@drawable/ic_bars_solid"-->
+    <!--                    app:navigationIcon="@drawable/ic_bars_solid"-->
+    <!--                    app:subtitleTextColor="#FFFFFF"-->
+    <!--                    app:titleTextColor="#FFFFFF">-->
+
+    <!--                </androidx.appcompat.widget.Toolbar>-->
+    <!--            </com.google.android.material.appbar.AppBarLayout>-->
+    <!--        </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+
+    <!--        <com.google.android.material.navigation.NavigationView-->
+    <!--            android:id="@+id/l_navView"-->
+    <!--            android:layout_width="300dp"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_gravity="start"-->
+    <!--            app:headerLayout="@layout/logged_nav_view_drawer"-->
+    <!--            app:itemIconTint="@color/text_topnavView"-->
+    <!--            app:itemTextColor="@color/text_topnavView">-->
+    <!--        </com.google.android.material.navigation.NavigationView>-->
+
+
+    <!--    </androidx.drawerlayout.widget.DrawerLayout>-->
+
+
+
