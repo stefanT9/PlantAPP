@@ -14,7 +14,6 @@
     <string name="sign_up">Sign Up</string>
     <string name="welcome">Welcome!</string>
     <string name="Password">Password</string>
-    <string name="Email">Email address</string>
     <string name="Account">Already have an account? <font color='#36A961'>Sign in</font></string>
 
 </resources>

@@ -18,10 +18,9 @@ var arr = arrayListOf<String>()
     }
     fun read_json()
     {
-        var json : String? =null
         try {
             val inputStream:InputStream=assets.open("proiect.json")
-            json=inputStream.bufferedReader().use{it.readText()}
+            var json=inputStream.bufferedReader().use{it.readText()}
             val jsonarr=JSONArray(json)
             var len=jsonarr.length()
             for ( i in 0 until jsonarr.length())
