@@ -11,4 +11,8 @@
     <color name="color1">#36A961</color>
     <color name="color2">#1D5833</color>
     <color name="colorSignup">#A7A7A7</color>
+    <color name="topNavView">#36A961</color>
+    <color name="back_topNavView">#FFFFFF</color>
+    <color name="dark_topNavView">#1B5531</color>
+    <color name="text_topnavView">#707070</color>
 </resources>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TopNavViewActivity"
+    android:id="@+id/topNavView_layoutLogged"
+    >
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/topNavView">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.Toolbar
+                android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+                android:id="@+id/topNavViewLogged"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                app:collapseIcon="@drawable/ic_bars_solid"
+                app:navigationIcon="@drawable/ic_bars_solid"
+                app:subtitleTextColor="#FFFFFF"
+                app:titleTextColor="#FFFFFF">
+
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navViewLogged"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+
+        app:itemIconTint="#ffffff"
+        app:itemTextColor="@color/text_topnavView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:id="@+id/navViewLayout">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/navigation_header_container"
+                android:layout_width="300dp"
+                android:layout_height="?android:actionBarSize"
+                android:background="@color/topNavView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/close_nav_view_logged"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="25dp"
+                    android:background="#00FFFFFF"
+                    android:src="@drawable/ic_bars_solid"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                </androidx.appcompat.widget.AppCompatImageButton>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/nav_view_btns"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                app:layout_constraintTop_toBottomOf="@id/navigation_header_container"
+                app:layout_constraintBottom_toTopOf="@id/nav_view_menu"
+                >
+
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/image_prophile_photo"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="48dp"
+                    android:src="@drawable/ic_user"
+                    app:civ_border_width="1.5dp"
+                    app:civ_border_color="#707070"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/t1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/username_username"
+                    app:layout_constraintStart_toEndOf="@+id/image_prophile_photo"
+                    app:layout_constraintTop_toTopOf="@+id/nav_view_btns"
+                    tools:layout_editor_absoluteY="16dp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="@string/mail_mail_com"
+                    app:layout_constraintBottom_toBottomOf="@+id/nav_view_btns"
+                    app:layout_constraintStart_toEndOf="@+id/image_prophile_photo" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/nav_view_menu"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nav_view_btns">
+
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/btn_plants"
+                    android:layout_width="200dp"
+                    android:layout_height="?android:actionBarSize"
+                    android:layout_marginStart="50dp"
+                    android:fontFamily="@font/salsa"
+                    android:text="@string/plants"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                    android:textColor="@color/text_topnavView"
+                    app:chipBackgroundColor="@color/back_topNavView"
+                    app:chipIcon="@drawable/ic_seedling_solid"
+                    app:chipIconSize="13dp"
+                    />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/btn_contact"
+                    android:layout_width="200dp"
+                    android:layout_height="?android:actionBarSize"
+                    android:layout_marginStart="50dp"
+                    android:text="@string/contact_us"
+                    android:textColor="@color/text_topnavView"
+                    app:chipBackgroundColor="@color/back_topNavView"
+                    app:chipIcon="@drawable/ic_envelope_solid"
+                    app:chipIconSize="13dp"
+                    />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/btn_home"
+                    android:layout_width="200dp"
+                    android:layout_height="?android:actionBarSize"
+                    android:layout_marginStart="50dp"
+                    android:text="@string/home"
+                    android:textColor="@color/text_topnavView"
+                    app:chipBackgroundColor="@color/back_topNavView"
+                    app:chipIcon="@drawable/ic_home_solid"
+                    app:chipIconSize="13dp"/>
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/btn_log_out"
+                    android:layout_width="200dp"
+                    android:layout_height="?android:actionBarSize"
+                    android:text="@string/log_out"
+                    android:textColor="@color/text_topnavView"
+                    app:chipBackgroundColor="@color/back_topNavView"
+                    app:chipIcon="@drawable/ic_sign_out_alt_solid"
+                    app:chipIconSize="14dp"
+                    android:layout_marginStart="50dp"
+                    tools:layout_editor_absoluteX="50dp"
+                    tools:layout_editor_absoluteY="274dp"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/logo_botanicApp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="130dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/open_sans"
+                android:text="@string/botanicappgarden"
+                android:textAlignment="center"
+                android:textColor="@color/topNavView"
+                app:layout_constraintBottom_toBottomOf="@id/navViewLayout" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>

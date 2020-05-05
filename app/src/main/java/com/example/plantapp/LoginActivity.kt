@@ -52,8 +52,7 @@ class LoginActivity : AppCompatActivity() {
         lateinit var listenerState: FirebaseAuth.AuthStateListener
 
         //setColor to SIGN IN
-        val stringText: String = getString(R.string.sign_up_text)
-        val mSpannableString = SpannableString(stringText)
+        val mSpannableString = SpannableString(getString(R.string.sign_up_text))
         mSpannableString.setSpan("@color/sign_in_green_color", 23, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         sign_up_textView.text = mSpannableString
 
