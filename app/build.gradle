@@ -74,6 +74,8 @@ dependencies {
     implementation 'io.fotoapparat:fotoapparat:2.7.0'
     testImplementation 'com.android.support.test:rules:1.0.2'
     testImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'androidx.test:runner:1.2.0'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
 }
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'

@@ -49,12 +49,28 @@ class LoginActivityTest
     }
     @Test
     fun basic_login_false(){
-        onView(withId(R.id.email_textView)).perform(typeText("dasd@trl.com"))
+        onView(withId(R.id.email_textView)).perform(typeText("aaa"))
         onView(withId(R.id.password_editText)).perform(typeText("123123"))
         onView(withId(R.id.email_login_button)).perform(click())
         onView(withId(R.id.message2)).check(matches(withText("Authentication failed!")))
     }
-
+    @Test
+    fun check_id_edit_text() {
+        onView(withId(R.id.password_editText)).perform(typeText("p"))
+        onView(withId(R.id.email_login_button)).perform(click())
+        onView(withId(R.id.message_edit_text_email)).check(matches(withText("Please enter email id!")))
+    }
+    @Test
+    fun check_pw_edit_text() {
+        onView(withId(R.id.email_textView)).perform(typeText("E"))
+        onView(withId(R.id.email_login_button)).perform(click())
+        onView(withId(R.id.message_edit_text_password)).check(matches(withText("Please enter your password")))
+    }
+    @Test
+    fun check_google_login() {
+        onView(withId(R.id.sign_in_button)).perform(click())
+        onView(withId(R.id.message_google)).check(matches(withText("Signed in with Google Successfully")))
+    }
 
 
 

@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.view.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -52,7 +53,8 @@ class LoginActivity : AppCompatActivity() {
         lateinit var listenerState: FirebaseAuth.AuthStateListener
 
         //setColor to SIGN IN
-        val mSpannableString = SpannableString(getString(R.string.sign_up_text))
+        val stringText: String = getString(R.string.don_t_have_an_account_sign_up)
+        val mSpannableString = SpannableString(stringText)
         mSpannableString.setSpan("@color/sign_in_green_color", 23, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         sign_up_textView.text = mSpannableString
 
@@ -100,12 +102,14 @@ class LoginActivity : AppCompatActivity() {
             val pwd: String = password.text.toString()
 
             if (email.isEmpty()) {
+                message_edit_text_email.text = getString(R.string.please_enter_email_id)
                 emailID.error = "Please enter email id"
                 emailID.requestFocus()
             } else if (pwd.isEmpty()) {
-
+                message_edit_text_password.text = getString(R.string.please_enter_your_password)
                 password.error = "Please enter your password"
                 password.requestFocus()
+
 
             } else if (email.isEmpty() && pwd.isEmpty()) {
                 Toast.makeText(this@LoginActivity, "Fields are empty", Toast.LENGTH_SHORT).show()
@@ -195,6 +199,7 @@ class LoginActivity : AppCompatActivity() {
                         "Signed in with Google Successfully",
                         Toast.LENGTH_SHORT
                     ).show()
+                    message_google.text = getString(R.string.signed_in_google)
                     val user = auth.currentUser
                     updateUI(user!!)
 
