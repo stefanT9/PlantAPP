@@ -1,6 +1,7 @@
 package com.example.plantapp
 
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -49,7 +50,8 @@ class TopNavViewActivity : AppCompatActivity(){
             logOut = findViewById(R.id.btn_log_out)
             logOut.setOnClickListener {
                 //Change activity to home and log out
-                Toast.makeText(applicationContext,"Log out button was clicked",Toast.LENGTH_SHORT).show()
+                var logOutText = Toast.makeText(applicationContext,"Log out button was clicked",Toast.LENGTH_SHORT)
+				logOutText.show()
             }
         }
         else
@@ -67,14 +69,18 @@ class TopNavViewActivity : AppCompatActivity(){
             logIn = findViewById(R.id.btn_log_in)
             logIn.setOnClickListener {
                 //Change activity to log in
-                Toast.makeText(applicationContext,"Log in button was clicked",Toast.LENGTH_SHORT).show()
+                var logInText = Toast.makeText(applicationContext,"Log in button was clicked",Toast.LENGTH_SHORT)
+				logInText.show()
             }
             signUp = findViewById(R.id.btn_sign_up)
             signUp.setOnClickListener {
                 //Change activity to sign up
-                Toast.makeText(applicationContext,"Sign up button was clicked",Toast.LENGTH_SHORT).show()
+                var signUpTxt = Toast.makeText(applicationContext,"Sign up button was clicked",Toast.LENGTH_SHORT)
+				signUpTxt.show()
             }
         }
+
+
 
         plants = findViewById(R.id.btn_plants)
         plants.setOnClickListener {
@@ -84,34 +90,46 @@ class TopNavViewActivity : AppCompatActivity(){
         contact = findViewById(R.id.btn_contact)
         contact.setOnClickListener {
             //Change activity to contact
-            Toast.makeText(applicationContext,"Contact button was clicked",Toast.LENGTH_SHORT).show()
+            var contactTxt = Toast.makeText(applicationContext,"Contact button was clicked",Toast.LENGTH_SHORT)
+			contactTxt.show()
         }
         home = findViewById(R.id.btn_home)
         home.setOnClickListener {
             //Change activity to home
-            Toast.makeText(applicationContext,"Home button was clicked",Toast.LENGTH_SHORT).show()
+            var homeTxt = Toast.makeText(applicationContext,"Home button was clicked",Toast.LENGTH_SHORT)
+			homeTxt.show()
         }
 
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar
         actionBar?.title=" "
 
-        actionBarDrawerToggle = ActionBarDrawerToggle(
-            this,
-            drawerLayout,
-            toolbar,
-            R.string.openNavView,
-            R.string.closeNavView
-        )
-        drawerLayout.addDrawerListener(actionBarDrawerToggle)
-        actionBarDrawerToggle.syncState()
+//        actionBarDrawerToggle = ActionBarDrawerToggle(
+//            this,
+//            drawerLayout,
+//            toolbar,
+//            R.string.openNavView,
+//            R.string.closeNavView
+//        )
 
+
+//        drawerLayout.addDrawerListener(actionBarDrawerToggle)
+//        actionBarDrawerToggle.syncState()
+        toolbar.setNavigationOnClickListener{
+            if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+            else{
+                drawerLayout.openDrawer(GravityCompat.START);
+                var openMenu = Toast.makeText(applicationContext,"Deschidem meniu",Toast.LENGTH_SHORT)
+				openMenu.show()
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpToolbar()
-
     }
 
     override fun onBackPressed(){
