@@ -53,7 +53,8 @@ class LoginActivity : AppCompatActivity() {
 
         //setColor to SIGN IN
         val mSpannableString = SpannableString(getString(R.string.sign_up_text))
-        mSpannableString.setSpan("@color/sign_in_green_color", 23, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        /// What does the next line do?
+        // mSpannableString.setSpan("@color/sign_in_green_color", 23, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         sign_up_textView.text = mSpannableString
 
 
