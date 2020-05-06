@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_marginVertical="100dp"
+    android:outlineAmbientShadowColor="#0000001C"
+    android:layout_marginVertical="10dp"
     android:layout_gravity="center"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -55,6 +56,7 @@
 
             <TextView
                 android:id="@+id/description_text_view"
+                android:text="text lung"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
