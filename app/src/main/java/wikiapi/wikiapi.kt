@@ -22,9 +22,9 @@ fun wikiapi(name: String): Hashtable<String, String>? {
         var table = ""
         for (nume in clade) {
             if (nume.childNodeSize() == 4) {
-                val key: String = nume.text().split(": ")[0]
-                val value: String = nume.text().split(": ")[1]
-                table="$table$key,$value,"
+                val key: String = nume.text().split(": ").get(0)
+                val value: String = nume.text().split(": ").get(1)
+                table = "$table,$key,$value"
             }
         }
         res["table"] = table
