@@ -43,14 +43,16 @@ class TakePhotoActivity : TopNavViewActivity() {
                 if (it != null) {
                     val intent = Intent(this, DataVisualisationActivity::class.java)
                     Thread {
-                        val res = wikiapi(getPlantName(it))
+                        val plantName= getPlantName((it))
+                        val res = wikiapi(plantName)
                         if (res != null) {
                             intent.putExtra("description", res["description"])
                             intent.putExtra("table", res["table"])
-                            println("here you should start an activity")
+                            intent.putExtra("latinName", plantName)
                             startActivity(intent)
                         } else {
                             println("something happened")
+                            Toast.makeText(this,"Try o make another pcture",Toast.LENGTH_SHORT).show()
                         }
                     }.start()
                 }

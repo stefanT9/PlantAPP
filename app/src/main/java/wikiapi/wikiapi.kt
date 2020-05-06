@@ -24,7 +24,10 @@ fun wikiapi(name: String): Hashtable<String, String>? {
             if (nume.childNodeSize() == 4) {
                 val key: String = nume.text().split(": ").get(0)
                 val value: String = nume.text().split(": ").get(1)
-                table = "$table,$key,$value"
+                table = if(table.isNotEmpty())
+                    "$table,$key,$value"
+                else
+                    "$key,$value"
             }
         }
         res["table"] = table

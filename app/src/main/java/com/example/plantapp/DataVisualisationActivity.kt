@@ -11,16 +11,41 @@ import kotlinx.android.synthetic.main.activity_data_visualisation.*
 class DataVisualisationActivity : TopNavViewActivity() {
 var arr = arrayListOf<String>()
 
+    lateinit var descriptionText:String
+    lateinit var minimizedDescriptionText:String
+    lateinit var latinName:String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data_visualisation)
+        read_more_anchor.setOnClickListener {
+            if (read_more_anchor.text == "Read more") {
+                description_text_view.text = descriptionText
+                read_more_anchor.text="Read less"
+            }
+            else
+            {
+                description_text_view.text = minimizedDescriptionText
+                read_more_anchor.text="Read more"
 
+            }
+        }
         val extras = intent.extras
         if (extras != null) {
-            val description = extras.getString("description")
+
+            latinName = extras.getString("latinName")!!
+            descriptionText = extras.getString("description")!!
+            minimizedDescriptionText=descriptionText.substring(0,40)+"..."
+
+            plantname.text=latinName
+            description_text_view.text = minimizedDescriptionText
+
+            println(extras.get("table"))
+
             val table = extras.getString("table")?.split(',')
             if (table != null) {
-                for (i in 0..table.size - 1 step 2) {
+
+                for (i in table.indices step 2) {
                     val row = TableRow(this)
                     val key = TextView(this)
                     val value = TextView(this)
@@ -30,7 +55,6 @@ var arr = arrayListOf<String>()
                     row.addView(value)
                     description_table.addView(row)
                 }
-                description_text_view.text = description
             } else {
                 println("Erroare afisare date")
             }
