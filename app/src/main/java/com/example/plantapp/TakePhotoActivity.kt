@@ -1,10 +1,10 @@
 package com.example.plantapp
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import io.fotoapparat.Fotoapparat
@@ -14,23 +14,16 @@ import io.fotoapparat.log.loggers
 import io.fotoapparat.parameter.ScaleType
 import io.fotoapparat.selector.back
 import kotlinx.android.synthetic.main.activity_take_photo.*
+import plantToTextAPI.getPlantName
+import wikiapi.wikiapi
 
-class TakePhotoActivity : AppCompatActivity() {
+class TakePhotoActivity : TopNavViewActivity() {
 
     private var fotoapparat: Fotoapparat? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_take_photo)
-
-        photo_button.setOnClickListener {
-            Toast.makeText(this, "Photo Taken", Toast.LENGTH_LONG).show()
-        }
-
-        gallery_button.setOnClickListener {
-            Toast.makeText(this, "Enter Gallery", Toast.LENGTH_LONG).show()
-        }
-
         if (ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.CAMERA
@@ -40,7 +33,31 @@ class TakePhotoActivity : AppCompatActivity() {
         } else {
             initFotoapparat()
         }
+
+        gallery_button.setOnClickListener {
+            Toast.makeText(this, "Enter Gallery", Toast.LENGTH_LONG).show()
+        }
+
+        photo_button.setOnClickListener {
+            fotoapparat!!.takePicture().toBitmap().whenAvailable {
+                if (it != null) {
+                    val intent = Intent(this, DataVisualisationActivity::class.java)
+                    Thread {
+                        val res = wikiapi(getPlantName(it))
+                        if (res != null) {
+                            intent.putExtra("description", res["description"])
+                            intent.putExtra("table", res["table"])
+                            println("here you should start an activity")
+                            startActivity(intent)
+                        } else {
+                            println("something happened")
+                        }
+                    }.start()
+                }
+            }
+        }
     }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

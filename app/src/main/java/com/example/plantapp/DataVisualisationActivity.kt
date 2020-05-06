@@ -8,13 +8,13 @@ import org.json.JSONArray
 import java.io.IOException
 import java.io.InputStream
 
-class DataVisualisationActivity : AppCompatActivity() {
+class DataVisualisationActivity : TopNavViewActivity() {
 var arr = arrayListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data_visualisation)
-        read_json()
+        //read_json()
     }
     fun read_json()
     {

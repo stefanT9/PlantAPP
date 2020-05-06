@@ -1,0 +1,40 @@
+<LinearLayout
+    android:id="@+id/nav_view_btns"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:layout_constraintTop_toBottomOf="@id/navigation_header_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Button
+        android:id="@+id/btn_log_in"
+        android:layout_width="200dp"
+        android:layout_height="?android:actionBarSize"
+        android:layout_marginTop="70dp"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/log_in"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+
+        />
+
+    <Button
+        android:id="@+id/btn_sign_up"
+        android:layout_width="200dp"
+        android:layout_height="?android:actionBarSize"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="70dp"
+        android:backgroundTint="@color/back_topNavView"
+        android:fontFamily="@font/open_sans"
+        android:text="@string/sign_up"
+        android:textAllCaps="false"
+        android:textColor="@color/topNavView"
+        android:textStyle="bold"
+        android:layout_gravity="center"
+        app:strokeColor="@color/topNavView"
+        app:strokeWidth="2dp"
+        />
+</LinearLayout>

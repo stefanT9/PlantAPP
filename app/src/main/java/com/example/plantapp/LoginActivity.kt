@@ -23,8 +23,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_top_nav.*
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : TopNavViewActivity() {
 
     lateinit var emailID: EditText
     lateinit var password: EditText
@@ -46,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        this.layoutInflater.inflate(R.layout.activity_home,mainLayout)
 
 
         lateinit var listenerState: FirebaseAuth.AuthStateListener
