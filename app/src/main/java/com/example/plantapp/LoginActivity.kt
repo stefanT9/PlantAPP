@@ -59,15 +59,6 @@ class LoginActivity : TopNavViewActivity() {
         sign_up_textView.text = mSpannableString
 
 
-        //set toolbar
-        val toolbar = login_toolbar as Toolbar?
-        setSupportActionBar(toolbar)
-        toolbar?.title = "Log in"
-        toolbar?.navigationIcon = ContextCompat.getDrawable(this,R.drawable.ic_menu_black_24dp)
-        toolbar?.setNavigationOnClickListener {
-            Toast.makeText(applicationContext,"Navigation icon was clicked",Toast.LENGTH_SHORT).show()
-        }
-
         val authent: FirebaseAuth = FirebaseAuth.getInstance()
         emailID = email_textView
         password = password_editText

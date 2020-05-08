@@ -15,10 +15,6 @@ class HomeActivity : TopNavViewActivity() {
         super.onCreate(savedInstanceState)
         this.layoutInflater.inflate(R.layout.activity_home,mainLayout)
 
-         hamburgerMenu_imgButton.setOnClickListener {
-             Toast.makeText(this@HomeActivity, "the button works!", Toast.LENGTH_SHORT).show()
-         }
-
         scanPlant_imgButton.setOnClickListener {
             val intent= Intent(this,TakePhotoActivity::class.java)
             startActivity(intent)
@@ -28,7 +24,6 @@ class HomeActivity : TopNavViewActivity() {
         uploadPhoto_imgButton.setOnClickListener {
             Toast.makeText(this@HomeActivity, "Upload a photo!", Toast.LENGTH_SHORT).show()
         }
-
 
     }
 }

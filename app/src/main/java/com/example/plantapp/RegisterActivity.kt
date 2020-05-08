@@ -28,12 +28,9 @@ class RegisterActivity : TopNavViewActivity() {
     var TAG = "thisLOGIN"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.layoutInflater.inflate(R.layout.activity_home,mainLayout)
+        this.layoutInflater.inflate(R.layout.activity_register,mainLayout)
 
         mAuth = FirebaseAuth.getInstance()
-
-
-
         listenerState = FirebaseAuth.AuthStateListener() {
 
             fun onAuthStateChanged(fireAuth: FirebaseAuth) {

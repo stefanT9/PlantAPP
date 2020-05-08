@@ -4,7 +4,6 @@ package com.example.plantapp
 import android.os.Bundle
 import android.widget.TableRow
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_data_visualisation.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
 
@@ -18,9 +17,9 @@ var arr = arrayListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        //setContentView(R.layout.activity_data_visualisation)
         this.layoutInflater.inflate(R.layout.activity_data_visualisation,mainLayout)
+        setUpToolbar()
+
         read_more_anchor.setOnClickListener {
             if (read_more_anchor.text == "Read more") {
                 description_text_view.text = descriptionText
