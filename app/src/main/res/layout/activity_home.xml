@@ -9,6 +9,9 @@
     tools:context=".HomeActivity"
     android:background="@color/bckColor">
 
+        <!--
+        TODO: De verficat si modificat marginile (Alex Barsan)
+        -->
     <ImageButton
         android:id="@+id/svgBackground_Image"
         android:layout_width="353dp"

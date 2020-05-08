@@ -10,12 +10,12 @@ fun wikiapi(name: String): Hashtable<String, String>? {
     name.replace(" ", "_")
     val url = "https://en.wikipedia.org/wiki/$name"
     try {
-        println("beforeJSOUP")
         val document: Document = Jsoup.connect(url).get()
-        println("afterJSOUP")
 
         val res = Hashtable<String, String>()
         // Descrierea
+        /// TODO: Sa obtina si o poza pe care sa o paseze laolalta cu restul hastable-ului(Stefan Tomsa)
+
         val desc: Element = document.select("table+p")[0]
         val clade: Elements = document.select("table")[0].getElementsByTag("tr")
         res["description"] = desc.text()
@@ -33,9 +33,7 @@ fun wikiapi(name: String): Hashtable<String, String>? {
         res["table"] = table
         return res
     } catch (e: Exception) {
-        println("----------------------")
         e.printStackTrace()
-        println("----------------------")
         return null
     }
 }

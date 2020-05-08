@@ -60,6 +60,10 @@ class LoginActivity : TopNavViewActivity() {
         googleBtn = sign_in_button
         auth = FirebaseAuth.getInstance()
 
+        sign_up_textView.setOnClickListener{
+            val inten=Intent(this,RegisterActivity::class.java)
+            startActivity(intent)
+        }
 
         listenerState = FirebaseAuth.AuthStateListener {
 
@@ -104,6 +108,7 @@ class LoginActivity : TopNavViewActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             Log.d("logare", "logat cu success!")
+                            /// TODO: Replace toasts with activity transfers to home activity(Alex Barsan)
                             Toast.makeText(
                                 this@LoginActivity,
                                 "Logged in successfully",

@@ -18,11 +18,11 @@ class HomeActivity : TopNavViewActivity() {
         scanPlant_imgButton.setOnClickListener {
             val intent= Intent(this,TakePhotoActivity::class.java)
             startActivity(intent)
-            Toast.makeText(this@HomeActivity, "Scan flowers!", Toast.LENGTH_SHORT).show()
         }
 
         uploadPhoto_imgButton.setOnClickListener {
-            Toast.makeText(this@HomeActivity, "Upload a photo!", Toast.LENGTH_SHORT).show()
+            // http://www.codeplayon.com/2018/11/android-image-upload-to-server-from-camera-and-gallery/
+            // TODO: make this work(Teodora Balan)
         }
 
     }

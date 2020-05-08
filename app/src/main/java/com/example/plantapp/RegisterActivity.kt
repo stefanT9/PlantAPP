@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
@@ -16,16 +14,16 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import kotlinx.android.synthetic.main.activity_top_nav.*
 
 class RegisterActivity : TopNavViewActivity() {
 
-    lateinit var mAuth: FirebaseAuth
-    lateinit var listenerState: FirebaseAuth.AuthStateListener
-    val RC_SIGN_IN: Int=1
+    private lateinit var mAuth: FirebaseAuth
+    private lateinit var listenerState: FirebaseAuth.AuthStateListener
+    private val rcSignIn: Int=1
 
-    var TAG = "thisLOGIN"
+    private var tag = "thisLOGIN"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.layoutInflater.inflate(R.layout.activity_register,mainLayout)
@@ -35,7 +33,7 @@ class RegisterActivity : TopNavViewActivity() {
 
             fun onAuthStateChanged(fireAuth: FirebaseAuth) {
 
-                var user: FirebaseUser? = mAuth.currentUser
+                val user: FirebaseUser? = mAuth.currentUser
                 if (user != null) {
                     Toast.makeText(this@RegisterActivity, "You are auth!", Toast.LENGTH_SHORT)
                         .show()
@@ -45,30 +43,20 @@ class RegisterActivity : TopNavViewActivity() {
                 }
             }
         }
-        btn_Register.setOnClickListener(View.OnClickListener { it: View? ->
-
-
+        btn_Register.setOnClickListener(View.OnClickListener {
             val email: String = regEmail.text.toString()
             val pass: String = regPassword.text.toString()
-
 
             if (email.isEmpty()) {
                 regEmail.error = "Please enter email id";
                 regEmail.requestFocus();
             } else if (pass.isEmpty()) {
-
                 regPassword.error = "Please enter your password";
                 regPassword.requestFocus();
-
             } else {
                 mAuth.createUserWithEmailAndPassword(email, pass)
-
                     .addOnCompleteListener(this) { task ->
-
                         if (task.isSuccessful) {
-
-                            // Sign in success, update UI with the signed-in user's information
-
                             Log.d("create", "createUserWithEmail:success")
                             Toast.makeText(
                                 this@RegisterActivity,
@@ -76,9 +64,7 @@ class RegisterActivity : TopNavViewActivity() {
                                 Toast.LENGTH_SHORT
                             ).show();
                             val user = mAuth.currentUser
-
                             // updateUI(user)
-
                         } else {
 
                             // If sign in fails, display a message to the user.
@@ -90,8 +76,6 @@ class RegisterActivity : TopNavViewActivity() {
 
                                 Toast.LENGTH_SHORT
                             ).show()
-
-                            // updateUI(null)
                         }
                     }
             }
@@ -112,7 +96,7 @@ class RegisterActivity : TopNavViewActivity() {
 
           sign_in_button.setOnClickListener{
         val signInIntent=mGoogleSignInClient.signInIntent
-       startActivityForResult(signInIntent,RC_SIGN_IN)
+       startActivityForResult(signInIntent,rcSignIn)
 
  }
 
@@ -121,14 +105,14 @@ class RegisterActivity : TopNavViewActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
+        if (requestCode == rcSignIn) {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 // Google Sign In was successful, authenticate with Firebase
 
-                Log.d(TAG, "signInWithCredential:success")
+                Log.d(tag, "signInWithCredential:success")
                 val account = task.getResult(ApiException::class.java)
                 Toast.makeText(
                     this@RegisterActivity,
@@ -137,7 +121,7 @@ class RegisterActivity : TopNavViewActivity() {
                 ).show()
                 firebaseAuthWithGoogle(account!!)
             } catch (e: ApiException) {
-                Log.w(TAG, "signInWithCredential:failure", task.exception)
+                Log.w(tag, "signInWithCredential:failure", task.exception)
                 Toast.makeText(this@RegisterActivity, "Authetication failed", Toast.LENGTH_SHORT)
                     .show()
                 //  firebaseAuthWithGoogle(null)
@@ -146,13 +130,15 @@ class RegisterActivity : TopNavViewActivity() {
     }
     fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
 
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id!!)
+        Log.d(tag, "firebaseAuthWithGoogle:" + acct.id!!)
         val credential: AuthCredential = GoogleAuthProvider.getCredential(acct.idToken, null)
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithCredential:success")
+                    Log.d(tag, "signInWithCredential:success")
+                    /// TODO: Replace toasts with activity transfers to home activity(Daniel Bicu)
+
                     Toast.makeText(
                         this@RegisterActivity,
                         "Signed in with Google Successfully",
@@ -162,7 +148,7 @@ class RegisterActivity : TopNavViewActivity() {
                     updateUI(user!!)
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithCredential:failure", task.exception)
+                    Log.w(tag, "signInWithCredential:failure", task.exception)
                     Toast.makeText(
                         this@RegisterActivity,
                         "Authentication failed",

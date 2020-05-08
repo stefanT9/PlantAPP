@@ -23,6 +23,16 @@ open class TopNavViewActivity : AppCompatActivity(){
         val user = FirebaseAuth.getInstance().currentUser
 
         setContentView(R.layout.activity_top_nav)
+
+        /// TODO: Make Contact button go to the mail with preset email address(Robert Zahariea) intenturi speciale
+        /// TODO: Make logout button only visible when you are logged in and add functionality to it(Robert Zahariea)
+
+        btn_plants.setOnClickListener {
+            Toast.makeText(this, "login clicked", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, TakePhotoActivity::class.java)
+            startActivity(intent)
+        }
+
         if(user == null)
         {
             this.layoutInflater.inflate(R.layout.top_nav_login_fragment,navigaton_anchor_view)
@@ -37,7 +47,6 @@ open class TopNavViewActivity : AppCompatActivity(){
                 val intent = Intent(this, RegisterActivity::class.java)
                 startActivity(intent)
             }
-
         }
         else
         {
@@ -52,7 +61,7 @@ open class TopNavViewActivity : AppCompatActivity(){
 
     protected fun updateUI()
     {
-        ///todo deinflate before
+        ///todo deflate before
         if(logged())
         {
             this.layoutInflater.inflate(R.layout.top_nav_login_fragment,navigaton_anchor_view)

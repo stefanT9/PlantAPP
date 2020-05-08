@@ -9,6 +9,10 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
+
+    <!--
+    TODO: De verficat si modificat marginile (Alex Barsan)
+    -->
     <TextView
         android:id="@+id/textView4"
         android:layout_width="134dp"

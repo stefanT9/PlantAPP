@@ -12,8 +12,10 @@
 
 
 
+    <!--
+    TODO: De verficat si modificat marginile (Alex Barsan)
+    -->
     <TextView
-
         android:id="@+id/welcome_textView"
         android:ems="10"
         android:orientation="vertical"
@@ -21,13 +23,11 @@
         android:textColor="@color/sign_in_green_color"
         android:textSize="30sp"
         android:layout_marginTop="36dp"
-        app:layout_constraintTop_toBottomOf="@+id/login_toolbar"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:layout_gravity="center"
         android:textAlignment="center"
         />
-
     <EditText
         android:id="@+id/email_textView"
         android:layout_width="wrap_content"

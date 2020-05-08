@@ -1,7 +1,9 @@
 package com.example.plantapp
 
 
+import android.graphics.Color
 import android.os.Bundle
+import android.view.Gravity
 import android.widget.TableRow
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_data_visualisation.*
@@ -18,7 +20,6 @@ var arr = arrayListOf<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.layoutInflater.inflate(R.layout.activity_data_visualisation,mainLayout)
-        setUpToolbar()
 
         read_more_anchor.setOnClickListener {
             if (read_more_anchor.text == "Read more") {
@@ -53,6 +54,14 @@ var arr = arrayListOf<String>()
                     val value = TextView(this)
                     key.text = table[i]
                     value.text = table[i + 1]
+
+                    /// TODO: Add properties to make this look like it looks in design (Alexandra Ciocoiu)
+                    row.gravity = Gravity.CENTER
+                    key.gravity = Gravity.CENTER
+                    value.gravity = Gravity.CENTER
+                    key.setTextColor(Color.parseColor("#36A961"))
+                    value.setTextColor(Color.parseColor("#1D5833"))
+
                     row.addView(key)
                     row.addView(value)
                     description_table.addView(row)
