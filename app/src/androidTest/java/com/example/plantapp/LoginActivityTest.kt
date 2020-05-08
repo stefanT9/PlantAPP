@@ -35,6 +35,7 @@ class LoginActivityTest
     fun enter_email() {
         onView(withId(R.id.email_textView)).perform(typeText("Email"))
     }
+
     @Test
     fun enter_password() {
         onView(withId(R.id.password_editText)).perform(typeText("Password"))

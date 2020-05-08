@@ -38,12 +38,6 @@ class LoginActivity : TopNavViewActivity() {
 
     val RC_SIGN_IN:Int = 1
 
-
-    // ------------
-
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -84,7 +78,7 @@ class LoginActivity : TopNavViewActivity() {
 
         }
 
-        buttonSignIn.setOnClickListener(View.OnClickListener { it: View? ->
+        buttonSignIn.setOnClickListener(View.OnClickListener {
 
             // Toast.makeText(this@loginActivity, "Just clicked", Toast.LENGTH_SHORT).show()
 

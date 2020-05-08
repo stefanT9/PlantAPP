@@ -35,33 +35,29 @@ class RegisterActivity : TopNavViewActivity() {
 
             fun onAuthStateChanged(fireAuth: FirebaseAuth) {
 
-                var user: FirebaseUser? = mAuth.getCurrentUser()
+                var user: FirebaseUser? = mAuth.currentUser
                 if (user != null) {
                     Toast.makeText(this@RegisterActivity, "You are auth!", Toast.LENGTH_SHORT)
-                        .show();
-
+                        .show()
                 } else {
                     Toast.makeText(this@RegisterActivity, "Please auth!", Toast.LENGTH_SHORT)
-                        .show();
-
+                        .show()
                 }
-
             }
-
-        };
+        }
         btn_Register.setOnClickListener(View.OnClickListener { it: View? ->
 
 
-            var email: String = regEmail.text.toString()
-            var pass: String = regPassword.text.toString()
+            val email: String = regEmail.text.toString()
+            val pass: String = regPassword.text.toString()
 
 
             if (email.isEmpty()) {
-                regEmail.setError("Please enter email id");
+                regEmail.error = "Please enter email id";
                 regEmail.requestFocus();
             } else if (pass.isEmpty()) {
 
-                regPassword.setError("Please enter your password");
+                regPassword.error = "Please enter your password";
                 regPassword.requestFocus();
 
             } else {
@@ -102,14 +98,15 @@ class RegisterActivity : TopNavViewActivity() {
         })
 
         // Configure sign-in to request the user's ID, email address, and basic
-// profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
 
         // Configure sign-in to request the user's ID, email address, and basic
-// profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build()
+
         // Build a GoogleSignInClient with the options specified by gso.
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
@@ -171,10 +168,7 @@ class RegisterActivity : TopNavViewActivity() {
                         "Authentication failed",
                         Toast.LENGTH_SHORT
                     ).show()
-                    //     updateUI(null)
                 }
-
-                // ...
             }
     }
     fun updateUI(fUser: FirebaseUser) {
@@ -182,12 +176,8 @@ class RegisterActivity : TopNavViewActivity() {
         val account = GoogleSignIn.getLastSignedInAccount(applicationContext)
 
         if (account != null) {
-            var personName = account.displayName
-            var personGivenName = account.givenName
-            var personFamily = account.familyName
-            var personEmail = account.email
-            var personId = account.id
-            var personPhoto = account.photoUrl
+            val personName = account.displayName
+            val personEmail = account.email
 
             Toast.makeText(this@RegisterActivity, personName + personEmail, Toast.LENGTH_SHORT)
                 .show()
