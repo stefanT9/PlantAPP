@@ -13,34 +13,34 @@
     <!--
     TODO: De verficat si modificat marginile (Alex Barsan)
     -->
+
     <TextView
         android:id="@+id/textView4"
         android:layout_width="134dp"
-        android:layout_height="34dp"
-        android:layout_marginTop="112dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
         android:text="Welcome!"
         android:textAlignment="center"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
         android:textColor="#1D5833"
-        android:textSize="27sp"
-        android:layout_gravity="center"
-        app:layout_constraintHorizontal_bias="0.476" />
+        android:textSize="27sp" />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="35dp"
+        android:layout_height="49dp"
+        android:layout_gravity="center"
         android:layout_marginHorizontal="36dp"
+        android:layout_marginTop="35dp"
         android:background="#ECECEC"
         android:ems="10"
         android:hint="Username (ex: firstname.name)"
         android:inputType="textPersonName"
         android:textColor="#000000"
         android:textSize="18sp"
-        android:layout_gravity="center"
         app:layout_constraintBottom_toTopOf="@+id/regEmail"
-        app:layout_constraintHorizontal_bias="0.0"/>
+        app:layout_constraintHorizontal_bias="0.0" />
 
     <EditText
         android:id="@+id/regEmail"

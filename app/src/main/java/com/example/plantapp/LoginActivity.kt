@@ -3,16 +3,10 @@ package com.example.plantapp
 import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
-import android.text.Spanned
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
+import android.widget.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -50,10 +44,11 @@ class LoginActivity : TopNavViewActivity() {
         val mSpannableString = SpannableString(getString(R.string.sign_up_text))
         /// What does the next line do?
         // mSpannableString.setSpan("@color/sign_in_green_color", 23, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        sign_up_textView.text = mSpannableString
+        // sign_up_textView.text = mSpannableString
 
 
         val authent: FirebaseAuth = FirebaseAuth.getInstance()
+
         emailID = email_textView
         password = password_editText
         buttonSignIn = email_login_button
@@ -61,7 +56,7 @@ class LoginActivity : TopNavViewActivity() {
         auth = FirebaseAuth.getInstance()
 
         sign_up_textView.setOnClickListener{
-            val inten=Intent(this,RegisterActivity::class.java)
+            val intent =Intent(this,RegisterActivity::class.java)
             startActivity(intent)
         }
 
@@ -108,6 +103,8 @@ class LoginActivity : TopNavViewActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             Log.d("logare", "logat cu success!")
+                            val intent =Intent(this,HomeActivity::class.java)
+                            startActivity(intent)
                             /// TODO: Replace toasts with activity transfers to home activity(Alex Barsan)
                             Toast.makeText(
                                 this@LoginActivity,

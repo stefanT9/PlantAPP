@@ -14,8 +14,8 @@
         -->
     <ImageButton
         android:id="@+id/svgBackground_Image"
-        android:layout_width="353dp"
-        android:layout_height="375dp"
+        android:layout_width="356dp"
+        android:layout_height="323dp"
         android:layout_gravity="center"
         android:layout_marginTop="36dp"
         android:background="@color/bckColor"
