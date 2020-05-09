@@ -27,7 +27,7 @@ class LoginActivity : TopNavViewActivity() {
     lateinit var googleClientSignIN: GoogleSignInClient
     lateinit var googleBtn: Button
     lateinit var auth:FirebaseAuth
-     var TAG="thisLOGIN"
+    var TAG="thisLOGIN"
     //LOGIN_ACTIVITY
 
     val RC_SIGN_IN:Int = 1
@@ -35,7 +35,7 @@ class LoginActivity : TopNavViewActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        this.layoutInflater.inflate(R.layout.activity_home,mainLayout)
+        this.layoutInflater.inflate(R.layout.activity_login,mainLayout)
 
 
         lateinit var listenerState: FirebaseAuth.AuthStateListener
