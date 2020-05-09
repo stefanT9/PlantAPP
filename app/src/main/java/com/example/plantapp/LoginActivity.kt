@@ -48,7 +48,6 @@ class LoginActivity : TopNavViewActivity() {
 
 
         val authent: FirebaseAuth = FirebaseAuth.getInstance()
-
         emailID = email_textView
         password = password_editText
         buttonSignIn = email_login_button
@@ -61,7 +60,6 @@ class LoginActivity : TopNavViewActivity() {
         }
 
         listenerState = FirebaseAuth.AuthStateListener {
-
             fun onAuthStateChanged(fireAuth: FirebaseAuth) {
 
                 val user: FirebaseUser? = authent.currentUser
@@ -102,7 +100,6 @@ class LoginActivity : TopNavViewActivity() {
                 authent.signInWithEmailAndPassword(email, pwd)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            Log.d("logare", "logat cu success!")
                             val intent =Intent(this,HomeActivity::class.java)
                             startActivity(intent)
                         } else {
@@ -115,8 +112,8 @@ class LoginActivity : TopNavViewActivity() {
                     }
             }
         })
-        //---GOOGLE SIGN IN ----
-        // Configure Google Sign In
+
+        /// TODO: Test/Repair register with google(Alex Barsan)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()

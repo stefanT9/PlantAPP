@@ -20,6 +20,8 @@ import kotlin.concurrent.thread
 class DataVisualisationActivity : TopNavViewActivity() {
 var arr = arrayListOf<String>()
 
+    /// TODO: Sometimes back crashes the app fix this
+    /// Probably you have to add onResume/onPause functions in takePhoto/photoTaken Activity
     lateinit var descriptionText:String
     lateinit var minimizedDescriptionText:String
     lateinit var latinName:String
@@ -35,6 +37,7 @@ var arr = arrayListOf<String>()
             }
             else
             {
+
                 description_text_view.text = minimizedDescriptionText
                 read_more_anchor.text="Read more"
 
@@ -46,7 +49,7 @@ var arr = arrayListOf<String>()
             var photo: Bitmap?
             photo=null
             val src=extras.getString("photoUrl")
-            val t=thread {
+/*            val t=thread {
                 println(src)
                 val url = URL(src)
                 val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
@@ -59,7 +62,7 @@ var arr = arrayListOf<String>()
             while (t.isAlive) {
                 continue
             }
-            plant_image.setImageBitmap(photo)
+            plant_image.setImageBitmap(photo)*/
 
             latinName = extras.getString("latinName")!!
             descriptionText = extras.getString("description")!!
@@ -80,7 +83,7 @@ var arr = arrayListOf<String>()
                     key.text = table[i]
                     value.text = table[i + 1]
 
-                    /// TODO: Add properties to make this look like it looks in design (Alexandra Ciocoiu)
+                    /// TODO: Add properties to make this look like it looks in design (Alexandra Ciocoiu, Teodora Balan)
                     row.gravity = Gravity.CENTER
                     key.gravity = Gravity.CENTER
                     value.gravity = Gravity.CENTER

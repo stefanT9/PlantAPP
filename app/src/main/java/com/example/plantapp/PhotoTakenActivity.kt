@@ -13,6 +13,7 @@ class PhotoTakenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_photo_taken)
 
 
+        /// TODO Integrate Activity(Stefan Tomsa)
 
         retakephoto.setOnClickListener(View.OnClickListener {
             Toast.makeText(this@PhotoTakenActivity, "Retake photo!", Toast.LENGTH_SHORT).show()

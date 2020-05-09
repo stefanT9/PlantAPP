@@ -9,6 +9,12 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+    <!--
+        TODO: Check that all textboxes display the first part of the text (Robert Zaharia)
+        TODO: Change text and replace log in with google to correct image (Rober Zaharia)
+    -->
+
+
     <TextView
         android:id="@+id/welcome_textView"
         android:ems="10"

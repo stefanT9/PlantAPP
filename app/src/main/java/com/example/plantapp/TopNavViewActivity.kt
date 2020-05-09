@@ -2,7 +2,6 @@ package com.example.plantapp
 
 import android.content.Intent
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -13,7 +12,6 @@ import androidx.core.text.HtmlCompat
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import kotlinx.android.synthetic.main.activity_top_nav.*
 import kotlinx.android.synthetic.main.top_nav_no_login_fragment.*
 
@@ -22,18 +20,20 @@ open class TopNavViewActivity : AppCompatActivity(){
     private lateinit var drawerLayout: DrawerLayout
 
     private fun logged(): Boolean {
-        return null == FirebaseAuth.getInstance().currentUser
+        // TODO: make ui update when a user logs in(Stefan Tomsa)
+        return null != FirebaseAuth.getInstance().currentUser
     }
 
     protected fun setUpToolbar()
     {
         val user = FirebaseAuth.getInstance().currentUser
 
-        setContentView(R.layout.activity_top_nav)
+        println("---------------")
+        println(user?.email)
+        println("---------------")
 
-        /// TODO: Make Contact button go to the mail with preset email address(Robert Zahariea) intenturi speciale
-        /// TODO: Make logout button only visible when you are logged in and add functionality to it(Robert Zahariea)
-        /// TODO: Make Home button go to HomeActivity (Robert Zahariea)
+
+        setContentView(R.layout.activity_top_nav)
 
         btn_contact.setOnClickListener {
             val mailAddress = "robert.zahariea@gmail.com"
@@ -73,7 +73,25 @@ open class TopNavViewActivity : AppCompatActivity(){
             startActivity(intent)
         }
 
-        if(user != null)
+        btn_log_out.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+            updateUI()
+        }
+
+        updateUI()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setUpToolbar()
+    }
+
+    protected fun updateUI()
+    {
+        ///todo deflate before
+        navigaton_anchor_view.removeAllViews()
+
+        if(!logged())
         {
             btn_log_out.visibility = View.GONE
             this.layoutInflater.inflate(R.layout.top_nav_no_login_fragment,navigaton_anchor_view)
@@ -93,24 +111,6 @@ open class TopNavViewActivity : AppCompatActivity(){
         {
             btn_log_out.visibility = View.VISIBLE
             this.layoutInflater.inflate(R.layout.top_nav_login_fragment,navigaton_anchor_view)
-        }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setUpToolbar()
-    }
-
-    protected fun updateUI()
-    {
-        ///todo deflate before
-        if(logged())
-        {
-            this.layoutInflater.inflate(R.layout.top_nav_login_fragment,navigaton_anchor_view)
-        }
-        else
-        {
-            this.layoutInflater.inflate(R.layout.top_nav_no_login_fragment,navigaton_anchor_view)
         }
     }
     override fun onBackPressed(){
