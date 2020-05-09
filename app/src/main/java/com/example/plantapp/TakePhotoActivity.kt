@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.MediaStore
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -17,6 +18,8 @@ import io.fotoapparat.selector.back
 import kotlinx.android.synthetic.main.activity_take_photo.*
 import plantToTextAPI.getPlantName
 import wikiapi.wikiapi
+
+const val GET_FROM_GALLERY = 3
 
 class TakePhotoActivity : AppCompatActivity() {
 
@@ -37,7 +40,12 @@ class TakePhotoActivity : AppCompatActivity() {
         }
 
         gallery_button.setOnClickListener {
-            Toast.makeText(this, "Enter Gallery", Toast.LENGTH_LONG).show()
+            startActivityForResult(
+                Intent(
+                    Intent.ACTION_PICK,
+                    MediaStore.Images.Media.INTERNAL_CONTENT_URI
+                ), GET_FROM_GALLERY
+            )
         }
 
         photo_button.setOnClickListener {
