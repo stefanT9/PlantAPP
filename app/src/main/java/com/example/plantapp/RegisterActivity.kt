@@ -146,16 +146,8 @@ class RegisterActivity : TopNavViewActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(tag, "signInWithCredential:success")
-                    /// TODO: Replace toasts with activity transfers to home activity(Daniel Bicu)
-
                     val intent= Intent(this,HomeActivity::class.java)
                     startActivity(intent)
-
-//                    Toast.makeText(
-//                        this@RegisterActivity,
-//                        "Signed in with Google Successfully",
-//                        Toast.LENGTH_SHORT
-//                    ).show()
 
                     val user = mAuth.currentUser
                     updateUI(user!!)

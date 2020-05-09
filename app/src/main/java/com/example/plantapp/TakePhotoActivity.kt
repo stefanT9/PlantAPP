@@ -39,7 +39,7 @@ class TakePhotoActivity : AppCompatActivity() {
             initFotoapparat()
         }
 
-        
+        //TODO: extract photo and send it to photo taken activity
         gallery_button.setOnClickListener {
             startActivityForResult(
                 Intent(

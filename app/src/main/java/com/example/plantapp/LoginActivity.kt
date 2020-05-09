@@ -105,14 +105,6 @@ class LoginActivity : TopNavViewActivity() {
                             Log.d("logare", "logat cu success!")
                             val intent =Intent(this,HomeActivity::class.java)
                             startActivity(intent)
-                            /// TODO: Replace toasts with activity transfers to home activity(Alex Barsan)
-                            Toast.makeText(
-                                this@LoginActivity,
-                                "Logged in successfully",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            val user = authent.currentUser
-                            //updateUI(user);
                         } else {
                             Toast.makeText(
                                 this@LoginActivity,
