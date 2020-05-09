@@ -1,6 +1,7 @@
 package plantToTextAPI
 
 import io.fotoapparat.result.BitmapPhoto
+import org.json.JSONObject
 
 /// TODO: de folosit PlantNET (Cosmin Aftanase)
 fun getPlantName(photo: BitmapPhoto?): String {

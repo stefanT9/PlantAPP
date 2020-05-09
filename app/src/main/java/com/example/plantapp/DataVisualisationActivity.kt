@@ -20,8 +20,6 @@ import kotlin.concurrent.thread
 class DataVisualisationActivity : TopNavViewActivity() {
 var arr = arrayListOf<String>()
 
-    /// TODO: Sometimes back crashes the app fix this
-    /// Probably you have to add onResume/onPause functions in takePhoto/photoTaken Activity
     lateinit var descriptionText:String
     lateinit var minimizedDescriptionText:String
     lateinit var latinName:String

@@ -9,15 +9,12 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
-import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_top_nav.*
 import kotlinx.android.synthetic.main.top_nav_no_login_fragment.*
 
 
 open class TopNavViewActivity : AppCompatActivity(){
-    private lateinit var drawerLayout: DrawerLayout
 
     private fun logged(): Boolean {
         // TODO: make ui update when a user logs in(Stefan Tomsa)
@@ -88,7 +85,6 @@ open class TopNavViewActivity : AppCompatActivity(){
 
     protected fun updateUI()
     {
-        ///todo deflate before
         navigaton_anchor_view.removeAllViews()
 
         if(!logged())
@@ -109,19 +105,9 @@ open class TopNavViewActivity : AppCompatActivity(){
         }
         else
         {
+            // TODO: Update content of the view with user data (Alex Barsan)
             btn_log_out.visibility = View.VISIBLE
             this.layoutInflater.inflate(R.layout.top_nav_login_fragment,navigaton_anchor_view)
         }
     }
-    override fun onBackPressed(){
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }
-        else
-        {
-            super.onBackPressed();
-        }
-    }
-
-
 }

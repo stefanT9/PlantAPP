@@ -61,15 +61,8 @@ class RegisterActivity : TopNavViewActivity() {
 
                             val intent= Intent(this,HomeActivity::class.java)
                             startActivity(intent)
-
-//                            Toast.makeText(
-//                                this@RegisterActivity,
-//                                "Signed up successfully!",
-//                                Toast.LENGTH_SHORT
-//                            ).show();
-
                             val user = mAuth.currentUser
-                            // updateUI(user)
+
                         } else {
 
                             // If sign in fails, display a message to the user.
@@ -86,11 +79,7 @@ class RegisterActivity : TopNavViewActivity() {
             }
         })
 
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        /// TODO: fix this (Daniel Bicu)
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -138,7 +127,6 @@ class RegisterActivity : TopNavViewActivity() {
         }
     }
     fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
-
         Log.d(tag, "firebaseAuthWithGoogle:" + acct.id!!)
         val credential: AuthCredential = GoogleAuthProvider.getCredential(acct.idToken, null)
         mAuth.signInWithCredential(credential)
@@ -148,9 +136,7 @@ class RegisterActivity : TopNavViewActivity() {
                     Log.d(tag, "signInWithCredential:success")
                     val intent= Intent(this,HomeActivity::class.java)
                     startActivity(intent)
-
                     val user = mAuth.currentUser
-                    updateUI(user!!)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(tag, "signInWithCredential:failure", task.exception)
@@ -161,18 +147,6 @@ class RegisterActivity : TopNavViewActivity() {
                     ).show()
                 }
             }
-    }
-    fun updateUI(fUser: FirebaseUser) {
-
-        val account = GoogleSignIn.getLastSignedInAccount(applicationContext)
-
-        if (account != null) {
-            val personName = account.displayName
-            val personEmail = account.email
-
-            Toast.makeText(this@RegisterActivity, personName + personEmail, Toast.LENGTH_SHORT)
-                .show()
-        }
     }
 }
 

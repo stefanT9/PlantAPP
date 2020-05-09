@@ -113,7 +113,7 @@ class LoginActivity : TopNavViewActivity() {
             }
         })
 
-        /// TODO: Test/Repair register with google(Alex Barsan)
+        /// TODO: Test/Repair register with google(Daniel Bicu)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()

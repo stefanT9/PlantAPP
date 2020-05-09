@@ -9,6 +9,10 @@
     android:id="@+id/topNavView"
     >
 
+    <!--
+        TODO: Rename plants to something more appropriate(Robert Zahariea)
+    -->
+
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/mainLayout"
