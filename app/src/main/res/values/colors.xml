@@ -15,4 +15,5 @@
     <color name="back_topNavView">#FFFFFF</color>
     <color name="dark_topNavView">#1B5531</color>
     <color name="text_topnavView">#707070</color>
-</resources>
+    <color name="black">#000000</color>
+    </resources>
