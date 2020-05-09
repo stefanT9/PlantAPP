@@ -14,30 +14,27 @@ import kotlinx.android.synthetic.main.activity_top_nav.*
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
-import kotlin.concurrent.thread
 
 
 class DataVisualisationActivity : TopNavViewActivity() {
-var arr = arrayListOf<String>()
+    var arr = arrayListOf<String>()
 
-    lateinit var descriptionText:String
-    lateinit var minimizedDescriptionText:String
-    lateinit var latinName:String
+    lateinit var descriptionText: String
+    lateinit var minimizedDescriptionText: String
+    lateinit var latinName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.layoutInflater.inflate(R.layout.activity_data_visualisation,mainLayout)
+        this.layoutInflater.inflate(R.layout.activity_data_visualisation, mainLayout)
 
         read_more_anchor.setOnClickListener {
             if (read_more_anchor.text == "Read more") {
                 description_text_view.text = descriptionText
-                read_more_anchor.text="Read less"
-            }
-            else
-            {
+                read_more_anchor.text = "Read less"
+            } else {
 
                 description_text_view.text = minimizedDescriptionText
-                read_more_anchor.text="Read more"
+                read_more_anchor.text = "Read more"
 
             }
         }
@@ -45,28 +42,30 @@ var arr = arrayListOf<String>()
         if (extras != null) {
 
             var photo: Bitmap?
-            photo=null
-            val src=extras.getString("photoUrl")
-/*            val t=thread {
-                println(src)
-                val url = URL(src)
-                val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
-                connection.doInput = true
-                connection.connect()
-                val input: InputStream = connection.inputStream
-                photo=BitmapFactory.decodeStream(input)
-            }
-            t.run()
-            while (t.isAlive) {
-                continue
-            }
-            plant_image.setImageBitmap(photo)*/
+            photo = null
+            val src = extras.getString("photoUrl")
+
+            /*
+                    val t=thread {
+                        println(src)
+                        val url = URL(src)
+                        val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+                        connection.doInput = true
+                        connection.connect()
+                        val input: InputStream = connection.inputStream
+                        photo=BitmapFactory.decodeStream(input)
+                    }
+                    t.run()
+                    while (t.isAlive) {
+                        continue
+                    }
+                    plant_image.setImageBitmap(photo)*/
 
             latinName = extras.getString("latinName")!!
             descriptionText = extras.getString("description")!!
-            minimizedDescriptionText=descriptionText.substring(0,40)+"..."
+            minimizedDescriptionText = descriptionText.substring(0, 40) + "..."
 
-            plantname.text=latinName
+            plantname.text = latinName
             description_text_view.text = minimizedDescriptionText
 
             println(extras.get("table"))
@@ -97,7 +96,8 @@ var arr = arrayListOf<String>()
             }
         }
     }
-    private fun addUrlImageToView(src: String?, view:ImageView){
+
+    private fun addUrlImageToView(src: String?, view: ImageView) {
         println("----------")
         println(src)
         println("----------")

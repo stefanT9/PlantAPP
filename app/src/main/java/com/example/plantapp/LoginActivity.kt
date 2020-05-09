@@ -26,16 +26,16 @@ class LoginActivity : TopNavViewActivity() {
     lateinit var buttonSignIn: TextView
     lateinit var googleClientSignIN: GoogleSignInClient
     lateinit var googleBtn: Button
-    lateinit var auth:FirebaseAuth
-    var TAG="thisLOGIN"
+    lateinit var auth: FirebaseAuth
+    var TAG = "thisLOGIN"
     //LOGIN_ACTIVITY
 
-    val RC_SIGN_IN:Int = 1
+    val RC_SIGN_IN: Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
-        this.layoutInflater.inflate(R.layout.activity_login,mainLayout)
+        this.layoutInflater.inflate(R.layout.activity_login, mainLayout)
 
 
         lateinit var listenerState: FirebaseAuth.AuthStateListener
@@ -54,8 +54,8 @@ class LoginActivity : TopNavViewActivity() {
         googleBtn = sign_in_button
         auth = FirebaseAuth.getInstance()
 
-        sign_up_textView.setOnClickListener{
-            val intent =Intent(this,RegisterActivity::class.java)
+        sign_up_textView.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
 
@@ -79,7 +79,7 @@ class LoginActivity : TopNavViewActivity() {
 
             // Toast.makeText(this@loginActivity, "Just clicked", Toast.LENGTH_SHORT).show()
 
-             // pentru test, nu incurca
+            // pentru test, nu incurca
             val email: String = emailID.text.toString()
             val pwd: String = password.text.toString()
 
@@ -95,12 +95,12 @@ class LoginActivity : TopNavViewActivity() {
                 Toast.makeText(this@LoginActivity, "Fields are empty", Toast.LENGTH_SHORT).show()
 
             } else if (!(email.isEmpty() && pwd.isEmpty())) {
-                message.text= getString(R.string.logged_in_successfully)
-                message2.text= getString(R.string.auth_failed)
+                message.text = getString(R.string.logged_in_successfully)
+                message2.text = getString(R.string.auth_failed)
                 authent.signInWithEmailAndPassword(email, pwd)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            val intent =Intent(this,HomeActivity::class.java)
+                            val intent = Intent(this, HomeActivity::class.java)
                             startActivity(intent)
                         } else {
                             Toast.makeText(
@@ -123,18 +123,18 @@ class LoginActivity : TopNavViewActivity() {
 
         googleBtn.setOnClickListener(View.OnClickListener {
 
-                signIn()
-              //  FirebaseAuth.getInstance().signOut()
+            signIn()
+            //  FirebaseAuth.getInstance().signOut()
         })
     }
 
 
     private fun signIn() {
-        var signInIntent:Intent  = googleClientSignIN.signInIntent
+        var signInIntent: Intent = googleClientSignIN.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-    public override  fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
@@ -162,7 +162,7 @@ class LoginActivity : TopNavViewActivity() {
     fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
 
         Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id!!)
-        val credential: AuthCredential  = GoogleAuthProvider.getCredential(acct.idToken, null)
+        val credential: AuthCredential = GoogleAuthProvider.getCredential(acct.idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -191,19 +191,19 @@ class LoginActivity : TopNavViewActivity() {
             }
     }
 
-        fun updateUI(fUser: FirebaseUser) {
+    fun updateUI(fUser: FirebaseUser) {
 
-            val account = GoogleSignIn.getLastSignedInAccount(applicationContext)
+        val account = GoogleSignIn.getLastSignedInAccount(applicationContext)
 
-            if (account != null) {
-                val personName = account.displayName
-                val personEmail = account.email
+        if (account != null) {
+            val personName = account.displayName
+            val personEmail = account.email
 
-                Toast.makeText(this@LoginActivity, personName + personEmail, Toast.LENGTH_SHORT)
-                    .show()
-            }
-
+            Toast.makeText(this@LoginActivity, personName + personEmail, Toast.LENGTH_SHORT)
+                .show()
         }
+
+    }
 
 }
 

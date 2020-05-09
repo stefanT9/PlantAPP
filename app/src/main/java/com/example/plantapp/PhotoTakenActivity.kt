@@ -1,31 +1,90 @@
 package com.example.plantapp
 
+import android.content.Intent
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import android.view.View
 import android.widget.Toast
+import io.fotoapparat.result.BitmapPhoto
 import kotlinx.android.synthetic.main.activity_photo_taken.*
+import kotlinx.android.synthetic.main.activity_top_nav.*
+import plantToTextAPI.getPlantName
+import plantToTextAPI.ocrFunction
+import wikiapi.wikiapi
 
-class PhotoTakenActivity : AppCompatActivity() {
+@Volatile
+var done: Boolean = false
+
+@Volatile
+var failed: Boolean = false
+
+class PhotoTakenActivity : TopNavViewActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_photo_taken)
+        done = false
+        failed = false
 
+        this.layoutInflater.inflate(R.layout.activity_photo_taken, mainLayout)
 
-        /// TODO Integrate Activity(Stefan Tomsa)
+        val bitmap = BitmapFactory.decodeStream(this.openFileInput("myImage"))
+        val photoBitmap = BitmapPhoto(bitmap, 0)
+        plant_photo.setImageDrawable(BitmapDrawable(resources, photoBitmap.bitmap))
 
-        retakephoto.setOnClickListener(View.OnClickListener {
-            Toast.makeText(this@PhotoTakenActivity, "Retake photo!", Toast.LENGTH_SHORT).show()
-        })
+        retakephoto.setOnClickListener {
+            finish()
+        }
 
+        seeresult.setOnClickListener {
+            val intent = Intent(this, DataVisualisationActivity::class.java)
+            Thread {
+                val plantName = getPlantName((photoBitmap))
+                println("plantname finished")
+                val res = wikiapi(plantName)
+                println("wikiapi finished")
+                if (res != null) {
+                    intent.putExtra("description", res["description"])
+                    intent.putExtra("table", res["table"])
+                    intent.putExtra("latinName", plantName)
+                    intent.putExtra("photoUrl", res["image"])
+                    if (done == false) {
+                        done = true
+                        startActivity(intent)
+                    }
+                } else {
+                    if (failed == false) {
+                        failed = true
+                    } else {
+                        println("something happened")
+                        Toast.makeText(this, "Try o make another pcture", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }.start()
 
-
-        seeresult.setOnClickListener(View.OnClickListener {
-
-            Toast.makeText(this@PhotoTakenActivity, "See result!", Toast.LENGTH_SHORT).show()
-
-        })
+            Thread {
+                val plantName = ocrFunction((photoBitmap))
+                println("plantname finished")
+                val res = wikiapi(plantName)
+                println("wikiapi finished")
+                if (res != null) {
+                    intent.putExtra("description", res["description"])
+                    intent.putExtra("table", res["table"])
+                    intent.putExtra("latinName", plantName)
+                    intent.putExtra("photoUrl", res["image"])
+                    if (done == false) {
+                        done = true
+                        startActivity(intent)
+                    }
+                } else {
+                    if (failed == false) {
+                        failed = true
+                    } else {
+                        println("something happened")
+                        Toast.makeText(this, "Try o make another pcture", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }.start()
+        }
     }
 }
 

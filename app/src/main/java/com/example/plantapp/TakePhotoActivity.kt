@@ -1,8 +1,10 @@
 package com.example.plantapp
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
@@ -16,8 +18,9 @@ import io.fotoapparat.log.loggers
 import io.fotoapparat.parameter.ScaleType
 import io.fotoapparat.selector.back
 import kotlinx.android.synthetic.main.activity_take_photo.*
-import plantToTextAPI.getPlantName
-import wikiapi.wikiapi
+import java.io.ByteArrayOutputStream
+import java.io.FileOutputStream
+
 
 const val GET_FROM_GALLERY = 3
 
@@ -52,23 +55,9 @@ class TakePhotoActivity : AppCompatActivity() {
         photo_button.setOnClickListener {
             fotoapparat!!.takePicture().toBitmap().whenAvailable {
                 if (it != null) {
-                    val intent = Intent(this, DataVisualisationActivity::class.java)
-                    Thread {
-                        val plantName= getPlantName((it))
-                        println("plantname finished")
-                        val res = wikiapi(plantName)
-                        println("wikiapi finished")
-                        if (res != null) {
-                            intent.putExtra("description", res["description"])
-                            intent.putExtra("table", res["table"])
-                            intent.putExtra("latinName", plantName)
-                            intent.putExtra("photoUrl",res["image"])
-                            startActivity(intent)
-                        } else {
-                            println("something happened")
-                            Toast.makeText(this,"Try o make another pcture",Toast.LENGTH_SHORT).show()
-                        }
-                    }.start()
+                    val intent=Intent(this,PhotoTakenActivity::class.java)
+                    createImageFromBitmap(it.bitmap)
+                    startActivity(intent)
                 }
             }
         }
@@ -116,5 +105,20 @@ class TakePhotoActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         fotoapparat?.stop()
+    }
+    fun createImageFromBitmap(bitmap: Bitmap): String? {
+        var fileName: String? = "myImage" //no .png or .jpg needed
+        try {
+            val bytes = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+            val fo: FileOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE)
+            fo.write(bytes.toByteArray())
+            // remember close file output
+            fo.close()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            fileName = null
+        }
+        return fileName
     }
 }
