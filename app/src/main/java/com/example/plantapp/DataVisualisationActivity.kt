@@ -1,13 +1,20 @@
 package com.example.plantapp
 
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
+import android.widget.ImageView
 import android.widget.TableRow
 import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_data_visualisation.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
+import kotlin.concurrent.thread
 
 
 class DataVisualisationActivity : TopNavViewActivity() {
@@ -35,6 +42,24 @@ var arr = arrayListOf<String>()
         }
         val extras = intent.extras
         if (extras != null) {
+
+            var photo: Bitmap?
+            photo=null
+            val src=extras.getString("photoUrl")
+            val t=thread {
+                println(src)
+                val url = URL(src)
+                val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+                connection.doInput = true
+                connection.connect()
+                val input: InputStream = connection.inputStream
+                photo=BitmapFactory.decodeStream(input)
+            }
+            t.run()
+            while (t.isAlive) {
+                continue
+            }
+            plant_image.setImageBitmap(photo)
 
             latinName = extras.getString("latinName")!!
             descriptionText = extras.getString("description")!!
@@ -71,4 +96,17 @@ var arr = arrayListOf<String>()
             }
         }
     }
+    private fun addUrlImageToView(src: String?, view:ImageView){
+        println("----------")
+        println(src)
+        println("----------")
+
+        val url = URL(src)
+        val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
+        connection.doInput = true
+        connection.connect()
+        val input: InputStream = connection.inputStream
+        view.setImageBitmap(BitmapFactory.decodeStream(input))
+    }
+
 }

@@ -46,11 +46,14 @@ class TakePhotoActivity : AppCompatActivity() {
                     val intent = Intent(this, DataVisualisationActivity::class.java)
                     Thread {
                         val plantName= getPlantName((it))
+                        println("plantname finished")
                         val res = wikiapi(plantName)
+                        println("wikiapi finished")
                         if (res != null) {
                             intent.putExtra("description", res["description"])
                             intent.putExtra("table", res["table"])
                             intent.putExtra("latinName", plantName)
+                            intent.putExtra("photoUrl",res["image"])
                             startActivity(intent)
                         } else {
                             println("something happened")
