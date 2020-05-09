@@ -58,11 +58,16 @@ class RegisterActivity : TopNavViewActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             Log.d("create", "createUserWithEmail:success")
-                            Toast.makeText(
-                                this@RegisterActivity,
-                                "Signed up successfully!",
-                                Toast.LENGTH_SHORT
-                            ).show();
+
+                            val intent= Intent(this,HomeActivity::class.java)
+                            startActivity(intent)
+
+//                            Toast.makeText(
+//                                this@RegisterActivity,
+//                                "Signed up successfully!",
+//                                Toast.LENGTH_SHORT
+//                            ).show();
+
                             val user = mAuth.currentUser
                             // updateUI(user)
                         } else {
@@ -114,11 +119,15 @@ class RegisterActivity : TopNavViewActivity() {
 
                 Log.d(tag, "signInWithCredential:success")
                 val account = task.getResult(ApiException::class.java)
-                Toast.makeText(
-                    this@RegisterActivity,
-                    "Signed in with Google Successfully",
-                    Toast.LENGTH_SHORT
-                ).show()
+
+                val intent= Intent(this,HomeActivity::class.java)
+                startActivity(intent)
+
+//                Toast.makeText(
+//                    this@RegisterActivity,
+//                    "Signed in with Google Successfully",
+//                    Toast.LENGTH_SHORT
+//                ).show()
                 firebaseAuthWithGoogle(account!!)
             } catch (e: ApiException) {
                 Log.w(tag, "signInWithCredential:failure", task.exception)
@@ -139,11 +148,15 @@ class RegisterActivity : TopNavViewActivity() {
                     Log.d(tag, "signInWithCredential:success")
                     /// TODO: Replace toasts with activity transfers to home activity(Daniel Bicu)
 
-                    Toast.makeText(
-                        this@RegisterActivity,
-                        "Signed in with Google Successfully",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    val intent= Intent(this,HomeActivity::class.java)
+                    startActivity(intent)
+
+//                    Toast.makeText(
+//                        this@RegisterActivity,
+//                        "Signed in with Google Successfully",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+
                     val user = mAuth.currentUser
                     updateUI(user!!)
                 } else {
