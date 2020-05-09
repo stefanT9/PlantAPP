@@ -1,5 +1,8 @@
 package plantToTextAPI
 
+import android.graphics.Bitmap
+import com.google.firebase.ml.vision.FirebaseVision
+import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import io.fotoapparat.result.BitmapPhoto
 import org.json.JSONObject
 import java.io.BufferedReader
@@ -9,14 +12,24 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 /// TODO: de folosit PlantNET (Cosmin Aftanase)
-fun getPlantName(photo: BitmapPhoto?): String {
-    return "Taraxacum"
-}
+//fun getPlantName(photo: BitmapPhoto?): String {
+//    return "Taraxacum"
+//}
 
 /// TODO: De folosit API OCR Ovidiu (Cosmin Aftase)
-fun ocrFunction(photo: BitmapPhoto?):String{
-    return "Taraxacum"
+fun ocrFunction(photo: BitmapPhoto):String {
+    var returnedText: String = "error";
+    val image = FirebaseVisionImage.fromBitmap(photo.bitmap)
+    val detector = FirebaseVision.getInstance().cloudTextRecognizer
+    val result = detector.processImage(image)
+        .addOnSuccessListener { firebaseVisionText ->
+            returnedText = firebaseVisionText.toString()
+        }
+        .addOnFailureListener { e -> print("Recognition error") }
+    return returnedText;
 }
+
+
 
 /// TODO: De validat cu API Adrian (Cosmin Aftase)
 fun validatePlantLocation(latinName: String, latitude: Double, longitude: Double): Boolean {
