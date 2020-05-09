@@ -39,6 +39,7 @@ class TakePhotoActivity : AppCompatActivity() {
             initFotoapparat()
         }
 
+        
         gallery_button.setOnClickListener {
             startActivityForResult(
                 Intent(

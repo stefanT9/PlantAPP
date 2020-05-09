@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.Toast
-import kotlinx.android.synthetic.main.content_photo_taken.*
+import kotlinx.android.synthetic.main.activity_photo_taken.*
 
 class PhotoTakenActivity : AppCompatActivity() {
 
@@ -15,9 +15,7 @@ class PhotoTakenActivity : AppCompatActivity() {
 
 
         retakephoto.setOnClickListener(View.OnClickListener {
-
             Toast.makeText(this@PhotoTakenActivity, "Retake photo!", Toast.LENGTH_SHORT).show()
-
         })
 
 
