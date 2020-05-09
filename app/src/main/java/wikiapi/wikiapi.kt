@@ -13,12 +13,8 @@ fun wikiapi(name: String): Hashtable<String, String>? {
         val document: Document = Jsoup.connect(url).get()
 
         val res = Hashtable<String, String>()
-        // Descrierea
-        /// TODO: Sa obtina si o poza pe care sa o paseze laolalta cu restul hastable-ului(Stefan Tomsa)
         val photoUrl = document.selectFirst(".image img")?.absUrl("src")
-        println("--------------------")
         println(photoUrl)
-        println("--------------------")
 
         val desc: Element = document.select("table+p")[0]
         val clade: Elements = document.select("table")[0].getElementsByTag("tr")

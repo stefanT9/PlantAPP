@@ -9,9 +9,6 @@
     android:id="@+id/topNavView"
     >
 
-    <!--
-    TODO: De verficat si modificat marginile (Alex Barsan)
-    -->
     <LinearLayout
         android:orientation="vertical"
         android:id="@+id/mainLayout"

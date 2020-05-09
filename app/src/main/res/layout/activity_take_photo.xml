@@ -6,11 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".TakePhotoActivity">
 
-
-    <!--
-    TODO: De verficat si modificat marginile (Alex Barsan)
-    -->
-
     <io.fotoapparat.view.CameraView
         android:id="@+id/camera_view"
         android:layout_width="0dp"

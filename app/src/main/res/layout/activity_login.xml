@@ -9,12 +9,6 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
-
-
-
-    <!--
-    TODO: De verficat si modificat marginile (Alex Barsan)
-    -->
     <TextView
         android:id="@+id/welcome_textView"
         android:ems="10"
