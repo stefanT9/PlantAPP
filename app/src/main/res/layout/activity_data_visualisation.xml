@@ -64,22 +64,24 @@
 
             <TextView
                 android:id="@+id/read_more_anchor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="89dp"
+                android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:textColor="#1D5833"
                 android:background="#FFFF"
                 android:text="@string/read_more"
+                android:textColor="#1D5833"
                 android:textSize="13sp" />
 
             <TableLayout
                 android:id="@+id/description_table"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="300dp"
+                android:layout_height="34dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:stretchColumns="1">
 
             </TableLayout>
+
+
         </LinearLayout>
 </ScrollView>
