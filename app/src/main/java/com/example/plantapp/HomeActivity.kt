@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
+import kotlinx.android.synthetic.main.top_nav_login_fragment.*
 
 class HomeActivity : TopNavViewActivity() {
 

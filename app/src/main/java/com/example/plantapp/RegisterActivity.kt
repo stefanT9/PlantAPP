@@ -15,6 +15,7 @@ import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.android.synthetic.main.activity_top_nav.*
+import kotlinx.android.synthetic.main.top_nav_login_fragment.*
 
 class RegisterActivity : TopNavViewActivity() {
 
@@ -35,6 +36,8 @@ class RegisterActivity : TopNavViewActivity() {
 
                 val user: FirebaseUser? = mAuth.currentUser
                 if (user != null) {
+                    username.setText(FirebaseAuth.getInstance().currentUser?.displayName.toString())
+                    mail.setText(FirebaseAuth.getInstance().currentUser?.email.toString())
                     Toast.makeText(this@RegisterActivity, "You are auth!", Toast.LENGTH_SHORT)
                         .show()
                 } else {
