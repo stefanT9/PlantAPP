@@ -23,50 +23,44 @@ import java.net.URL
 import java.util.*
 
 
-fun getPlantName(photo: BitmapPhoto): String {
+fun getPlantName(photo: BitmapPhoto): String? {
     //Call api no. 1
-    var plantList1 = apiPlant1(photo.bitmap)
+    val plantList1 = apiPlant1(photo.bitmap)
 
     //Call api no. 2
-    var plantList2 = apiPlant2(photo.bitmap)
+    val plantList2 = apiPlant2(photo.bitmap)
 
     //Prepare variables
-    var i = 0
     var result1 : Hashtable<String, String>?
     var result2 : Hashtable<String, String>?
-    var validPlant = "404 error"
 
     //Return the first result that we can find on wikipedia
-    while (i < plantList1.size) {
+    for (i in plantList1.indices){
 
         //Check if first api returned something good
         result1 = wikiapi(plantList1[i])
         if (result1 != null) {
-            validPlant = plantList1[i]
-            break
+            return plantList1[i]
         }
+    }
 
+    for (i in plantList2.indices) {
         //Check if second api returned something good
         result2 = wikiapi(plantList2[i])
         if (result2 != null) {
-            validPlant = plantList2[i]
-            break
+            return plantList2[i]
         }
-
-        //Continue searching with results that are less accurate
-        // example: ( plantList1[2] is less accurate than plantList1[1] etc.)
-        i++
     }
 
-    return validPlant
+    return null
 }
 
 //TODO: check if problem was fixed -> ocr is not async
-fun ocrFunction(photo: BitmapPhoto):String {
-    var returnedText: String = "404 error"
+fun ocrFunction(photo: BitmapPhoto):String? {
+    var returnedText: String? = null
     val image = FirebaseVisionImage.fromBitmap(photo.bitmap)
     val detector = FirebaseVision.getInstance().cloudTextRecognizer
-    val result = detector.processImage(image)
+    detector.processImage(image)
         .addOnSuccessListener { firebaseVisionText ->
             returnedText = firebaseVisionText.toString()
             Log.e("Ocr","Ocr recognized: $returnedText !")
@@ -74,11 +68,7 @@ fun ocrFunction(photo: BitmapPhoto):String {
         .addOnFailureListener { e ->
             Log.e("Ocr","Ocr Recognition error")
         }
-        .getResult() // make it sync
-    //note1: getResult will block the main thread. That is not recommendable according to Stackoverflow
-    //          but this is the only way to assure that function is not async
-    //          and that we can return a text when ocrFunction is called
-    //note2: remove these comments line
+        .result
     return returnedText
 }
 
@@ -88,7 +78,7 @@ fun validatePlantLocation(latinName: String, latitude: Double, longitude: Double
     params.put("lat", latitude)
     params.put("long", longitude)
 
-    var response = sendPostRequest("https://us-central1-locationip-31d6f.cloudfunctions.net/plants", params, null)
+    val response = sendPostRequest("https://us-central1-locationip-31d6f.cloudfunctions.net/plants", params, null)
 
     return response.contains(latinName)
 }
