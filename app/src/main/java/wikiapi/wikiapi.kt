@@ -6,7 +6,10 @@ import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.util.*
 
-fun wikiapi(name: String): Hashtable<String, String>? {
+fun wikiapi(name: String?): Hashtable<String, String>? {
+    if(name==null)
+        return null
+
     name.replace(" ", "_")
     val url = "https://en.wikipedia.org/wiki/$name"
     try {

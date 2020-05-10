@@ -3,6 +3,7 @@ package com.example.plantapp
 import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
+import android.text.Spanned
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -38,9 +39,6 @@ class LoginActivity : TopNavViewActivity() {
         super.onCreate(savedInstanceState)
         this.layoutInflater.inflate(R.layout.activity_login, mainLayout)
 
-
-        lateinit var listenerState: FirebaseAuth.AuthStateListener
-
         //setColor to SIGN IN
         val stringText: String = getString(R.string.don_t_have_an_account_sign_up)
         val mSpannableString = SpannableString(stringText)
@@ -60,22 +58,6 @@ class LoginActivity : TopNavViewActivity() {
             startActivity(intent)
         }
 
-        listenerState = FirebaseAuth.AuthStateListener {
-            fun onAuthStateChanged(fireAuth: FirebaseAuth) {
-
-                val user: FirebaseUser? = authent.currentUser
-                if (user != null) {
-                    Toast.makeText(this@LoginActivity, "You are logged in!", Toast.LENGTH_SHORT)
-                        .show()
-
-                } else {
-                    Toast.makeText(this@LoginActivity, "Please login!", Toast.LENGTH_SHORT).show()
-                }
-
-            }
-
-        }
-
         buttonSignIn.setOnClickListener(View.OnClickListener {
 
             // Toast.makeText(this@loginActivity, "Just clicked", Toast.LENGTH_SHORT).show()
@@ -85,11 +67,12 @@ class LoginActivity : TopNavViewActivity() {
             val pwd: String = password.text.toString()
 
             if (email.isEmpty()) {
-                message_edit_text_email.text = getString(R.string.please_enter_email_id)
+                /// TODO: find what these 2 are and repair them
+                // message_edit_text_email.text = getString(R.string.please_enter_email_id)
                 emailID.error = "Please enter email id"
                 emailID.requestFocus()
             } else if (pwd.isEmpty()) {
-                message_edit_text_password.text = getString(R.string.please_enter_your_password)
+                // message_edit_text_password.text = getString(R.string.please_enter_your_password)
                 password.error = "Please enter your password"
                 password.requestFocus()
 
@@ -125,9 +108,7 @@ class LoginActivity : TopNavViewActivity() {
         googleClientSignIN = GoogleSignIn.getClient(this, gso)
 
         googleBtn.setOnClickListener(View.OnClickListener {
-
             signIn()
-            //  FirebaseAuth.getInstance().signOut()
         })
     }
 
@@ -157,7 +138,6 @@ class LoginActivity : TopNavViewActivity() {
                 Log.w(TAG, "signInWithCredential:failure", task.exception)
                 Toast.makeText(this@LoginActivity, "Authentication failed", Toast.LENGTH_SHORT)
                     .show()
-                //  firebaseAuthWithGoogle(null)
             }
         }
     }

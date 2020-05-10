@@ -21,13 +21,13 @@ class RegisterActivity : TopNavViewActivity() {
 
     private lateinit var mAuth: FirebaseAuth
     private lateinit var listenerState: FirebaseAuth.AuthStateListener
-    private val rcSignIn: Int=1
+    private val rcSignIn: Int = 1
 
     private var tag = "thisLOGIN"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        this.layoutInflater.inflate(R.layout.activity_register,mainLayout)
+        this.layoutInflater.inflate(R.layout.activity_register, mainLayout)
 
         mAuth = FirebaseAuth.getInstance()
         listenerState = FirebaseAuth.AuthStateListener() {
@@ -62,7 +62,7 @@ class RegisterActivity : TopNavViewActivity() {
                         if (task.isSuccessful) {
                             Log.d("create", "createUserWithEmail:success")
 
-                            val intent= Intent(this,HomeActivity::class.java)
+                            val intent = Intent(this, HomeActivity::class.java)
                             startActivity(intent)
                             val user = mAuth.currentUser
 
@@ -91,13 +91,14 @@ class RegisterActivity : TopNavViewActivity() {
         // Build a GoogleSignInClient with the options specified by gso.
         val mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-          sign_in_button.setOnClickListener{
-        val signInIntent=mGoogleSignInClient.signInIntent
-       startActivityForResult(signInIntent,rcSignIn)
+        sign_in_button.setOnClickListener {
+            val signInIntent = mGoogleSignInClient.signInIntent
+            startActivityForResult(signInIntent, rcSignIn)
 
- }
+        }
 
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -112,7 +113,7 @@ class RegisterActivity : TopNavViewActivity() {
                 Log.d(tag, "signInWithCredential:success")
                 val account = task.getResult(ApiException::class.java)
 
-                val intent= Intent(this,HomeActivity::class.java)
+                val intent = Intent(this, HomeActivity::class.java)
                 startActivity(intent)
 
 //                Toast.makeText(
@@ -129,6 +130,7 @@ class RegisterActivity : TopNavViewActivity() {
             }
         }
     }
+
     fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
         Log.d(tag, "firebaseAuthWithGoogle:" + acct.id!!)
         val credential: AuthCredential = GoogleAuthProvider.getCredential(acct.idToken, null)
@@ -137,7 +139,7 @@ class RegisterActivity : TopNavViewActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(tag, "signInWithCredential:success")
-                    val intent= Intent(this,HomeActivity::class.java)
+                    val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
                     val user = mAuth.currentUser
                 } else {
