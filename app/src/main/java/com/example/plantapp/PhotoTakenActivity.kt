@@ -47,12 +47,12 @@ class PhotoTakenActivity : TopNavViewActivity() {
                     intent.putExtra("table", res["table"])
                     intent.putExtra("latinName", plantName)
                     intent.putExtra("photoUrl", res["image"])
-                    if (done == false) {
+                    if (!done) {
                         done = true
                         startActivity(intent)
                     }
                 } else {
-                    if (failed == false) {
+                    if (!failed) {
                         failed = true
                     } else {
                         println("something happened")
@@ -71,12 +71,12 @@ class PhotoTakenActivity : TopNavViewActivity() {
                     intent.putExtra("table", res["table"])
                     intent.putExtra("latinName", plantName)
                     intent.putExtra("photoUrl", res["image"])
-                    if (done == false) {
+                    if (!done) {
                         done = true
                         startActivity(intent)
                     }
                 } else {
-                    if (failed == false) {
+                    if (!failed) {
                         failed = true
                     } else {
                         println("something happened")
