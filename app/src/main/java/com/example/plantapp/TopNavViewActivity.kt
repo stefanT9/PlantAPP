@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_top_nav.*
+import kotlinx.android.synthetic.main.top_nav_login_fragment.*
 import kotlinx.android.synthetic.main.top_nav_no_login_fragment.*
 
 
@@ -106,8 +107,11 @@ open class TopNavViewActivity : AppCompatActivity(){
         else
         {
             // TODO: Update content of the view with user data (Alex Barsan)
+
             btn_log_out.visibility = View.VISIBLE
             this.layoutInflater.inflate(R.layout.top_nav_login_fragment,navigaton_anchor_view)
+            username.setText(FirebaseAuth.getInstance().currentUser?.displayName.toString())
+            mail.setText(FirebaseAuth.getInstance().currentUser?.email.toString())
         }
     }
 }

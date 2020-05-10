@@ -152,6 +152,7 @@ class LoginActivity : TopNavViewActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
                 firebaseAuthWithGoogle(account!!)
+
             } catch (e: ApiException) {
                 Log.w(TAG, "signInWithCredential:failure", task.exception)
                 Toast.makeText(this@LoginActivity, "Authentication failed", Toast.LENGTH_SHORT)
@@ -176,10 +177,8 @@ class LoginActivity : TopNavViewActivity() {
                         "Signed in with Google Successfully",
                         Toast.LENGTH_SHORT
                     ).show()
-                    message_google.text = getString(R.string.signed_in_google)
-                    val user = auth.currentUser
-                    updateUI(user!!)
-
+                    val intent = Intent(this, HomeActivity::class.java)
+                    startActivity(intent)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithCredential:failure", task.exception)
@@ -188,27 +187,9 @@ class LoginActivity : TopNavViewActivity() {
                         "Authentication failed",
                         Toast.LENGTH_SHORT
                     ).show()
-                    //     updateUI(null)
                 }
-
-                // ...
             }
     }
-
-    fun updateUI(fUser: FirebaseUser) {
-
-        val account = GoogleSignIn.getLastSignedInAccount(applicationContext)
-
-        if (account != null) {
-            val personName = account.displayName
-            val personEmail = account.email
-
-            Toast.makeText(this@LoginActivity, personName + personEmail, Toast.LENGTH_SHORT)
-                .show()
-        }
-
-    }
-
 }
 
 
