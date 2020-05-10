@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.top_nav_no_login_fragment.*
 open class TopNavViewActivity : AppCompatActivity(){
 
     private fun logged(): Boolean {
-        // TODO: make ui update when a user logs in(Stefan Tomsa)
         return null != FirebaseAuth.getInstance().currentUser
     }
 
@@ -106,12 +105,11 @@ open class TopNavViewActivity : AppCompatActivity(){
         }
         else
         {
-            // TODO: Update content of the view with user data (Alex Barsan)
 
             btn_log_out.visibility = View.VISIBLE
             this.layoutInflater.inflate(R.layout.top_nav_login_fragment,navigaton_anchor_view)
-            username.setText(FirebaseAuth.getInstance().currentUser?.displayName.toString())
-            mail.setText(FirebaseAuth.getInstance().currentUser?.email.toString())
+            username.text = FirebaseAuth.getInstance().currentUser?.displayName.toString()
+            mail.text = FirebaseAuth.getInstance().currentUser?.email.toString()
         }
     }
 }

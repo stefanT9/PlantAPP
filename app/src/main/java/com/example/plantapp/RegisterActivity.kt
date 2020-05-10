@@ -82,7 +82,6 @@ class RegisterActivity : TopNavViewActivity() {
             }
         })
 
-        /// TODO: fix this (Daniel Bicu)
         val gso =
             GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()

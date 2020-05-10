@@ -60,7 +60,6 @@ class LoginActivity : TopNavViewActivity() {
         buttonSignIn.setOnClickListener(View.OnClickListener {
 
             // Toast.makeText(this@loginActivity, "Just clicked", Toast.LENGTH_SHORT).show()
-
             // pentru test, nu incurca
             val email: String = emailID.text.toString()
             val pwd: String = password.text.toString()
@@ -98,7 +97,7 @@ class LoginActivity : TopNavViewActivity() {
             }
         })
 
-        /// TODO: Test/Repair register with google(Daniel Bicu)
+        /// TODO: Test/Repair register with google(Stefan Tomsa)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
