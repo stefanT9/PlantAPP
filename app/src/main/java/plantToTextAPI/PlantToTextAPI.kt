@@ -55,11 +55,10 @@ fun getPlantName(photo: BitmapPhoto): String? {
     return null
 }
 
-//TODO: check if problem was fixed -> ocr is not async
 fun ocrFunction(photo: BitmapPhoto):String? {
     var returnedText: String? = null
     val image = FirebaseVisionImage.fromBitmap(photo.bitmap)
-    val detector = FirebaseVision.getInstance().cloudTextRecognizer
+    val detector = FirebaseVision.getInstance().onDeviceTextRecognizer
     detector.processImage(image)
         .addOnSuccessListener { firebaseVisionText ->
             returnedText = firebaseVisionText.toString()
@@ -117,7 +116,6 @@ fun apiPlant1(bitmap: Bitmap): List<String>{
     return names
 }
 
-//TODO: THIS NEEDS TESTING!!!
 fun apiPlant2(bitmap: Bitmap): List<String>{
     //Prepare variables
     val plantFile = bitmapToFile(bitmap)
@@ -174,7 +172,6 @@ fun bitmapToBase64(bitmap: Bitmap): String {
     return returnedString
 }
 
-///TODO: test if this function works properly (not sure if file is actually created/ saved)
 fun bitmapToFile(bitmap: Bitmap): File {
     //Create output stream and path+file
     val root = Environment.getRootDirectory()
