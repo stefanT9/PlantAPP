@@ -98,15 +98,15 @@ fun apiPlant1(bitmap: Bitmap): List<String>{
 
     // We only care about the scientific name ( ex "scientific_name": "Rosa")
     var lastIndex = 0
-    var searchedText = "\"scientific_name\": "
-    var jumpOverText = searchedText.length
+    val searchedText = "\"scientific_name\": "
+    val jumpOverText = searchedText.length
 
     //Get all scientific names
     val names = mutableListOf<String>()
     while(lastIndex != -1) {
         lastIndex = response.indexOf(searchedText, lastIndex)
         if(lastIndex != -1){
-            var scientific_name =  response.substring(lastIndex + jumpOverText, lastIndex + jumpOverText + 20).split("\"")[1]
+            val scientific_name =  response.substring(lastIndex + jumpOverText, lastIndex + jumpOverText + 20).split("\"")[1]
             names.add(scientific_name)
             lastIndex += 1
         }

@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.top_nav_login_fragment.*
 import kotlinx.android.synthetic.main.top_nav_no_login_fragment.*
 
 
+// TODO: make navigation buttons close the sidenav when they are clicked (Alex Barsan)
 open class TopNavViewActivity : AppCompatActivity(){
 
     private fun logged(): Boolean {
@@ -24,12 +25,6 @@ open class TopNavViewActivity : AppCompatActivity(){
     protected fun setUpToolbar()
     {
         val user = FirebaseAuth.getInstance().currentUser
-
-        println("---------------")
-        println(user?.email)
-        println("---------------")
-
-
         setContentView(R.layout.activity_top_nav)
 
         btn_contact.setOnClickListener {

@@ -64,13 +64,11 @@ class LoginActivity : TopNavViewActivity() {
             val email: String = emailID.text.toString()
             val pwd: String = password.text.toString()
 
+            // TODO: make sure that input is valid ( Cosin Aftanase )
             if (email.isEmpty()) {
-                /// TODO: find what these 2 are and repair them
-                // message_edit_text_email.text = getString(R.string.please_enter_email_id)
-                emailID.error = "Please enter email id"
+                emailID.error = "Please enter email"
                 emailID.requestFocus()
             } else if (pwd.isEmpty()) {
-                // message_edit_text_password.text = getString(R.string.please_enter_your_password)
                 password.error = "Please enter your password"
                 password.requestFocus()
 

@@ -41,10 +41,11 @@ class DataVisualisationActivity : TopNavViewActivity() {
         val extras = intent.extras
         if (extras != null) {
 
-            var photo: Bitmap?
+            val photo: Bitmap?
             photo = null
             val src = extras.getString("photoUrl")
 
+            // TODO : make this work (Stefan Tomsa)
             /*
                     val t=thread {
                         println(src)
@@ -80,7 +81,7 @@ class DataVisualisationActivity : TopNavViewActivity() {
                     key.text = table[i]
                     value.text = table[i + 1]
 
-                    /// TODO: Add properties to make this look like it looks in design (Alexandra Ciocoiu, Teodora Balan)
+                    /// TODO: Add properties to make this look like it looks in design (Teodora Balan)
                     row.gravity = Gravity.CENTER
                     key.gravity = Gravity.CENTER
                     value.gravity = Gravity.CENTER

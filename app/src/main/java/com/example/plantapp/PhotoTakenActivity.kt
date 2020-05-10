@@ -36,6 +36,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
         }
 
         seeresult.setOnClickListener {
+            //TODO: make sure that only threads arent created if old ones exist ( Robert zahariea )
             val intent = Intent(this, DataVisualisationActivity::class.java)
             Thread {
                 val plantName = getPlantName((photoBitmap))
