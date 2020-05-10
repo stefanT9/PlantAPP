@@ -52,7 +52,6 @@ class LoginActivity : TopNavViewActivity() {
         emailID = email_textView
         password = password_editText
         buttonSignIn = email_login_button
-        googleBtn = sign_in_button
         auth = FirebaseAuth.getInstance()
 
         sign_up_textView.setOnClickListener {
@@ -122,7 +121,7 @@ class LoginActivity : TopNavViewActivity() {
 
         googleClientSignIN = GoogleSignIn.getClient(this, gso)
 
-        googleBtn.setOnClickListener(View.OnClickListener {
+        sign_in_button.setOnClickListener(View.OnClickListener {
 
             signIn()
             //  FirebaseAuth.getInstance().signOut()

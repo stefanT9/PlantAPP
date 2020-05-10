@@ -65,8 +65,8 @@ open class TopNavViewActivity : AppCompatActivity(){
             startActivity(intent)
         }
 
-        btn_plants.setOnClickListener {
-            Toast.makeText(this, "btn_plants clicked", Toast.LENGTH_SHORT).show()
+        btn_quick_scan.setOnClickListener {
+            Toast.makeText(this, "btn_quick_scan clicked", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, TakePhotoActivity::class.java)
             startActivity(intent)
         }
