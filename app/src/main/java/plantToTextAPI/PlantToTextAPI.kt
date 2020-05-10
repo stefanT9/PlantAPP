@@ -1,59 +1,208 @@
 package plantToTextAPI
 
 import android.graphics.Bitmap
+import android.os.Environment
+import android.util.Base64
+import android.util.Log
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import cz.msebera.android.httpclient.HttpResponse
+import cz.msebera.android.httpclient.client.HttpClient
+import cz.msebera.android.httpclient.client.methods.HttpPost
+import cz.msebera.android.httpclient.entity.mime.MultipartEntityBuilder
+import cz.msebera.android.httpclient.entity.mime.content.FileBody
+import cz.msebera.android.httpclient.impl.client.HttpClientBuilder
+import cz.msebera.android.httpclient.util.EntityUtils
 import io.fotoapparat.result.BitmapPhoto
+import org.json.JSONArray
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
+import wikiapi.wikiapi
+import java.io.*
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.*
 
-/// TODO: de folosit PlantNET (Cosmin Aftanase)
-//fun getPlantName(photo: BitmapPhoto?): String {
-//    return "Taraxacum"
-//}
 
-/// TODO: De folosit API OCR Ovidiu (Cosmin Aftase)
-fun ocrFunction(photo: BitmapPhoto):String {
-    var returnedText: String = "error";
-    val image = FirebaseVisionImage.fromBitmap(photo.bitmap)
-    val detector = FirebaseVision.getInstance().cloudTextRecognizer
-    val result = detector.processImage(image)
-        .addOnSuccessListener { firebaseVisionText ->
-            returnedText = firebaseVisionText.toString()
+fun getPlantName(photo: BitmapPhoto): String? {
+    //Call api no. 1
+    val plantList1 = apiPlant1(photo.bitmap)
+
+    //Call api no. 2
+    val plantList2 = apiPlant2(photo.bitmap)
+
+    //Prepare variables
+    var result1 : Hashtable<String, String>?
+    var result2 : Hashtable<String, String>?
+
+    //Return the first result that we can find on wikipedia
+    for (i in plantList1.indices){
+
+        //Check if first api returned something good
+        result1 = wikiapi(plantList1[i])
+        if (result1 != null) {
+            return plantList1[i]
         }
-        .addOnFailureListener { e -> print("Recognition error") }
-    return returnedText;
+    }
+
+    for (i in plantList2.indices) {
+        //Check if second api returned something good
+        result2 = wikiapi(plantList2[i])
+        if (result2 != null) {
+            return plantList2[i]
+        }
+    }
+
+    return null
 }
 
+//TODO: check if problem was fixed -> ocr is not async
+fun ocrFunction(photo: BitmapPhoto):String? {
+    var returnedText: String? = null
+    val image = FirebaseVisionImage.fromBitmap(photo.bitmap)
+    val detector = FirebaseVision.getInstance().cloudTextRecognizer
+    detector.processImage(image)
+        .addOnSuccessListener { firebaseVisionText ->
+            returnedText = firebaseVisionText.toString()
+            Log.e("Ocr","Ocr recognized: $returnedText !")
+        }
+        .addOnFailureListener { e ->
+            Log.e("Ocr","Ocr Recognition error")
+        }
+        .result
+    return returnedText
+}
 
-
-/// TODO: De validat cu API Adrian (Cosmin Aftase)
 fun validatePlantLocation(latinName: String, latitude: Double, longitude: Double): Boolean {
 
     val params = JSONObject()
     params.put("lat", latitude)
     params.put("long", longitude)
 
-    var response = sendPostRequest("https://us-central1-locationip-31d6f.cloudfunctions.net/plants", params)
+    val response = sendPostRequest("https://us-central1-locationip-31d6f.cloudfunctions.net/plants", params, null)
 
     return response.contains(latinName)
 }
 
-fun sendPostRequest(urlName:String, params: JSONObject): String {
+///AUXILIARY FUNCTIONS BELOW
+
+fun apiPlant1(bitmap: Bitmap): List<String>{
+    //Prepare request
+    val base64Img = bitmapToBase64(bitmap)
+    val plantIdUrl = "https://api.plant.id/v2/identify"
+    val plantIdToken = "UNMFzRR5vGyf7upPyKuKbTiPLvMq7BJTSxpKpOBoGget5HY950"
+    val params = JSONObject()
+    params.put("images", JSONArray().put(base64Img))
+    params.put("modifiers",  JSONArray().put("similar_images"))
+
+    //Call request
+    val response = sendPostRequest(plantIdUrl, params, plantIdToken)
+
+    // We only care about the scientific name ( ex "scientific_name": "Rosa")
+    var lastIndex = 0
+    var searchedText = "\"scientific_name\": "
+    var jumpOverText = searchedText.length
+
+    //Get all scientific names
+    val names = mutableListOf<String>()
+    while(lastIndex != -1) {
+        lastIndex = response.indexOf(searchedText, lastIndex)
+        if(lastIndex != -1){
+            var scientific_name =  response.substring(lastIndex + jumpOverText, lastIndex + jumpOverText + 20).split("\"")[1]
+            names.add(scientific_name)
+            lastIndex += 1
+        }
+    }
+
+    //Return the names
+    return names
+}
+
+//TODO: THIS NEEDS TESTING!!!
+fun apiPlant2(bitmap: Bitmap): List<String>{
+    //Prepare variables
+    val plantFile = bitmapToFile(bitmap)
+    val plantNetUrl = "https://my-api.plantnet.org/v2/identify/all?api-key="
+    val plantIdToken: String = "2a10vXHb74WyFBZaR6fQYdF6u"
+
+    //Prepare post
+    val entity = MultipartEntityBuilder.create().addPart("images", FileBody(plantFile)).addTextBody("organs", "flower").build()
+    val request = HttpPost("$plantNetUrl$plantIdToken&include-related-images=true")
+    request.entity = entity
+    val client: HttpClient = HttpClientBuilder.create().build()
+
+    //Get response
+    val httpResponse: HttpResponse
+    var response: String
+    try {
+        httpResponse = client.execute(request)
+        response = EntityUtils.toString(httpResponse.entity)
+    } catch (e: IOException) {
+        response = "error"
+    }
+
+    // We only care about the scientific name ( ex "scientificNameWithoutAuthor":"Galanthus nivalis")
+    var lastIndex = 0
+    var searchedText = "\"scientificNameWithoutAuthor\":"
+    var jumpOverText = searchedText.length
+
+    //Get all scientific names
+    val names = mutableListOf<String>()
+    while(lastIndex != -1) {
+        lastIndex = response.indexOf(searchedText, lastIndex)
+        if(lastIndex != -1){
+            var scientific_name =  response.substring(lastIndex + jumpOverText, lastIndex + jumpOverText + 20).split("\"")[1]
+            names.add(scientific_name)
+            lastIndex += 1
+        }
+    }
+
+    //Return the response
+    return names
+}
+
+fun bitmapToBase64(bitmap: Bitmap): String {
+    //Create output stream and compress bitmap
+    val outputStream = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+
+    //Encode
+    val returnedString = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
+
+    //Clean up
+    outputStream.flush()
+    outputStream.close()
+    return returnedString
+}
+
+///TODO: test if this function works properly (not sure if file is actually created/ saved)
+fun bitmapToFile(bitmap: Bitmap): File {
+    //Create output stream and path+file
+    val root = Environment.getRootDirectory()
+    val file = File(root,"plantPhoto.png")
+    val outputStream: OutputStream = BufferedOutputStream(FileOutputStream(file))
+
+    //Write to file the Bitmap
+    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+
+    //Clean up
+    outputStream.flush()
+    outputStream.close()
+    return file
+}
+
+fun sendPostRequest(urlName:String, params: JSONObject, token: String?): String {
     val mURL = URL(urlName)
     with(mURL.openConnection() as HttpURLConnection) {
         requestMethod = "POST"
-        doOutput = true;
-        doInput = true;
-        setRequestProperty("Content-Type", "application/json");
+        doOutput = true
+        doInput = true
+        setRequestProperty("Content-Type", "application/json")
+        if (token != null)
+            setRequestProperty("Api-Key", token)
 
-        val wr = OutputStreamWriter(getOutputStream());
-        wr.write(params.toString());
-        wr.flush();
+        val wr = OutputStreamWriter(outputStream)
+        wr.write(params.toString())
+        wr.flush()
 
         BufferedReader(InputStreamReader(inputStream)).use {
             val response = StringBuffer()
@@ -66,4 +215,3 @@ fun sendPostRequest(urlName:String, params: JSONObject): String {
         }
     }
 }
-
