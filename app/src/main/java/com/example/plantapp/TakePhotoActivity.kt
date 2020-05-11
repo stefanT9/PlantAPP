@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Matrix
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Toast
@@ -57,7 +58,26 @@ class TakePhotoActivity : AppCompatActivity() {
             fotoapparat!!.takePicture().toBitmap().whenAvailable {
                 if (it != null) {
                     val intent=Intent(this,PhotoTakenActivity::class.java)
-                    createImageFromBitmap(it.bitmap)
+
+                    val matrix = Matrix()
+
+                    matrix.postRotate(90f)
+
+                    val scaledBitmap =
+                        Bitmap.createScaledBitmap(it.bitmap, it.bitmap.width, it.bitmap.height, true)
+
+                    val rotatedBitmap = Bitmap.createBitmap(
+                        scaledBitmap,
+                        0,
+                        0,
+                        scaledBitmap.width,
+                        scaledBitmap.height,
+                        matrix,
+                        true
+                    )
+
+                    createImageFromBitmap(rotatedBitmap)
+
                     startActivity(intent)
                 }
             }
@@ -83,6 +103,7 @@ class TakePhotoActivity : AppCompatActivity() {
             finish()
         }
     }
+
 
     private fun initFotoapparat() {
         fotoapparat = Fotoapparat(
@@ -115,10 +136,29 @@ class TakePhotoActivity : AppCompatActivity() {
             val fo: FileOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE)
             fo.write(bytes.toByteArray())
             fo.close()
+
         } catch (e: Exception) {
             e.printStackTrace()
             fileName = null
         }
-        return fileName
+        //return fileName
+
+ //       var exif  = ExifInterface("")
+//         var rot  =  exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+//        Log.d("orietnation", rot.toString());
+
+        return fileName;
     }
+
+    fun rotateImage(source: Bitmap, angle: Float): Bitmap? {
+        val matrix = Matrix()
+        matrix.postRotate(angle)
+        return Bitmap.createBitmap(
+            source, 0, 0, source.width, source.height,
+            matrix, true
+        )
+    }
+
+
+
 }
