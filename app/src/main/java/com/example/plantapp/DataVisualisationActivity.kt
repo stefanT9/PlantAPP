@@ -9,6 +9,7 @@ import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TableRow
 import android.widget.TextView
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_data_visualisation.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
 import java.io.InputStream
@@ -44,23 +45,7 @@ class DataVisualisationActivity : TopNavViewActivity() {
             val photo: Bitmap?
             photo = null
             val src = extras.getString("photoUrl")
-
-            // TODO : make this work (Stefan Tomsa)
-            /*
-                    val t=thread {
-                        println(src)
-                        val url = URL(src)
-                        val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
-                        connection.doInput = true
-                        connection.connect()
-                        val input: InputStream = connection.inputStream
-                        photo=BitmapFactory.decodeStream(input)
-                    }
-                    t.run()
-                    while (t.isAlive) {
-                        continue
-                    }
-                    plant_image.setImageBitmap(photo)*/
+            Picasso.get().load(src).into(plant_image);
 
             latinName = extras.getString("latinName")!!
             descriptionText = extras.getString("description")!!

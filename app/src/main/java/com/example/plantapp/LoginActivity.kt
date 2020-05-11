@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -15,24 +14,26 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
-import kotlinx.android.synthetic.main.activity_login.view.*
 
 class LoginActivity : TopNavViewActivity() {
 
     lateinit var emailID: EditText
     lateinit var password: EditText
     lateinit var buttonSignIn: TextView
-    lateinit var googleClientSignIN: GoogleSignInClient
     lateinit var googleBtn: Button
     lateinit var auth: FirebaseAuth
-    var TAG = "thisLOGIN"
-    //LOGIN_ACTIVITY
 
-    val RC_SIGN_IN: Int = 1
+    //Google Login Request Code
+    private val RC_SIGN_IN = 7
+
+    //Google Sign In Client
+    private lateinit var mGoogleSignInClient: GoogleSignInClient
+
+    //Firebase Auth
+    private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -42,11 +43,16 @@ class LoginActivity : TopNavViewActivity() {
         //setColor to SIGN IN
         val stringText: String = getString(R.string.don_t_have_an_account_sign_up)
         val mSpannableString = SpannableString(stringText)
-        mSpannableString.setSpan("@color/sign_in_green_color", 23, 30, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        mSpannableString.setSpan(
+            "@color/sign_in_green_color",
+            23,
+            30,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
         sign_up_textView.text = mSpannableString
 
 
-        val authent: FirebaseAuth = FirebaseAuth.getInstance()
+        mAuth = FirebaseAuth.getInstance()
         emailID = email_textView
         password = password_editText
         buttonSignIn = email_login_button
@@ -79,7 +85,7 @@ class LoginActivity : TopNavViewActivity() {
             } else if (!(email.isEmpty() && pwd.isEmpty())) {
                 message.text = getString(R.string.logged_in_successfully)
                 message2.text = getString(R.string.auth_failed)
-                authent.signInWithEmailAndPassword(email, pwd)
+                mAuth.signInWithEmailAndPassword(email, pwd)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             val intent = Intent(this, HomeActivity::class.java)
@@ -101,7 +107,7 @@ class LoginActivity : TopNavViewActivity() {
             .requestEmail()
             .build()
 
-        googleClientSignIN = GoogleSignIn.getClient(this, gso)
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso)
         sign_in_button.setOnClickListener(View.OnClickListener {
             signIn()
         })
@@ -109,59 +115,41 @@ class LoginActivity : TopNavViewActivity() {
 
 
     private fun signIn() {
-        var signInIntent: Intent = googleClientSignIN.signInIntent
+        val signInIntent: Intent = mGoogleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 // Google Sign In was successful, authenticate with Firebase
-                Log.d(TAG, "signInWithCredential:success")
                 val account = task.getResult(ApiException::class.java)
-                Toast.makeText(
-                    this@LoginActivity,
-                    "Signed in with Google Successfully",
-                    Toast.LENGTH_SHORT
-                ).show()
                 firebaseAuthWithGoogle(account!!)
-
             } catch (e: ApiException) {
-                Log.w(TAG, "signInWithCredential:failure", task.exception)
-                Toast.makeText(this@LoginActivity, "Authentication failed", Toast.LENGTH_SHORT)
-                    .show()
+                // Google Sign In failed, update UI appropriately
+                Log.w("Login", "Google sign in failed", e)
+                // ...
             }
+
         }
+
     }
 
+    private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
+        Log.d("Login", "firebaseAuthWithGoogle:" + acct.id!!)
 
-    fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
-
-        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.id!!)
-        val credential: AuthCredential = GoogleAuthProvider.getCredential(acct.idToken, null)
-        auth.signInWithCredential(credential)
+        val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
+        mAuth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "signInWithCredential:success")
-                    Toast.makeText(
-                        this@LoginActivity,
-                        "Signed in with Google Successfully",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
+                    Log.d("Login", "signInWithCredential:success")
                 } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "signInWithCredential:failure", task.exception)
-                    Toast.makeText(
-                        this@LoginActivity,
-                        "Authentication failed",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Log.w("Login", "signInWithCredential:failure", task.exception)
+                    Toast.makeText(this,"Auth Failed",Toast.LENGTH_LONG).show()
                 }
             }
     }
