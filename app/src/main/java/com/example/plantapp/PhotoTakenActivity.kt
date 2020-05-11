@@ -40,56 +40,56 @@ class PhotoTakenActivity : TopNavViewActivity() {
 
         seeresult.setOnClickListener {
             Toast.makeText(this, "See result pressed!", Toast.LENGTH_SHORT).show()
-            //TODO: make sure that only threads arent created if old ones exist ( Robert zahariea )
+            //TODO: progressBar on Absolute Layout( Robert zahariea )
             progressBar.visibility = View.VISIBLE
             val intent = Intent(this, DataVisualisationActivity::class.java)
-//            Thread {
-//                val plantName = getPlantName((photoBitmap))
-//                println("plantname finished")
-//                val res = wikiapi(plantName)
-//                println("wikiapi finished")
-//                if (res != null) {
-//                    intent.putExtra("description", res["description"])
-//                    intent.putExtra("table", res["table"])
-//                    intent.putExtra("latinName", plantName)
-//                    intent.putExtra("photoUrl", res["image"])
-//                    if (!done) {
-//                        done = true
-//                        startActivity(intent)
-//                    }
-//                } else {
-//                    if (!failed) {
-//                        failed = true
-//                    } else {
-//                        println("something happened")
-//                        Toast.makeText(this, "Try o make another pcture", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//            }.start()
-//
-//            Thread {
-//                val plantName = ocrFunction((photoBitmap))
-//                println("plantname finished")
-//                val res = wikiapi(plantName)
-//                println("wikiapi finished")
-//                if (res != null) {
-//                    intent.putExtra("description", res["description"])
-//                    intent.putExtra("table", res["table"])
-//                    intent.putExtra("latinName", plantName)
-//                    intent.putExtra("photoUrl", res["image"])
-//                    if (!done) {
-//                        done = true
-//                        startActivity(intent)
-//                    }
-//                } else {
-//                    if (!failed) {
-//                        failed = true
-//                    } else {
-//                        println("something happened")
-//                        Toast.makeText(this, "Try o make another pcture", Toast.LENGTH_SHORT).show()
-//                    }
-//                }
-//            }.start()
+            Thread {
+                val plantName = getPlantName((photoBitmap))
+                println("plantname finished")
+                val res = wikiapi(plantName)
+                println("wikiapi finished")
+                if (res != null) {
+                    intent.putExtra("description", res["description"])
+                    intent.putExtra("table", res["table"])
+                    intent.putExtra("latinName", plantName)
+                    intent.putExtra("photoUrl", res["image"])
+                    if (!done) {
+                        done = true
+                        startActivity(intent)
+                    }
+                } else {
+                    if (!failed) {
+                        failed = true
+                    } else {
+                        println("something happened")
+                        Toast.makeText(this, "Try o make another pcture", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }.start()
+
+            Thread {
+                val plantName = ocrFunction((photoBitmap))
+                println("plantname finished")
+                val res = wikiapi(plantName)
+                println("wikiapi finished")
+                if (res != null) {
+                    intent.putExtra("description", res["description"])
+                    intent.putExtra("table", res["table"])
+                    intent.putExtra("latinName", plantName)
+                    intent.putExtra("photoUrl", res["image"])
+                    if (!done) {
+                        done = true
+                        startActivity(intent)
+                    }
+                } else {
+                    if (!failed) {
+                        failed = true
+                    } else {
+                        println("something happened")
+                        Toast.makeText(this, "Try o make another pcture", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }.start()
             seeresult.isClickable = false
         }
     }
