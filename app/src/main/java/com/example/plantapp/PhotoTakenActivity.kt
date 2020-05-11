@@ -1,9 +1,13 @@
 package com.example.plantapp
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
+import android.media.ExifInterface
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import io.fotoapparat.result.BitmapPhoto
 import kotlinx.android.synthetic.main.activity_photo_taken.*
@@ -28,6 +32,8 @@ class PhotoTakenActivity : TopNavViewActivity() {
         this.layoutInflater.inflate(R.layout.activity_photo_taken, mainLayout)
 
         val bitmap = BitmapFactory.decodeStream(this.openFileInput("myImage"))
+
+
         val photoBitmap = BitmapPhoto(bitmap, 0)
         plant_photo.setImageDrawable(BitmapDrawable(resources, photoBitmap.bitmap))
 
@@ -87,5 +93,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
             }.start()
         }
     }
+
+
 }
 
