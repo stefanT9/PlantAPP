@@ -3,6 +3,7 @@ package com.example.plantapp
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -16,6 +17,7 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import kotlinx.android.synthetic.main.activity_top_nav.*
 import kotlinx.android.synthetic.main.top_nav_login_fragment.*
+import java.util.regex.Pattern
 
 class RegisterActivity : TopNavViewActivity() {
 
@@ -53,10 +55,36 @@ class RegisterActivity : TopNavViewActivity() {
             if (email.isEmpty()) {
                 regEmail.error = "Please enter email id";
                 regEmail.requestFocus();
-            } else if (pass.isEmpty()) {
+            }
+            else if ( !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                regEmail.error = "Please enter a valid email"
+                regEmail.requestFocus()
+            }
+            else if (pass.isEmpty()) {
                 regPassword.error = "Please enter your password";
                 regPassword.requestFocus();
-            } else {
+            }
+            else if ( pass.length < 5) {
+                regPassword.error = "Password must have at least 5 characters";
+                regPassword.requestFocus();
+            }
+            else if ( pass == pass.toLowerCase()) {
+                regPassword.error = "Password should have at least 1 uppercase";
+                regPassword.requestFocus();
+            }
+            else if ( pass == pass.toUpperCase()) {
+                regPassword.error = "Password should have at least 1 lowercase";
+                regPassword.requestFocus();
+            }
+            else if( Pattern.compile("(.)*(\\\\d)(.)*").matcher(pass).matches() ) {
+                regPassword.error = "Password should have at least 1 digit";
+                regPassword.requestFocus();
+            }
+            else if( !Pattern.compile("(.)*([\$&+,:;=\\\\\\\\?@#|/'<>.^*()%!-])(.)*").matcher(pass).matches() ){
+                regPassword.error = "Password should have at least 1 special character";
+                regPassword.requestFocus();
+            }
+            else {
                 mAuth.createUserWithEmailAndPassword(email, pass)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {

@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
+import android.text.TextUtils
 import android.util.Log
+import android.util.Patterns
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -70,15 +73,18 @@ class LoginActivity : TopNavViewActivity() {
             val email: String = emailID.text.toString()
             val pwd: String = password.text.toString()
 
-            // TODO: make sure that input is valid ( Cosin Aftanase )
             if (email.isEmpty()) {
                 emailID.error = "Please enter email"
                 emailID.requestFocus()
-            } else if (pwd.isEmpty()) {
+
+            }
+            else if ( !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                emailID.error = "Please enter a valid email"
+                emailID.requestFocus()
+            }
+            else if (pwd.isEmpty()) {
                 password.error = "Please enter your password"
                 password.requestFocus()
-
-
             } else if (email.isEmpty() && pwd.isEmpty()) {
                 Toast.makeText(this@LoginActivity, "Fields are empty", Toast.LENGTH_SHORT).show()
 
