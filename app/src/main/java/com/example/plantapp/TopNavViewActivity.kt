@@ -6,9 +6,11 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
+import androidx.core.view.GravityCompat
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_top_nav.*
 import kotlinx.android.synthetic.main.top_nav_login_fragment.*
@@ -54,9 +56,19 @@ open class TopNavViewActivity : AppCompatActivity(){
         }
 
         btn_home.setOnClickListener {
-            Toast.makeText(this, "btn_home clicked", Toast.LENGTH_SHORT).show()
-            val intent = Intent(this, HomeActivity::class.java)
-            startActivity(intent)
+            var currentActivity = split(getWindow().getDecorView().getRootView().toString())
+            if(currentActivity != "HomeActivity") {
+                Toast.makeText(this, "btn_home clicked", Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, HomeActivity::class.java)
+                startActivity(intent)
+            }
+            else
+            {
+                if (topNavView.isDrawerOpen(GravityCompat.START)) {
+                    topNavView.closeDrawer(GravityCompat.START)
+                }
+            }
+
         }
 
         btn_quick_scan.setOnClickListener {
@@ -73,10 +85,14 @@ open class TopNavViewActivity : AppCompatActivity(){
         updateUI()
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpToolbar()
+        //TODO: add onclicklistener on hamburger (Alex Barsan)
     }
+
+
 
     protected fun updateUI()
     {
@@ -88,19 +104,36 @@ open class TopNavViewActivity : AppCompatActivity(){
             this.layoutInflater.inflate(R.layout.top_nav_no_login_fragment,navigaton_anchor_view)
 
             btn_log_in.setOnClickListener {
-                Toast.makeText(this,"login clicked",Toast.LENGTH_SHORT).show()
-                val intent= Intent(this, LoginActivity::class.java)
-                startActivity(intent)
+                var currentActivity = window.decorView.rootView.toString().split("[", "]")[1]
+                if(currentActivity != "LoginActivity") {
+                    Toast.makeText(this, "login clicked", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                }
+                else
+                {
+                    if (topNavView.isDrawerOpen(GravityCompat.START)) {
+                        topNavView.closeDrawer(GravityCompat.START)
+                    }
+                }
             }
             btn_sign_up.setOnClickListener {
-                Toast.makeText(this,"registered clicked",Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, RegisterActivity::class.java)
-                startActivity(intent)
+                var currentActivity = split(getWindow().getDecorView().getRootView().toString())
+                if(currentActivity != "RegisterActivity"){
+                    Toast.makeText(this, "Sign Up button clicked" ,Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, RegisterActivity::class.java)
+                    startActivity(intent)
+                }
+                else
+                {
+                    if (topNavView.isDrawerOpen(GravityCompat.START)) {
+                        topNavView.closeDrawer(GravityCompat.START)
+                    }
+                }
             }
         }
         else
         {
-
             btn_log_out.visibility = View.VISIBLE
             this.layoutInflater.inflate(R.layout.top_nav_login_fragment,navigaton_anchor_view)
             username.text = FirebaseAuth.getInstance().currentUser?.displayName.toString()
