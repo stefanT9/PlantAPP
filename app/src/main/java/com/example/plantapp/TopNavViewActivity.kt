@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.top_nav_login_fragment.*
 import kotlinx.android.synthetic.main.top_nav_no_login_fragment.*
 
 
-// TODO: make navigation buttons close the sidenav when they are clicked (Alex Barsan)
 open class TopNavViewActivity : AppCompatActivity(){
 
     private fun logged(): Boolean {
@@ -89,6 +88,7 @@ open class TopNavViewActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpToolbar()
+
         //TODO: add onclicklistener on hamburger (Alex Barsan)
     }
 
