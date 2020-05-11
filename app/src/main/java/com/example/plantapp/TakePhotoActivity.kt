@@ -43,7 +43,7 @@ class TakePhotoActivity : AppCompatActivity() {
             initFotoapparat()
         }
 
-        //TODO: extract photo and send it to photo taken activity (Teodora Balan)
+        // TODO: make this work( Robert Zahariea )
         gallery_button.setOnClickListener {
             startActivityForResult(
                 Intent(
@@ -53,7 +53,6 @@ class TakePhotoActivity : AppCompatActivity() {
             )
         }
 
-        // TODO: Make sure the image is not rotated ( Daniel Bicu )
         photo_button.setOnClickListener {
             fotoapparat!!.takePicture().toBitmap().whenAvailable {
                 if (it != null) {

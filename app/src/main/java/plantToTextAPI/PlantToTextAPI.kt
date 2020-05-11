@@ -22,13 +22,14 @@ import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
 
+/// TODO: Only use results that are more than x% (parametrizat) confident ( Cosmin Aftanase )
 
 fun getPlantName(photo: BitmapPhoto): String? {
     //Call api no. 1
     val plantList1 = apiPlant1(photo.bitmap)
 
     //Call api no. 2
-    val plantList2 = apiPlant2(photo.bitmap)
+    //val plantList2 = apiPlant2(photo.bitmap)
 
     //Prepare variables
     var result1 : Hashtable<String, String>?
@@ -43,7 +44,7 @@ fun getPlantName(photo: BitmapPhoto): String? {
             return plantList1[i]
         }
     }
-
+    /*
     for (i in plantList2.indices) {
         //Check if second api returned something good
         result2 = wikiapi(plantList2[i])
@@ -51,7 +52,7 @@ fun getPlantName(photo: BitmapPhoto): String? {
             return plantList2[i]
         }
     }
-
+    */
     return null
 }
 

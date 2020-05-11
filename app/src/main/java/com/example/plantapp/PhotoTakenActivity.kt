@@ -30,6 +30,8 @@ class PhotoTakenActivity : TopNavViewActivity() {
         done = false
         failed = false
 
+        /// TODO: make activity responsive to the intent coming in from either upload or camera ( Robert Zahariea )
+
         this.layoutInflater.inflate(R.layout.activity_photo_taken, mainLayout)
         seeresult.isClickable = true
         progressBar.visibility = View.GONE
@@ -95,7 +97,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
                         Toast.makeText(this, "Try o make another pcture", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }.start()
+            }
             seeresult.isClickable = false
         }
     }

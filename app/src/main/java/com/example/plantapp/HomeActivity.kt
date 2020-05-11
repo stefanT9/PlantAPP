@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.top_nav_login_fragment.*
 
 class HomeActivity : TopNavViewActivity() {
 
+    // TODO: Remove all warnings ( Daniel Bicu )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,7 +25,7 @@ class HomeActivity : TopNavViewActivity() {
 
         uploadPhoto_imgButton.setOnClickListener {
             // http://www.codeplayon.com/2018/11/android-image-upload-to-server-from-camera-and-gallery/
-            // TODO: make this work(Teodora Balan)
+            // TODO: make this work( Robert Zahariea )
         }
 
     }

@@ -67,7 +67,6 @@ open class TopNavViewActivity : AppCompatActivity(){
                     topNavView.closeDrawer(GravityCompat.START)
                 }
             }
-
         }
 
         btn_quick_scan.setOnClickListener {
@@ -80,19 +79,14 @@ open class TopNavViewActivity : AppCompatActivity(){
             FirebaseAuth.getInstance().signOut()
             updateUI()
         }
-
         updateUI()
     }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpToolbar()
-
-        //TODO: add onclicklistener on hamburger (Alex Barsan)
+        // TODO: add onclicklistener on hamburger ( Alex Barsan )
+        // TODO: on_back_butten_pressed ( Alex Barsan )
     }
-
-
 
     protected fun updateUI()
     {

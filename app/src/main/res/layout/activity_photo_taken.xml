@@ -48,6 +48,6 @@
 
         android:background="#000000"
         app:srcCompat="@drawable/ic_retakephoto"
-        tools:ignore="VectorDrawableCompat" />
-
+        tools:ignore="VectorDrawableCompat"
+        />
 </LinearLayout>
