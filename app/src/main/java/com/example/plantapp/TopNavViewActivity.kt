@@ -56,7 +56,7 @@ open class TopNavViewActivity : AppCompatActivity(){
         }
 
         btn_home.setOnClickListener {
-            var currentActivity = split(getWindow().getDecorView().getRootView().toString())
+            var currentActivity = window.decorView.rootView.toString().split("[", "]")[1]
             if(currentActivity != "HomeActivity") {
                 Toast.makeText(this, "btn_home clicked", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, HomeActivity::class.java)
@@ -118,7 +118,7 @@ open class TopNavViewActivity : AppCompatActivity(){
                 }
             }
             btn_sign_up.setOnClickListener {
-                var currentActivity = split(getWindow().getDecorView().getRootView().toString())
+                var currentActivity = window.decorView.rootView.toString().split("[", "]")[1]
                 if(currentActivity != "RegisterActivity"){
                     Toast.makeText(this, "Sign Up button clicked" ,Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, RegisterActivity::class.java)
