@@ -3,13 +3,13 @@ package com.example.plantapp
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
 
-class HomeActivity : TopNavViewActivity() {
 
+const val PICK_IMAGE = 1
+
+class HomeActivity : TopNavViewActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +23,17 @@ class HomeActivity : TopNavViewActivity() {
         uploadPhoto_imgButton.setOnClickListener {
             // http://www.codeplayon.com/2018/11/android-image-upload-to-server-from-camera-and-gallery/
             // TODO: make this work(Teodora Balan)
+            val picture = Intent()
+            picture.type = "image/*"
+            picture.action = Intent.ACTION_GET_CONTENT
+            startActivityForResult(Intent.createChooser(picture, "Select Picture"), PICK_IMAGE)
+
+            /*val intent = Intent(this, DataVisualisationActivity::class.java).apply {
+                putExtra("picture from gallery", picture.)
+            }
+            startActivity(intent)*/
         }
+
 
     }
 }
