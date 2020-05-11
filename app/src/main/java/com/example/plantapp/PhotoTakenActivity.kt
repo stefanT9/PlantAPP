@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.media.ExifInterface
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import io.fotoapparat.result.BitmapPhoto
 import kotlinx.android.synthetic.main.activity_photo_taken.*
@@ -30,6 +31,8 @@ class PhotoTakenActivity : TopNavViewActivity() {
         failed = false
 
         this.layoutInflater.inflate(R.layout.activity_photo_taken, mainLayout)
+        seeresult.isClickable = true
+        progressBar.visibility = View.GONE
 
         val bitmap = BitmapFactory.decodeStream(this.openFileInput("myImage"))
 
@@ -42,7 +45,9 @@ class PhotoTakenActivity : TopNavViewActivity() {
         }
 
         seeresult.setOnClickListener {
-            //TODO: make sure that only threads arent created if old ones exist ( Robert zahariea )
+            Toast.makeText(this, "See result pressed!", Toast.LENGTH_SHORT).show()
+            //TODO: progressBar on Absolute Layout( Robert zahariea )
+            progressBar.visibility = View.VISIBLE
             val intent = Intent(this, DataVisualisationActivity::class.java)
             Thread {
                 val plantName = getPlantName((photoBitmap))
@@ -91,6 +96,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
                     }
                 }
             }.start()
+            seeresult.isClickable = false
         }
     }
 
