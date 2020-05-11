@@ -76,7 +76,7 @@ class TakePhotoActivity : AppCompatActivity() {
                         true
                     )
 
-                    createImageFromBitmap(it.bitmap)
+                    createImageFromBitmap(rotatedBitmap)
 
                     startActivity(intent)
                 }
