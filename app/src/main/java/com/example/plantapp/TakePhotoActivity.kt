@@ -1,17 +1,22 @@
 package com.example.plantapp
 
 import android.Manifest
+import android.app.Activity
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.example.plantapp.HomeActivity.Companion.PERMISSION_CODE
 import io.fotoapparat.Fotoapparat
 import io.fotoapparat.log.fileLogger
 import io.fotoapparat.log.logcat
@@ -20,7 +25,9 @@ import io.fotoapparat.parameter.ScaleType
 import io.fotoapparat.selector.back
 import kotlinx.android.synthetic.main.activity_take_photo.*
 import java.io.ByteArrayOutputStream
+import java.io.FileNotFoundException
 import java.io.FileOutputStream
+import java.io.IOException
 
 
 const val GET_FROM_GALLERY = 3
@@ -43,20 +50,30 @@ class TakePhotoActivity : AppCompatActivity() {
             initFotoapparat()
         }
 
-        // TODO: make this work( Robert Zahariea )
         gallery_button.setOnClickListener {
-            startActivityForResult(
-                Intent(
-                    Intent.ACTION_PICK,
-                    MediaStore.Images.Media.INTERNAL_CONTENT_URI
-                ), GET_FROM_GALLERY
-            )
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if(ContextCompat.checkSelfPermission(this,
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                    //permission denied
+                    ActivityCompat.requestPermissions(this,
+                        arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), PERMISSION_CODE)
+                }
+                else {
+                    //permission already granted
+                    pickImageFromGallery()
+                }
+            }
+            else {
+                //system OS is < Marshmallow
+                pickImageFromGallery()
+            }
         }
 
         photo_button.setOnClickListener {
             fotoapparat!!.takePicture().toBitmap().whenAvailable {
                 if (it != null) {
                     val intent=Intent(this,PhotoTakenActivity::class.java)
+                    intent.putExtra("From", "TakePhotoActivity")
 
                     val matrix = Matrix()
 
@@ -83,13 +100,29 @@ class TakePhotoActivity : AppCompatActivity() {
         }
     }
 
+    private fun pickImageFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, HomeActivity.IMAGE_PICK_CODE)
+    }
+
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
+        when(requestCode){
+            PERMISSION_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED) {
+                    pickImageFromGallery()
+                }
+                else {
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
         if (requestCode == 222 && (grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
             initFotoapparat()
             fotoapparat?.start()
@@ -140,13 +173,44 @@ class TakePhotoActivity : AppCompatActivity() {
             e.printStackTrace()
             fileName = null
         }
-        //return fileName
-
- //       var exif  = ExifInterface("")
-//         var rot  =  exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-//        Log.d("orietnation", rot.toString());
-
         return fileName;
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(resultCode == Activity.RESULT_OK &&
+            requestCode == HomeActivity.IMAGE_PICK_CODE &&
+            data != null) {
+            val intent = Intent(this, PhotoTakenActivity::class.java)
+            intent.putExtra("From", "UploadPhoto")
+
+            val uriImage = data.data
+
+            val bitmap = getBitmap(uriImage, this.contentResolver)
+            if (bitmap != null) {
+                createImageFromBitmap(bitmap)
+            }
+
+            startActivity(intent)
+        }
+    }
+
+    fun getBitmap(file: Uri?, cr: ContentResolver): Bitmap?{
+        var bitmap: Bitmap ?= null
+        try {
+            val inputStream = file?.let { cr.openInputStream(it) }
+            bitmap = BitmapFactory.decodeStream(inputStream)
+            // close stream
+            try {
+                if (inputStream != null) {
+                    inputStream.close()
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+        }catch (e: FileNotFoundException){}
+        return bitmap
     }
 
     fun rotateImage(source: Bitmap, angle: Float): Bitmap? {
@@ -157,7 +221,5 @@ class TakePhotoActivity : AppCompatActivity() {
             matrix, true
         )
     }
-
-
 
 }
