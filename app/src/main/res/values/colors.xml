@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
+    <!-- <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
-    <color name="sign_in_green_color">#1B5E20</color>
+    <color name="colorAccent">#03DAC5</color> -->
+
+    <color name="primaryColor">#36A961</color>
+    <color name="darkGreen">#1D5833</color>
+
     <color name="white">#FFFFFF</color>
-    <color name="bckColor">#36A961</color>
-    <color name="text">#FFFFFF</color>
-    <color name="color1">#36A961</color>
-    <color name="color2">#1D5833</color>
-    <color name="colorSignup">#A7A7A7</color>
-    <color name="topNavView">#36A961</color>
-    <color name="back_topNavView">#FFFFFF</color>
-    <color name="dark_topNavView">#1B5531</color>
-    <color name="text_topnavView">#707070</color>
     <color name="black">#000000</color>
-    </resources>
+    <color name="grey">#707070</color>
+
+    <color name="activeButtonColor">#1B5E20</color>
+    <color name="disableButtonColor">#A7A7A7</color>
+    <color name="fieldColor">#ECECEC</color>
+
+</resources>

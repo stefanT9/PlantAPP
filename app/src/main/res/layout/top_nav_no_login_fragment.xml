@@ -15,7 +15,7 @@
         android:fontFamily="@font/open_sans"
         android:text="@string/log_in"
         android:textAllCaps="false"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_gravity="center"
 
@@ -27,14 +27,14 @@
         android:layout_height="?android:actionBarSize"
         android:layout_marginTop="7dp"
         android:layout_marginBottom="70dp"
-        android:backgroundTint="@color/back_topNavView"
+        android:backgroundTint="@color/grey"
         android:fontFamily="@font/open_sans"
         android:text="@string/sign_up"
         android:textAllCaps="false"
-        android:textColor="@color/topNavView"
+        android:textColor="@color/primaryColor"
         android:textStyle="bold"
         android:layout_gravity="center"
-        app:strokeColor="@color/topNavView"
+        app:strokeColor="@color/primaryColor"
         app:strokeWidth="2dp"
         />
 </LinearLayout>

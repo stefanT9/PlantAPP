@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import androidx.core.view.GravityCompat
+import com.google.firebase.BuildConfig
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_top_nav.*
 import kotlinx.android.synthetic.main.top_nav_login_fragment.*

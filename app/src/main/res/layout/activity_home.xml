@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeActivity"
-    android:background="@color/bckColor">
+    android:background="@color/primaryColor">
 
     <!-- TODO: Remove hardcoded strings and colors and move them to the specific xml ( Teodora Balan ) -->
 
@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="36dp"
-        android:background="@color/bckColor"
+        android:background="@color/primaryColor"
         app:srcCompat="@drawable/svgbckk" />
 
     <ImageButton
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
-        android:background="@color/bckColor"
+        android:background="@color/primaryColor"
 
         app:srcCompat="@drawable/scanbtn" />
 
@@ -35,7 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/bckColor"
+        android:background="@color/primaryColor"
         android:layout_marginTop="20dp"
         app:srcCompat="@drawable/uploadbtn" />
 
@@ -46,8 +46,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="@string/botanictext"
-        android:textColor="@color/text"
+        android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 </LinearLayout>
