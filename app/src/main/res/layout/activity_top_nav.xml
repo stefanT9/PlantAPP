@@ -153,7 +153,7 @@
                 android:layout_marginTop="130dp"
                 android:layout_marginBottom="20dp"
                 android:fontFamily="@font/open_sans"
-                android:text="@string/botanicappgarden"
+                android:text="@string/botanicAppGarden"
                 android:textAlignment="center"
                 android:textColor="@color/primaryColor"
                 app:layout_constraintBottom_toBottomOf="@id/navViewLayout" />
