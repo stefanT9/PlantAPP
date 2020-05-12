@@ -8,7 +8,12 @@ import android.text.Html
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.Toolbar
 import androidx.core.text.HtmlCompat
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_top_nav.*
 import kotlinx.android.synthetic.main.top_nav_login_fragment.*
@@ -16,6 +21,7 @@ import kotlinx.android.synthetic.main.top_nav_no_login_fragment.*
 
 
 open class TopNavViewActivity : AppCompatActivity(){
+    private var drawer = findViewById<DrawerLayout>(R.id.topNavView)
 
     private fun logged(): Boolean {
         // TODO: make ui update when a user logs in(Stefan Tomsa)
@@ -76,7 +82,34 @@ open class TopNavViewActivity : AppCompatActivity(){
             updateUI()
         }
 
+
+        //Open navDrawer event (Mititelu Cristina)
+        var toolbar:Toolbar
+        toolbar= findViewById(R.id.topNavViewLogged)
+        toolbar.setTitle(" ");
+        setSupportActionBar(toolbar)
+        toolbar.setNavigationOnClickListener {
+            drawer.openDrawer(GravityCompat.START)
+        }
+
+        //Close navDrawer event (Mititelu Cristina)
+        val btn_close_nav_bar = findViewById<AppCompatImageButton>(R.id.close_nav_view_logged)
+        btn_close_nav_bar.setOnClickListener {
+            if(drawer.isDrawerOpen(GravityCompat.START)){
+                drawer.closeDrawer(GravityCompat.START)
+            }
+        }
+
         updateUI()
+    }
+
+//    Close menu on back button event (Mititelu Cristina)
+//    Va rog verificati daca merge calumea si la voi
+    override fun onBackPressed() {
+        if(drawer.isDrawerOpen(GravityCompat.START)){
+            drawer.closeDrawer(GravityCompat.START)
+        }
+        super.onBackPressed()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
