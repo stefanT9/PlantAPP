@@ -4,10 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
-import android.text.TextUtils
 import android.util.Log
 import android.util.Patterns
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -15,7 +13,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
@@ -89,7 +86,7 @@ class LoginActivity : TopNavViewActivity() {
                 Toast.makeText(this@LoginActivity, "Fields are empty", Toast.LENGTH_SHORT).show()
 
             } else if (!(email.isEmpty() && pwd.isEmpty())) {
-                message.text = getString(R.string.logged_in_successfully)
+                message.text = getString(R.string.signed_in_successfully)
                 message2.text = getString(R.string.auth_failed)
                 mAuth.signInWithEmailAndPassword(email, pwd)
                     .addOnCompleteListener(this) { task ->
