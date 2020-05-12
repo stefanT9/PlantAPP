@@ -82,11 +82,17 @@ open class TopNavViewActivity : AppCompatActivity(){
         }
         updateUI()
     }
+    override fun onBackPressed() {
+        if (topNavView.isDrawerOpen(GravityCompat.START)) {
+            topNavView.closeDrawer(GravityCompat.START)
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setUpToolbar()
-        // TODO: add onclicklistener on hamburger ( Alex Barsan )
-        // TODO: on_back_butten_pressed ( Alex Barsan )
     }
 
     protected fun updateUI()
