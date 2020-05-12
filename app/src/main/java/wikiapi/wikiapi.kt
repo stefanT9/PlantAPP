@@ -6,11 +6,11 @@ import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.util.*
 
-fun wikiapi(name: String?): Hashtable<String, String>? {
+
+fun wikiapi(name: String? ): Hashtable<String, String>? {
     if(name==null)
         return null
 
-fun wikiapi(name: String ): Hashtable<String, Any>? {
     name.replace(" ", "_")
     val url = "https://en.wikipedia.org/wiki/$name"
     try {
@@ -26,8 +26,8 @@ fun wikiapi(name: String ): Hashtable<String, Any>? {
         var table = ""
         for (nume in clade) {
             if (nume.childNodeSize() == 4) {
-                val key: String = nume.text().split(": ").get(0)
-                val value: String = nume.text().split(": ").get(1)
+                val key: String = nume.text().split(": ")[0]
+                val value: String = nume.text().split(": ")[1]
                 table = if(table.isNotEmpty())
                     "$table,$key,$value"
                 else

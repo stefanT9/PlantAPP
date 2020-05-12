@@ -65,7 +65,9 @@ class PhotoTakenActivity : TopNavViewActivity() {
             Toast.makeText(this, "See result pressed!", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.VISIBLE
             val intent = Intent(this, DataVisualisationActivity::class.java)
-            Thread {
+
+            /// TODO: Make threads stop when the activity is exited on back button press sau retake photo/ upload another photo ( Robert Zahariea )
+            val t1 = Thread {
                 val plantName = getPlantName((photoBitmap))
                 println("plantname finished")
                 val res = wikiapi(plantName)
@@ -84,12 +86,14 @@ class PhotoTakenActivity : TopNavViewActivity() {
                         failed = true
                     } else {
                         println("something happened")
-                        Toast.makeText(this, "Try o make another pcture", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Try to make another picture", Toast.LENGTH_SHORT).show()
                     }
                 }
-            }.start()
-// TODO: Repair this
-//            Thread {
+            }
+            t1.start()
+
+// TODO: Repair this (the ocr from plat to TextAPI) ( Cosim Aftanase )
+//            val t2 = Thread {
 //                val plantName = ocrFunction((photoBitmap))
 //                println("plantname finished")
 //                val res = wikiapi(plantName)
@@ -111,8 +115,14 @@ class PhotoTakenActivity : TopNavViewActivity() {
 //                        Toast.makeText(this, "Try o make another pcture", Toast.LENGTH_SHORT).show()
 //                    }
 //                }
-//            }.start()
+//            }
+//           t2.start()
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        /// TODO: De verificat sa se intoarka in photo taken sau in home ( Robert Zahariea )
     }
 
 }

@@ -66,7 +66,8 @@ class DataVisualisationActivity : TopNavViewActivity() {
                     key.text = table[i]
                     value.text = table[i + 1]
 
-                    /// TODO: Add properties to make this look like it looks in design (Teodora Balan)
+                    /// https://stackoverflow.com/questions/2108456/how-can-i-create-a-table-with-borders-in-android
+                    /// TODO: Add properties to make this look like it looks in design ( Daniel Bicu )
                     row.gravity = Gravity.CENTER
                     key.gravity = Gravity.CENTER
                     value.gravity = Gravity.CENTER

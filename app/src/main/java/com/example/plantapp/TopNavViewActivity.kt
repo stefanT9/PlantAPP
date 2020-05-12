@@ -8,7 +8,9 @@ import android.text.Html
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.text.HtmlCompat
 import androidx.core.view.GravityCompat
 import com.google.firebase.BuildConfig
@@ -80,6 +82,21 @@ open class TopNavViewActivity : AppCompatActivity(){
             FirebaseAuth.getInstance().signOut()
             updateUI()
         }
+
+        // TODO: make sure that when navigation is open keyboard is closed ( Stefan Tomsa )
+
+        topNavViewLogged.title = " ";
+        setSupportActionBar(topNavViewLogged)
+        topNavViewLogged.setNavigationOnClickListener {
+            topNavView.openDrawer(GravityCompat.START)
+        }
+
+        close_nav_view_logged.setOnClickListener {
+            if(topNavView.isDrawerOpen(GravityCompat.START)){
+                topNavView.closeDrawer(GravityCompat.START)
+            }
+        }
+
         updateUI()
     }
     override fun onBackPressed() {

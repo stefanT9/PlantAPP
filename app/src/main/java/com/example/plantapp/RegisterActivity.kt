@@ -85,6 +85,7 @@ class RegisterActivity : TopNavViewActivity() {
                 regPassword.requestFocus();
             }
             else {
+                /// TODO: Update firebase username after the register is complete ( Alexandra Ciocoiu )
                 mAuth.createUserWithEmailAndPassword(email, pass)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
