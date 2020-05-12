@@ -67,8 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20sp"
-
-        android:background="#000000"
+        android:background="@color/black"
         app:srcCompat="@drawable/ic_upload_another_photo"
         tools:ignore="VectorDrawableCompat"
         />
