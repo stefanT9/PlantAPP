@@ -1,7 +1,6 @@
 package plantToTextAPI
 
 import android.graphics.Bitmap
-import android.os.Environment
 import android.util.Base64
 import android.util.Log
 import com.google.firebase.ml.vision.FirebaseVision
@@ -9,6 +8,7 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import cz.msebera.android.httpclient.HttpResponse
 import cz.msebera.android.httpclient.client.HttpClient
 import cz.msebera.android.httpclient.client.methods.HttpPost
+import cz.msebera.android.httpclient.entity.mime.HttpMultipartMode
 import cz.msebera.android.httpclient.entity.mime.MultipartEntityBuilder
 import cz.msebera.android.httpclient.entity.mime.content.FileBody
 import cz.msebera.android.httpclient.impl.client.HttpClientBuilder
@@ -45,6 +45,7 @@ fun getPlantName(photo: BitmapPhoto): String? {
     }
 
     for (i in plantList2.indices) {
+
         //Check if second api returned something good
         result2 = wikiapi(plantList2[i])
         if (result2 != null) {
@@ -52,7 +53,7 @@ fun getPlantName(photo: BitmapPhoto): String? {
         }
     }
 
-    return null
+    return "error"
 }
 
 fun ocrFunction(photo: BitmapPhoto):String? {
@@ -113,17 +114,24 @@ fun apiPlant1(bitmap: Bitmap): List<String>{
     }
 
     //Return the names
+    Log.d("api1", names.toString())
     return names
 }
 
 fun apiPlant2(bitmap: Bitmap): List<String>{
     //Prepare variables
-    val plantFile = bitmapToFile(bitmap)
     val plantNetUrl = "https://my-api.plantnet.org/v2/identify/all?api-key="
     val plantIdToken: String = "2a10vXHb74WyFBZaR6fQYdF6u"
 
+    //Transform bitmap into file body
+    val baos = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+    val imageBytes = baos.toByteArray()
+    val encodedImage =  Base64.encodeToString(imageBytes, Base64.DEFAULT)
+    val fileBody = FileBody(File(encodedImage))
+
     //Prepare post
-    val entity = MultipartEntityBuilder.create().addPart("images", FileBody(plantFile)).addTextBody("organs", "flower").build()
+    val entity = MultipartEntityBuilder.create().addPart("images", fileBody).addTextBody("organs", "flower").build()
     val request = HttpPost("$plantNetUrl$plantIdToken&include-related-images=true")
     request.entity = entity
     val client: HttpClient = HttpClientBuilder.create().build()
@@ -155,6 +163,7 @@ fun apiPlant2(bitmap: Bitmap): List<String>{
     }
 
     //Return the response
+    Log.d("api2", names.toString())
     return names
 }
 
@@ -170,21 +179,6 @@ fun bitmapToBase64(bitmap: Bitmap): String {
     outputStream.flush()
     outputStream.close()
     return returnedString
-}
-
-fun bitmapToFile(bitmap: Bitmap): File {
-    //Create output stream and path+file
-    val root = Environment.getRootDirectory()
-    val file = File(root,"plantPhoto.png")
-    val outputStream: OutputStream = BufferedOutputStream(FileOutputStream(file))
-
-    //Write to file the Bitmap
-    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-
-    //Clean up
-    outputStream.flush()
-    outputStream.close()
-    return file
 }
 
 fun sendPostRequest(urlName:String, params: JSONObject, token: String?): String {
