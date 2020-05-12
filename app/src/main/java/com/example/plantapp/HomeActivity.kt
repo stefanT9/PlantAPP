@@ -41,8 +41,6 @@ class HomeActivity : TopNavViewActivity() {
         }
 
         uploadPhoto_imgButton.setOnClickListener {
-            // http://www.codeplayon.com/2018/11/android-image-upload-to-server-from-camera-and-gallery/
-            // TODO: make this work( Robert Zahariea )
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if(ContextCompat.checkSelfPermission(this,

@@ -30,7 +30,6 @@ class PhotoTakenActivity : TopNavViewActivity() {
         done = false
         failed = false
 
-        /// TODO: make activity responsive to the intent coming in from either upload or camera ( Robert Zahariea )
         val intentFrom:String? = intent.getStringExtra("From")
 
 
@@ -64,7 +63,6 @@ class PhotoTakenActivity : TopNavViewActivity() {
 
         seeresult.setOnClickListener {
             Toast.makeText(this, "See result pressed!", Toast.LENGTH_SHORT).show()
-            //TODO: progressBar on Absolute Layout( Robert zahariea )
             progressBar.visibility = View.VISIBLE
             val intent = Intent(this, DataVisualisationActivity::class.java)
             Thread {
@@ -117,7 +115,6 @@ class PhotoTakenActivity : TopNavViewActivity() {
             seeresult.isClickable = false
         }
     }
-
 
 }
 

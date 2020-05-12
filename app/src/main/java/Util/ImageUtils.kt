@@ -13,6 +13,3 @@ fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
         MediaStore.Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
     return Uri.parse(path)
 }
-
-
-

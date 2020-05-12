@@ -50,7 +50,6 @@ class TakePhotoActivity : AppCompatActivity() {
             initFotoapparat()
         }
 
-        // TODO: make this work( Robert Zahariea )
         gallery_button.setOnClickListener {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if(ContextCompat.checkSelfPermission(this,
@@ -68,15 +67,6 @@ class TakePhotoActivity : AppCompatActivity() {
                 //system OS is < Marshmallow
                 pickImageFromGallery()
             }
-
-
-
-//            startActivityForResult(
-//                Intent(
-//                    Intent.ACTION_PICK,
-//                    MediaStore.Images.Media.INTERNAL_CONTENT_URI
-//                ), GET_FROM_GALLERY
-//            )
         }
 
         photo_button.setOnClickListener {
@@ -183,12 +173,6 @@ class TakePhotoActivity : AppCompatActivity() {
             e.printStackTrace()
             fileName = null
         }
-        //return fileName
-
- //       var exif  = ExifInterface("")
-//         var rot  =  exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-//        Log.d("orietnation", rot.toString());
-
         return fileName;
     }
 
@@ -237,7 +221,5 @@ class TakePhotoActivity : AppCompatActivity() {
             matrix, true
         )
     }
-
-
 
 }
