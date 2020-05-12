@@ -8,6 +8,7 @@ import android.widget.Toast
 import io.fotoapparat.result.BitmapPhoto
 import kotlinx.android.synthetic.main.activity_photo_taken.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
+import plantToTextAPI.GetPlantName
 import plantToTextAPI.getPlantName
 import plantToTextAPI.ocrFunction
 import wikiapi.wikiapi
@@ -38,7 +39,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
         seeresult.setOnClickListener {
             val intent = Intent(this, DataVisualisationActivity::class.java)
             Thread {
-                val plantName = getPlantName((photoBitmap))
+                val plantName = GetPlantName().execute(photoBitmap)
                 println("plantname finished")
                 val res = wikiapi(plantName)
                 println("wikiapi finished")
