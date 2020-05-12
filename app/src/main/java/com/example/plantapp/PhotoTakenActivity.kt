@@ -61,29 +61,29 @@ class PhotoTakenActivity : TopNavViewActivity() {
                 }
             }.start()
 
-            Thread {
-                val plantName = ocrFunction((photoBitmap))
-                println("plantname finished")
-                val res = wikiapi(plantName)
-                println("wikiapi finished")
-                if (res != null) {
-                    intent.putExtra("description", res["description"])
-                    intent.putExtra("table", res["table"])
-                    intent.putExtra("latinName", plantName)
-                    intent.putExtra("photoUrl", res["image"])
-                    if (!done) {
-                        done = true
-                        startActivity(intent)
-                    }
-                } else {
-                    if (!failed) {
-                        failed = true
-                    } else {
-                        println("something happened")
-                        Toast.makeText(this, "Try o make another pcture", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }.start()
+//            Thread {
+//                val plantName = ocrFunction((photoBitmap))
+//                println("plantname finished")
+//                val res = wikiapi(plantName)
+//                println("wikiapi finished")
+//                if (res != null) {
+//                    intent.putExtra("description", res["description"])
+//                    intent.putExtra("table", res["table"])
+//                    intent.putExtra("latinName", plantName)
+//                    intent.putExtra("photoUrl", res["image"])
+//                    if (!done) {
+//                        done = true
+//                        startActivity(intent)
+//                    }
+//                } else {
+//                    if (!failed) {
+//                        failed = true
+//                    } else {
+//                        println("something happened")
+//                        Toast.makeText(this, "Try o make another pcture", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            }.start()
         }
     }
 }
