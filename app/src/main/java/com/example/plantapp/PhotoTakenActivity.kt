@@ -31,6 +31,8 @@ class PhotoTakenActivity : TopNavViewActivity() {
         failed = false
 
         /// TODO: make activity responsive to the intent coming in from either upload or camera ( Robert Zahariea )
+        val intentFrom:String? = intent.getStringExtra("From")
+
 
         this.layoutInflater.inflate(R.layout.activity_photo_taken, mainLayout)
         seeresult.isClickable = true
@@ -42,8 +44,22 @@ class PhotoTakenActivity : TopNavViewActivity() {
         val photoBitmap = BitmapPhoto(bitmap, 0)
         plant_photo.setImageDrawable(BitmapDrawable(resources, photoBitmap.bitmap))
 
-        retakephoto.setOnClickListener {
-            finish()
+        if(intentFrom == "UploadPhoto") {
+
+            retakephoto.visibility = View.GONE
+
+            uploadAnotherPhoto.setOnClickListener {
+                finish()
+            }
+
+        }else if(intentFrom == "TakePhotoActivity"){
+
+            uploadAnotherPhoto.visibility = View.GONE
+
+            retakephoto.setOnClickListener {
+                finish()
+            }
+
         }
 
         seeresult.setOnClickListener {
