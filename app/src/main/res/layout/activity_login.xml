@@ -11,22 +11,24 @@
 
     <TextView
         android:id="@+id/welcome_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="36dp"
+        android:layout_weight="6"
+        android:gravity="center"
         android:ems="10"
         android:orientation="vertical"
         android:text="@string/welcome"
-        android:textColor="@color/darkGreen"
-        android:textSize="30sp"
-        android:layout_marginTop="36dp"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_gravity="center"
         android:textAlignment="center"
-        />
+        android:textColor="@color/darkGreen"
+        android:textSize="30sp" />
     <EditText
         android:id="@+id/email_textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
@@ -38,6 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_weight="1"
         android:ems="10"
         android:hint="@string/password"
         android:inputType="textPassword"
@@ -47,27 +50,31 @@
 
     <Button
         android:id="@+id/email_login_button"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
         android:layout_gravity="center"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sign_up"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="44dp"
+        android:layout_weight="1"
+        android:text="@string/sign_in" />
 
     <TextView
         android:id="@+id/or_textView"
-        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/or"
-        android:textColor="#1B5E20"
+        android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:text="@string/or"
+        android:textColor="@color/darkGreen"
         app:layout_constraintVertical_bias="0.492" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="44dp"
+        android:layout_gravity="center"
+        android:layout_weight="1"/>
 
     <TextView
         android:id="@+id/sign_up_textView"
@@ -82,6 +89,7 @@
         android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/email_login_button"
         tools:text=""
@@ -90,6 +98,7 @@
         android:id="@+id/message2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/email_login_button"
         tools:text=""

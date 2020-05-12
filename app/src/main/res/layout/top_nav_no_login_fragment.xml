@@ -13,7 +13,7 @@
         android:layout_height="?android:actionBarSize"
         android:layout_marginTop="70dp"
         android:fontFamily="@font/open_sans"
-        android:text="@string/log_in"
+        android:text="@string/sign_in"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textStyle="bold"

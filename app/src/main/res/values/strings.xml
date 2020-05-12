@@ -8,11 +8,11 @@
     <string name="home">Home</string>
 
     <string name="sign_up">Sign Up</string>
-    <string name="log_in">Log in</string>
+    <string name="sign_in">Sign in</string>
     <string name="log_out">Log out</string>
 
-    <string name="signed_in_google">Logged in with Google Successfully!</string>
-    <string name="logged_in_successfully">Logged in Successfully!</string>
+    <string name="signed_in_google">Signed in with Google Successfully!</string>
+    <string name="signed_in_successfully">Signed in Successfully!</string>
     <string name="auth_failed">Authentication failed!</string>
 
     <string name="welcome">Welcome!</string>
@@ -24,7 +24,7 @@
     <string name="please_enter_email_id">Please enter your email id</string>
     <string name="please_enter_your_password">Please enter your password</string>
 
-    <string name="account"><font color="@color/grey">Already have an account? </font><b><font color="@color/primaryColor">Log in</font></b></string>
+    <string name="account"><font color="@color/grey">Already have an account? </font><b><font color="@color/primaryColor">Sign in</font></b></string>
     <string name="don_t_have_an_account_sign_up"><font color="@color/grey">Don\'t have an account? </font><b><font color="@color/primaryColor">Sign up!</font></b></string>
 
     <string name="username_username">username.username</string>
