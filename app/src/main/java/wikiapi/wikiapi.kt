@@ -10,6 +10,7 @@ fun wikiapi(name: String?): Hashtable<String, String>? {
     if(name==null)
         return null
 
+fun wikiapi(name: String ): Hashtable<String, Any>? {
     name.replace(" ", "_")
     val url = "https://en.wikipedia.org/wiki/$name"
     try {
