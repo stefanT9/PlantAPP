@@ -11,9 +11,10 @@ import android.widget.Toast
 import io.fotoapparat.result.BitmapPhoto
 import kotlinx.android.synthetic.main.activity_photo_taken.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
-import plantToTextAPI.GetPlantNameTask
 import plantToTextAPI.OcrTask
 import plantToTextAPI.OnTaskEventListener
+import plantToTextAPI.PlantTask1
+import plantToTextAPI.PlantTask2
 import wikiapi.wikiapi
 
 @Volatile
@@ -23,9 +24,11 @@ var done: Boolean = false
 var failed: Boolean = false
 
 class PhotoTakenActivity : TopNavViewActivity() {
-    lateinit var plantNameTask: AsyncTask<BitmapPhoto, Int?, String?>
+    lateinit var plantTask1: AsyncTask<BitmapPhoto, Int?, String?>
+    lateinit var plantTask2: AsyncTask<BitmapPhoto, Int?, String?>
     lateinit var ocrTask: AsyncTask<BitmapPhoto, Int?, String?>
     private var failNumber : Int = 0
+    private var numberOfTasks : Int = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,16 +75,29 @@ class PhotoTakenActivity : TopNavViewActivity() {
             /// TODO: Make threads stop when the activity is exited on back button press sau retake photo/ upload another photo ( Robert Zahariea )
             failNumber = 0
 
-//            plantNameTask = GetPlantNameTask(object : OnTaskEventListener<String> {
-//                override fun onSuccess(result: String) {
-//                   // ocrTask.cancel(true)
-//                    successFunction(result, intent)
-//                }
-//
-//                override fun onFailure(e: Exception?) {
-//                    failureFunction(Exception("Plant api didn't find any plant"))
-//                }
-//            }).execute(photoBitmap)
+            plantTask1 = PlantTask1(object : OnTaskEventListener<String> {
+                override fun onSuccess(result: String) {
+                   // ocrTask.cancel(true)
+                    plantTask2.cancel(true)
+                    successFunction(result, intent)
+                }
+
+                override fun onFailure(e: Exception?) {
+                    failureFunction(Exception("Plant api 1 didn't find any plant"))
+                }
+            }).execute(photoBitmap)
+
+            plantTask2 = PlantTask2(object : OnTaskEventListener<String> {
+                override fun onSuccess(result: String) {
+                  //  ocrTask.cancel(true)
+                    plantTask1.cancel(true)
+                    successFunction(result, intent)
+                }
+
+                override fun onFailure(e: Exception?) {
+                    failureFunction(Exception("Plant api 2 didn't find any plant"))
+                }
+            }).execute(photoBitmap)
 
 //            ocrTask = OcrTask(object : OnTaskEventListener<String> {
 //                override fun onSuccess(result: String) {
@@ -99,31 +115,28 @@ class PhotoTakenActivity : TopNavViewActivity() {
 
 
     fun successFunction(plantName: String, intent: Intent){
-        //Call wikiapi and move to PlantDetailsActivity
-        Log.d("successFunction", plantName)
-
-        var res = wikiapi(plantName)
-        if (res != null) {
+        Thread {
+            val res = wikiapi(plantName)
             println("wikiapi finished")
-            intent.putExtra("description", res["description"])
-            intent.putExtra("table", res["table"])
-            intent.putExtra("latinName", plantName)
-            intent.putExtra("photoUrl", res["image"])
-            startActivity(intent)
-        }
-        else {
-            println("Something went wrong with wikiapi")
-            Log.d("wikiapi", "Something went wrong with wikiapi")
-            failNumber++
-            if (failNumber == 2)
-                Toast.makeText(this, "Try to take another picture", Toast.LENGTH_SHORT).show()
-        }
+            if (res != null) {
+                intent.putExtra("description", res["description"])
+                intent.putExtra("table", res["table"])
+                intent.putExtra("latinName", plantName)
+                intent.putExtra("photoUrl", res["image"])
+                startActivity(intent)
+            } else {
+                println("Something went wrong with wikiapi")
+                failNumber++
+                if (failNumber == numberOfTasks)
+                    Toast.makeText(this, "Try to take another picture", Toast.LENGTH_SHORT).show()
+            }
+        }.start()
     }
 
     fun failureFunction(e : Exception){
         //If both tasks have failed, ask user for another photo
         failNumber++
-        if (failNumber == 2)
+        if (failNumber == numberOfTasks)
             Toast.makeText(this, "Try to take another picture", Toast.LENGTH_SHORT).show()
         println(e)
     }

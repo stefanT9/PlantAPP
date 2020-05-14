@@ -26,42 +26,64 @@ import java.util.*
 
 var MIN_CONFIDENCE_LEVEL = 0.25
 
-class GetPlantNameTask(callback: OnTaskEventListener<String>) : AsyncTask<BitmapPhoto, Int?, String?>() {
+class PlantTask1(callback: OnTaskEventListener<String>) : AsyncTask<BitmapPhoto, Int?, String?>() {
 
     private var mCallBack: OnTaskEventListener<String> = callback
 
     override fun onPreExecute() {
         super.onPreExecute()
-        Log.d("GetPlantNameTask", "GetPlantNameTask started")
+        Log.d("PlantTask1", "PlantTask1 started")
     }
 
     override fun doInBackground(vararg params: BitmapPhoto): String? {
-        //Get bitmap from parameters
+        //Prepare variables
         val bitmap = params[0].bitmap
+        var result1 : Hashtable<String, String>?
 
         //Call api no. 1
         val plantList1 = apiPlant1(bitmap)
 
-        //Call api no. 2
-        val plantList2 = apiPlant2(bitmap)
-
-        //Prepare variables
-        var result1 : Hashtable<String, String>?
-        var result2 : Hashtable<String, String>?
-
-        //Return the first result that we can find on wikipedia
+        //Check if first api returned something good
         for (i in plantList1.indices){
-
-            //Check if first api returned something good
             result1 = wikiapi(plantList1[i])
             if (result1 != null) {
                 return plantList1[i]
             }
         }
 
-        for (i in plantList2.indices) {
+        return null
+    }
 
-            //Check if second api returned something good
+    override fun onPostExecute(result: String?) {
+        super.onPostExecute(result);
+        if (result != null) {
+            mCallBack?.onSuccess(result);
+        } else {
+            mCallBack?.onFailure(Exception("Failed to recognize plant"));
+        }
+        Log.d("PlantTask1", "PlantTask1 finished!")
+    }
+}
+
+class PlantTask2(callback: OnTaskEventListener<String>) : AsyncTask<BitmapPhoto, Int?, String?>() {
+
+    private var mCallBack: OnTaskEventListener<String> = callback
+
+    override fun onPreExecute() {
+        super.onPreExecute()
+        Log.d("PlantTask2", "PlantTask2 started")
+    }
+
+    override fun doInBackground(vararg params: BitmapPhoto): String? {
+        //Prepare variables
+        val bitmap = params[0].bitmap
+        var result2 : Hashtable<String, String>?
+
+        //Call api no. 2
+        val plantList2 = apiPlant2(bitmap)
+
+        //Check if second api returned something good
+        for (i in plantList2.indices) {
             result2 = wikiapi(plantList2[i])
             if (result2 != null) {
                 return plantList2[i]
@@ -78,7 +100,7 @@ class GetPlantNameTask(callback: OnTaskEventListener<String>) : AsyncTask<Bitmap
         } else {
             mCallBack?.onFailure(Exception("Failed to recognize plant"));
         }
-        Log.d("GetPlantNameTask", "GetPlantNameTask finished!")
+        Log.d("PlantTask2", "PlantTask2 finished!")
     }
 }
 
