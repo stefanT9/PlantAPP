@@ -9,6 +9,7 @@ import android.view.Gravity
 import android.widget.ImageView
 import android.widget.TableRow
 import android.widget.TextView
+import androidx.core.view.marginEnd
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_data_visualisation.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
@@ -68,11 +69,17 @@ class DataVisualisationActivity : TopNavViewActivity() {
 
                     /// https://stackoverflow.com/questions/2108456/how-can-i-create-a-table-with-borders-in-android
                     /// TODO: Add properties to make this look like it looks in design ( Daniel Bicu )
+
                     row.gravity = Gravity.CENTER
                     key.gravity = Gravity.CENTER
                     value.gravity = Gravity.CENTER
                     key.setTextColor(Color.parseColor("#36A961"))
                     value.setTextColor(Color.parseColor("#1D5833"))
+
+                    key.setBackgroundResource(R.drawable.cell_shape)
+                    value.setBackgroundResource(R.drawable.cell_shape)
+
+
 
                     row.addView(key)
                     row.addView(value)
