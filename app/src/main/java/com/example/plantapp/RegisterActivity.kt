@@ -7,14 +7,18 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
+import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import kotlinx.android.synthetic.main.activity_register.*
-import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.AuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
 import kotlinx.android.synthetic.main.top_nav_login_fragment.*
 import java.util.regex.Pattern
@@ -32,6 +36,7 @@ class RegisterActivity : TopNavViewActivity() {
         this.layoutInflater.inflate(R.layout.activity_register, mainLayout)
 
         mAuth = FirebaseAuth.getInstance()
+        val db = FirebaseFirestore.getInstance()
         listenerState = FirebaseAuth.AuthStateListener() {
 
             fun onAuthStateChanged(fireAuth: FirebaseAuth) {
@@ -51,7 +56,12 @@ class RegisterActivity : TopNavViewActivity() {
         btn_Register.setOnClickListener(View.OnClickListener {
             val email: String = regEmail.text.toString()
             val pass: String = regPassword.text.toString()
-
+            val ussname: String = editText.text.toString()
+            if(ussname.isEmpty())
+            {
+                regEmail.error = "Username Required";
+                regEmail.requestFocus();
+            }
             if (email.isEmpty()) {
                 regEmail.error = "Please enter email id";
                 regEmail.requestFocus();
@@ -90,7 +100,29 @@ class RegisterActivity : TopNavViewActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             Log.d("create", "createUserWithEmail:success")
+                            val userr: MutableMap<String, Any> =
+                                HashMap()
+                            userr.put("username",ussname)
 
+
+// Add a new document with a generated ID
+
+// Add a new document with a generated ID
+                            db.collection("users") .
+                                .add(userr)
+                                .addOnSuccessListener(OnSuccessListener<DocumentReference> { documentReference ->
+                                    Log.d(
+                                        tag,
+                                        "DocumentSnapshot added with ID: " + documentReference.id
+                                    )
+                                })
+                                .addOnFailureListener(OnFailureListener { e ->
+                                    Log.w(
+                                        tag,
+                                        "Error adding document",
+                                        e
+                                    )
+                                })
                             val intent = Intent(this, HomeActivity::class.java)
                             startActivity(intent)
                             val user = mAuth.currentUser
