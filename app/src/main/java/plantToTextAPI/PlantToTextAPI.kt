@@ -1,6 +1,7 @@
 package plantToTextAPI
 
 import android.graphics.Bitmap
+import android.os.AsyncTask
 import android.util.Base64
 import android.util.Log
 import com.google.firebase.ml.vision.FirebaseVision
@@ -8,7 +9,6 @@ import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import cz.msebera.android.httpclient.HttpResponse
 import cz.msebera.android.httpclient.client.HttpClient
 import cz.msebera.android.httpclient.client.methods.HttpPost
-import cz.msebera.android.httpclient.entity.mime.HttpMultipartMode
 import cz.msebera.android.httpclient.entity.mime.MultipartEntityBuilder
 import cz.msebera.android.httpclient.entity.mime.content.FileBody
 import cz.msebera.android.httpclient.impl.client.HttpClientBuilder
@@ -18,61 +18,100 @@ import org.json.JSONArray
 import org.json.JSONObject
 import wikiapi.wikiapi
 import java.io.*
+import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
 import java.util.*
 
-/// TODO: Only use results that are more than x% (parametrizat) confident ( Cosmin Aftanase )
 
-fun getPlantName(photo: BitmapPhoto): String? {
-    //Call api no. 1
-    val plantList1 = apiPlant1(photo.bitmap)
+var MIN_CONFIDENCE_LEVEL = 0.25
 
-    //Call api no. 2
-    //val plantList2 = apiPlant2(photo.bitmap)
+class GetPlantNameTask(callback: OnTaskEventListener<String>) : AsyncTask<BitmapPhoto, Int?, String?>() {
 
-    //Prepare variables
-    var result1 : Hashtable<String, String>?
-    var result2 : Hashtable<String, String>?
+    private var mCallBack: OnTaskEventListener<String> = callback
 
-    //Return the first result that we can find on wikipedia
-    for (i in plantList1.indices){
-
-        //Check if first api returned something good
-        result1 = wikiapi(plantList1[i])
-        if (result1 != null) {
-            return plantList1[i]
-        }
+    override fun onPreExecute() {
+        super.onPreExecute()
+        Log.d("GetPlantNameTask", "GetPlantNameTask started")
     }
-    
-    /*
-    for (i in plantList2.indices) {
 
-        //Check if second api returned something good
-        result2 = wikiapi(plantList2[i])
-        if (result2 != null) {
-            return plantList2[i]
+    override fun doInBackground(vararg params: BitmapPhoto): String? {
+        //Get bitmap from parameters
+        val bitmap = params[0].bitmap
+
+        //Call api no. 1
+        val plantList1 = apiPlant1(bitmap)
+
+        //Call api no. 2
+        val plantList2 = apiPlant2(bitmap)
+
+        //Prepare variables
+        var result1 : Hashtable<String, String>?
+        var result2 : Hashtable<String, String>?
+
+        //Return the first result that we can find on wikipedia
+        for (i in plantList1.indices){
+
+            //Check if first api returned something good
+            result1 = wikiapi(plantList1[i])
+            if (result1 != null) {
+                return plantList1[i]
+            }
         }
+
+        for (i in plantList2.indices) {
+
+            //Check if second api returned something good
+            result2 = wikiapi(plantList2[i])
+            if (result2 != null) {
+                return plantList2[i]
+            }
+        }
+
+        return null
     }
-    */
-    return null
+
+    override fun onPostExecute(result: String?) {
+        super.onPostExecute(result);
+        if (result != null) {
+            mCallBack?.onSuccess(result);
+        } else {
+            mCallBack?.onFailure(Exception("Failed to recognize plant"));
+        }
+        Log.d("GetPlantNameTask", "GetPlantNameTask finished!")
+    }
 }
 
-fun ocrFunction(photo: BitmapPhoto):String? {
-    var returnedText: String? = null
-    val image = FirebaseVisionImage.fromBitmap(photo.bitmap)
-    val detector = FirebaseVision.getInstance().onDeviceTextRecognizer
-    detector.processImage(image)
-        .addOnSuccessListener { firebaseVisionText ->
-            returnedText = firebaseVisionText.toString()
-            Log.e("Ocr","Ocr recognized: $returnedText !")
-        }
-        .addOnFailureListener { e ->
-            Log.e("Ocr","Ocr Recognition error")
-        }
-        .result
-    return returnedText
+class OcrTask(callback: OnTaskEventListener<String>) : AsyncTask<BitmapPhoto, Int?, String?>() {
+    private var mCallBack: OnTaskEventListener<String> = callback
+
+    override fun onPreExecute() {
+        super.onPreExecute()
+        Log.d("OcrTask", "OcrTask started")
+    }
+
+    override fun doInBackground(vararg params: BitmapPhoto): String? {
+        //Get bitmap from parameters
+        val bitmap = params[0].bitmap
+
+        //Make all steps from firebase api
+        var returnedText: String? = null
+        val image = FirebaseVisionImage.fromBitmap(bitmap)
+        val detector = FirebaseVision.getInstance().onDeviceTextRecognizer
+        val task = detector.processImage(image)
+            .addOnSuccessListener { firebaseVisionText ->
+                returnedText = firebaseVisionText.text
+                Log.e("OcrTask","Ocr recognized: $returnedText !")
+                mCallBack?.onSuccess(returnedText!!);
+            }
+            .addOnFailureListener { e ->
+                Log.e("OcrTask", "Ocr Recognition error")
+                mCallBack?.onFailure(Exception("No text found!"))
+            }
+        return null;
+    }
 }
+
 
 fun validatePlantLocation(latinName: String, latitude: Double, longitude: Double): Boolean {
 
@@ -101,23 +140,47 @@ fun apiPlant1(bitmap: Bitmap): List<String>{
 
     // We only care about the scientific name ( ex "scientific_name": "Rosa")
     var lastIndex = 0
-    val searchedText = "\"scientific_name\": "
-    val jumpOverText = searchedText.length
+    var searchedText = "\"scientific_name\": "
+    var jumpOverText = searchedText.length
 
     //Get all scientific names
     val names = mutableListOf<String>()
     while(lastIndex != -1) {
         lastIndex = response.indexOf(searchedText, lastIndex)
         if(lastIndex != -1){
-            val scientific_name =  response.substring(lastIndex + jumpOverText, lastIndex + jumpOverText + 20).split("\"")[1]
+            var scientific_name =  response.substring(lastIndex + jumpOverText, lastIndex + jumpOverText + 20).split("\"")[1]
             names.add(scientific_name)
             lastIndex += 1
         }
     }
 
+    // We only get each confidence number ( ex "probability": 0.09567288713602976)
+    lastIndex = 0
+    var searchedText2 = "\"probability\": "
+    jumpOverText = searchedText2.length
+
+    //Get all confidence numbers
+    val confidence = mutableListOf<Float>()
+    while(lastIndex != -1) {
+        lastIndex = response.indexOf(searchedText2, lastIndex)
+        if(lastIndex != -1){
+            var confidenceNo =  response.substring(lastIndex + jumpOverText, lastIndex + jumpOverText + 20).split(",")[0]
+            confidence.add(confidenceNo.toFloat())
+            lastIndex += 1
+        }
+    }
+
+    val finalNames = mutableListOf<String>()
+    for (i in confidence.indices)
+    {
+        if (confidence.get(i) < MIN_CONFIDENCE_LEVEL)
+            break
+        finalNames.add(names.get(i))
+    }
+
     //Return the names
-    Log.d("api1", names.toString())
-    return names
+    Log.d("api1", finalNames.toString())
+    return finalNames
 }
 
 fun apiPlant2(bitmap: Bitmap): List<String>{
@@ -164,9 +227,33 @@ fun apiPlant2(bitmap: Bitmap): List<String>{
         }
     }
 
-    //Return the response
-    Log.d("api2", names.toString())
-    return names
+    // We only get each confidence number ( ex "probability": 0.09567288713602976)
+    lastIndex = 0
+    var searchedText2 = "\"score\":"
+    jumpOverText = searchedText2.length
+
+    //Get all confidence numbers
+    val confidence = mutableListOf<Float>()
+    while(lastIndex != -1) {
+        lastIndex = response.indexOf(searchedText2, lastIndex)
+        if(lastIndex != -1){
+            var confidenceNo =  response.substring(lastIndex + jumpOverText, lastIndex + jumpOverText + 20).split(",")[0]
+            confidence.add(confidenceNo.toFloat())
+            lastIndex += 1
+        }
+    }
+
+    val finalNames = mutableListOf<String>()
+    for (i in confidence.indices)
+    {
+        if (confidence.get(i) < MIN_CONFIDENCE_LEVEL)
+            break
+        finalNames.add(names.get(i))
+    }
+
+    //Return the names
+    Log.d("api2", finalNames.toString())
+    return finalNames
 }
 
 fun bitmapToBase64(bitmap: Bitmap): String {
