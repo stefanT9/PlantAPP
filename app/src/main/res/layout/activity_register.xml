@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
-    <!-- TODO: Rename the ID's to follow the standard-->
+    <!-- TODO: Rename the ID's to follow the standard ( Alexandra Ciocoiu )-->
     <TextView
         android:layout_width="134dp"
         android:layout_height="wrap_content"
