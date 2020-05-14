@@ -12,7 +12,6 @@ import io.fotoapparat.result.BitmapPhoto
 import kotlinx.android.synthetic.main.activity_photo_taken.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
 import plantToTextAPI.GetPlantNameTask
-import plantToTextAPI.OcrTask
 import plantToTextAPI.OnTaskEventListener
 import wikiapi.wikiapi
 
@@ -67,38 +66,38 @@ abstract class PhotoTakenActivity : TopNavViewActivity() {
         seeresult.setOnClickListener {
             Toast.makeText(this, "See result pressed!", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.VISIBLE
-            val intent = Intent(this, DataVisualisationActivity::class.java)
+            var intent = Intent(this, DataVisualisationActivity::class.java)
 
             /// TODO: Make threads stop when the activity is exited on back button press sau retake photo/ upload another photo ( Robert Zahariea )
             failNumber = 0
+            successFunction("Helianthus", intent)
+//            plantNameTask = GetPlantNameTask(object : OnTaskEventListener<String> {
+//                override fun onSuccess(result: String) {
+//                    ocrTask.cancel(true)
+//                    successFunction(result, intent)
+//                }
+//
+//                override fun onFailure(e: Exception?) {
+//                    failureFunction(Exception("Plant api didn't find any plant"))
+//                }
+//            }).execute(photoBitmap)
 
-            plantNameTask = GetPlantNameTask(object : OnTaskEventListener<String> {
-                override fun onSuccess(result: String) {
-                    ocrTask.cancel(true)
-                    successFunction(result)
-                }
-
-                override fun onFailure(e: Exception?) {
-                    failureFunction(Exception("Plant api didn't find any plant"))
-                }
-            }).execute(photoBitmap)
-
-            ocrTask = OcrTask(object : OnTaskEventListener<String> {
-                override fun onSuccess(result: String) {
-                    plantNameTask.cancel(true)
-                    successFunction(result)
-                }
-
-                override fun onFailure(e: Exception?) {
-                   failureFunction(Exception("Ocr didn't find any text"))
-                }
-            }).execute(photoBitmap)
+//            ocrTask = OcrTask(object : OnTaskEventListener<String> {
+//                override fun onSuccess(result: String) {
+//                    plantNameTask.cancel(true)
+//                    successFunction(result, intent)
+//                }
+//
+//                override fun onFailure(e: Exception?) {
+//                   failureFunction(Exception("Ocr didn't find any text"))
+//                }
+//            }).execute(photoBitmap)
 
         }
     }
 
 
-    fun successFunction(plantName : String){
+    fun successFunction(plantName: String, intent: Intent){
         //Call wikiapi and move to PlantDetailsActivity
         val res = wikiapi(plantName)
         if (res != null) {
