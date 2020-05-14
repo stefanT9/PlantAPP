@@ -33,22 +33,7 @@ class RegisterActivity : TopNavViewActivity() {
 
         mAuth = FirebaseAuth.getInstance()
         val db = FirebaseFirestore.getInstance()
-        listenerState = FirebaseAuth.AuthStateListener() {
 
-            fun onAuthStateChanged(fireAuth: FirebaseAuth) {
-
-                val user: FirebaseUser? = mAuth.currentUser
-                if (user != null) {
-                    username.setText(FirebaseAuth.getInstance().currentUser?.displayName.toString())
-                    mail.setText(FirebaseAuth.getInstance().currentUser?.email.toString())
-                    Toast.makeText(this@RegisterActivity, "You are auth!", Toast.LENGTH_SHORT)
-                        .show()
-                } else {
-                    Toast.makeText(this@RegisterActivity, "Please auth!", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-        }
         btn_Register.setOnClickListener(View.OnClickListener {
             val email: String = regEmail.text.toString()
             val pass: String = regPassword.text.toString()
