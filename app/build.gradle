@@ -79,6 +79,7 @@ dependencies {
     androidTestImplementation 'androidx.test:rules:1.2.0'
     implementation group: 'cz.msebera.android' , name: 'httpclient', version: '4.4.1.1'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.google.firebase:firebase-firestore:21.4.3'
 }
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.android.application'

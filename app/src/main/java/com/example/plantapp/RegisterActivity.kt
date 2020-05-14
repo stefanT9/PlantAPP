@@ -7,17 +7,17 @@ import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import kotlinx.android.synthetic.main.activity_register.*
-import com.google.android.gms.common.api.ApiException
-import com.google.firebase.auth.AuthCredential
-import com.google.firebase.auth.GoogleAuthProvider
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.*
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
 import kotlinx.android.synthetic.main.top_nav_login_fragment.*
 import java.util.regex.Pattern
+
 
 class RegisterActivity : TopNavViewActivity() {
 
@@ -32,6 +32,7 @@ class RegisterActivity : TopNavViewActivity() {
         this.layoutInflater.inflate(R.layout.activity_register, mainLayout)
 
         mAuth = FirebaseAuth.getInstance()
+        val db = FirebaseFirestore.getInstance()
         listenerState = FirebaseAuth.AuthStateListener() {
 
             fun onAuthStateChanged(fireAuth: FirebaseAuth) {
@@ -54,6 +55,12 @@ class RegisterActivity : TopNavViewActivity() {
 
             // TODO: make all validation into a validate input function ( Cosmin Aftanase)
 
+            val ussname = editText.text.toString()
+            if(ussname.isEmpty())
+            {
+                regEmail.error = "Username Required";
+                regEmail.requestFocus();
+            }
             if (email.isEmpty()) {
                 regEmail.error = "Please enter email id";
                 regEmail.requestFocus();
@@ -87,15 +94,20 @@ class RegisterActivity : TopNavViewActivity() {
                 regPassword.requestFocus();
             }
             else {
-                /// TODO: Update firebase username after the register is complete ( Alexandra Ciocoiu )
                 mAuth.createUserWithEmailAndPassword(email, pass)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             Log.d("create", "createUserWithEmail:success")
+
+                            val profileUpdates =
+                                UserProfileChangeRequest.Builder()
+                                    .setDisplayName(ussname).build()
+
+                            val user = mAuth.currentUser
+                            user?.updateProfile(profileUpdates)
+
                             val intent = Intent(this, HomeActivity::class.java)
                             startActivity(intent)
-                            val user = mAuth.currentUser
-                            
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w("failed", "createUserWithEmail:failure", task.exception)
