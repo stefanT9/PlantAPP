@@ -18,6 +18,7 @@ import java.net.HttpURLConnection
 import java.net.URL
 
 
+// TODO: add takephoto to the toolbar ( Daniel Bicu )
 class DataVisualisationActivity : TopNavViewActivity() {
     var arr = arrayListOf<String>()
 
@@ -46,6 +47,8 @@ class DataVisualisationActivity : TopNavViewActivity() {
             val photo: Bitmap?
             photo = null
             val src = extras.getString("photoUrl")
+
+            // TODO: scale the photo that comes from picasso before showing it ( Daniel Bicu )
             Picasso.get().load(src).into(plant_image);
 
             latinName = extras.getString("latinName")!!
@@ -66,9 +69,6 @@ class DataVisualisationActivity : TopNavViewActivity() {
                     val value = TextView(this)
                     key.text = table[i]
                     value.text = table[i + 1]
-
-                    /// https://stackoverflow.com/questions/2108456/how-can-i-create-a-table-with-borders-in-android
-                    /// TODO: Add properties to make this look like it looks in design ( Daniel Bicu )
 
                     row.gravity = Gravity.CENTER
                     key.gravity = Gravity.CENTER

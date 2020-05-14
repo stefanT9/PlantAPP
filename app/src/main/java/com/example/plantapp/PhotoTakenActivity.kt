@@ -48,6 +48,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
             retakephoto.visibility = View.GONE
 
             uploadAnotherPhoto.setOnClickListener {
+                // TODO: Make this go to the gallery instead of the home activity ( Alexandra Ciocoiu )
                 finish()
             }
 
@@ -67,6 +68,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
             val intent = Intent(this, DataVisualisationActivity::class.java)
 
             /// TODO: Make threads stop when the activity is exited on back button press sau retake photo/ upload another photo ( Robert Zahariea )
+            /// TODO: Replace the threads with the afferent tasks ( Cosmin Aftanase )
             val t1 = Thread {
                 val plantName = getPlantName((photoBitmap))
                 println("plantname finished")
