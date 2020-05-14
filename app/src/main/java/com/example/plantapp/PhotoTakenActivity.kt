@@ -12,6 +12,7 @@ import io.fotoapparat.result.BitmapPhoto
 import kotlinx.android.synthetic.main.activity_photo_taken.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
 import plantToTextAPI.GetPlantNameTask
+import plantToTextAPI.OcrTask
 import plantToTextAPI.OnTaskEventListener
 import wikiapi.wikiapi
 
@@ -21,9 +22,9 @@ var done: Boolean = false
 @Volatile
 var failed: Boolean = false
 
-abstract class PhotoTakenActivity : TopNavViewActivity() {
-    abstract var plantNameTask: AsyncTask<BitmapPhoto, Int?, String?>
-    abstract var ocrTask: AsyncTask<BitmapPhoto, Int?, String?>
+class PhotoTakenActivity : TopNavViewActivity() {
+    lateinit var plantNameTask: AsyncTask<BitmapPhoto, Int?, String?>
+    lateinit var ocrTask: AsyncTask<BitmapPhoto, Int?, String?>
     private var failNumber : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,10 +71,10 @@ abstract class PhotoTakenActivity : TopNavViewActivity() {
 
             /// TODO: Make threads stop when the activity is exited on back button press sau retake photo/ upload another photo ( Robert Zahariea )
             failNumber = 0
-            successFunction("Helianthus", intent)
+
 //            plantNameTask = GetPlantNameTask(object : OnTaskEventListener<String> {
 //                override fun onSuccess(result: String) {
-//                    ocrTask.cancel(true)
+//                   // ocrTask.cancel(true)
 //                    successFunction(result, intent)
 //                }
 //
@@ -99,7 +100,9 @@ abstract class PhotoTakenActivity : TopNavViewActivity() {
 
     fun successFunction(plantName: String, intent: Intent){
         //Call wikiapi and move to PlantDetailsActivity
-        val res = wikiapi(plantName)
+        Log.d("successFunction", plantName)
+
+        var res = wikiapi(plantName)
         if (res != null) {
             println("wikiapi finished")
             intent.putExtra("description", res["description"])
@@ -108,11 +111,12 @@ abstract class PhotoTakenActivity : TopNavViewActivity() {
             intent.putExtra("photoUrl", res["image"])
             startActivity(intent)
         }
-        //Useless path?
         else {
             println("Something went wrong with wikiapi")
             Log.d("wikiapi", "Something went wrong with wikiapi")
-            Toast.makeText(this, "Try to take another picture", Toast.LENGTH_SHORT).show()
+            failNumber++
+            if (failNumber == 2)
+                Toast.makeText(this, "Try to take another picture", Toast.LENGTH_SHORT).show()
         }
     }
 
