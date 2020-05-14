@@ -108,7 +108,7 @@ class RegisterActivity : TopNavViewActivity() {
 // Add a new document with a generated ID
 
 // Add a new document with a generated ID
-                            db.collection("users") .
+                            db.collection("users") 
                                 .add(userr)
                                 .addOnSuccessListener(OnSuccessListener<DocumentReference> { documentReference ->
                                     Log.d(
