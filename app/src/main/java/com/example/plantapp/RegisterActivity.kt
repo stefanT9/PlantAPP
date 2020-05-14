@@ -52,6 +52,8 @@ class RegisterActivity : TopNavViewActivity() {
             val email: String = regEmail.text.toString()
             val pass: String = regPassword.text.toString()
 
+            // TODO: make all validation into a validate input function ( Cosmin Aftanase)
+
             if (email.isEmpty()) {
                 regEmail.error = "Please enter email id";
                 regEmail.requestFocus();
@@ -90,20 +92,15 @@ class RegisterActivity : TopNavViewActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             Log.d("create", "createUserWithEmail:success")
-
                             val intent = Intent(this, HomeActivity::class.java)
                             startActivity(intent)
                             val user = mAuth.currentUser
-
+                            
                         } else {
-
                             // If sign in fails, display a message to the user.
-
                             Log.w("failed", "createUserWithEmail:failure", task.exception)
-
                             Toast.makeText(
                                 this@RegisterActivity, "Authentication failed.",
-
                                 Toast.LENGTH_SHORT
                             ).show()
                         }

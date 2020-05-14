@@ -29,8 +29,6 @@ import java.util.jar.Manifest
 
 class HomeActivity : TopNavViewActivity() {
 
-    // TODO: Remove all warnings ( Daniel Bicu )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.layoutInflater.inflate(R.layout.activity_home,mainLayout)
