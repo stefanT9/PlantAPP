@@ -36,7 +36,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
         this.layoutInflater.inflate(R.layout.activity_photo_taken, mainLayout)
         seeresult.isClickable = true
         progressBar.visibility = View.GONE
-
+        foto.visibility = View.GONE
         val bitmap = BitmapFactory.decodeStream(this.openFileInput("myImage"))
 
 

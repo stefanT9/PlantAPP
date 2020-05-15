@@ -30,7 +30,7 @@ class RegisterActivity : TopNavViewActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.layoutInflater.inflate(R.layout.activity_register, mainLayout)
-
+        foto.visibility = View.GONE
         mAuth = FirebaseAuth.getInstance()
         val db = FirebaseFirestore.getInstance()
 

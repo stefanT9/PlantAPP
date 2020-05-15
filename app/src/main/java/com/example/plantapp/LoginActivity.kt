@@ -39,7 +39,7 @@ class LoginActivity : TopNavViewActivity() {
 
         super.onCreate(savedInstanceState)
         this.layoutInflater.inflate(R.layout.activity_login, mainLayout)
-
+        foto.visibility = View.GONE
         //setColor to SIGN IN
         val stringText: String = getString(R.string.don_t_have_an_account_sign_up)
         val mSpannableString = SpannableString(stringText)

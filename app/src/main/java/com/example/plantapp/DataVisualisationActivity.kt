@@ -1,6 +1,7 @@
 package com.example.plantapp
 
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -29,6 +30,12 @@ class DataVisualisationActivity : TopNavViewActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.layoutInflater.inflate(R.layout.activity_data_visualisation, mainLayout)
+
+
+        foto.setOnClickListener {
+            val intent = Intent(this, TakePhotoActivity::class.java)
+            startActivity(intent)
+        }
 
         read_more_anchor.setOnClickListener {
             if (read_more_anchor.text == "Read more") {
