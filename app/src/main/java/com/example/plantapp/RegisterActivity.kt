@@ -12,10 +12,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
-import com.google.firebase.auth.AuthCredential
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.*
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_register.*
@@ -36,63 +33,49 @@ class RegisterActivity : TopNavViewActivity() {
         this.layoutInflater.inflate(R.layout.activity_register, mainLayout)
 
         mAuth = FirebaseAuth.getInstance()
-        val db = FirebaseFirestore.getInstance()
-        listenerState = FirebaseAuth.AuthStateListener() {
 
-            fun onAuthStateChanged(fireAuth: FirebaseAuth) {
 
-                val user: FirebaseUser? = mAuth.currentUser
-                if (user != null) {
-                    username.setText(FirebaseAuth.getInstance().currentUser?.displayName.toString())
-                    mail.setText(FirebaseAuth.getInstance().currentUser?.email.toString())
-                    Toast.makeText(this@RegisterActivity, "You are auth!", Toast.LENGTH_SHORT)
-                        .show()
-                } else {
-                    Toast.makeText(this@RegisterActivity, "Please auth!", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-        }
         btn_Register.setOnClickListener(View.OnClickListener {
-            val email: String = regEmail.text.toString()
-            val pass: String = regPassword.text.toString()
-            val ussname: String = editText.text.toString()
+            val email: String = EmailID.text.toString()
+            val pass: String = PasswordID.text.toString()
+            val ussname = Edit_username.text.toString()
+
             if(ussname.isEmpty())
             {
-                regEmail.error = "Username Required";
-                regEmail.requestFocus();
+                Edit_username.error = "Username Required";
+                Edit_username.requestFocus();
             }
             if (email.isEmpty()) {
-                regEmail.error = "Please enter email id";
-                regEmail.requestFocus();
+                EmailID.error = "Please enter email id";
+                EmailID.requestFocus();
             }
             else if ( !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                regEmail.error = "Please enter a valid email"
-                regEmail.requestFocus()
+                EmailID.error = "Please enter a valid email"
+                EmailID.requestFocus()
             }
             else if (pass.isEmpty()) {
-                regPassword.error = "Please enter your password";
-                regPassword.requestFocus();
+                PasswordID.error = "Please enter your password";
+                PasswordID.requestFocus();
             }
             else if ( pass.length < 5) {
-                regPassword.error = "Password must have at least 5 characters";
-                regPassword.requestFocus();
+                PasswordID.error = "Password must have at least 5 characters";
+                PasswordID.requestFocus();
             }
             else if ( pass == pass.toLowerCase()) {
-                regPassword.error = "Password should have at least 1 uppercase";
-                regPassword.requestFocus();
+                PasswordID.error = "Password should have at least 1 uppercase";
+               PasswordID.requestFocus();
             }
             else if ( pass == pass.toUpperCase()) {
-                regPassword.error = "Password should have at least 1 lowercase";
-                regPassword.requestFocus();
+                PasswordID.error = "Password should have at least 1 lowercase";
+                PasswordID.requestFocus();
             }
             else if( Pattern.compile("(.)*(\\\\d)(.)*").matcher(pass).matches() ) {
-                regPassword.error = "Password should have at least 1 digit";
-                regPassword.requestFocus();
+                PasswordID.error = "Password should have at least 1 digit";
+                PasswordID.requestFocus();
             }
             else if( !Pattern.compile("(.)*([\$&+,:;=\\\\\\\\?@#|/'<>.^*()%!-])(.)*").matcher(pass).matches() ){
-                regPassword.error = "Password should have at least 1 special character";
-                regPassword.requestFocus();
+                PasswordID.error = "Password should have at least 1 special character";
+                PasswordID.requestFocus();
             }
             else {
                 /// TODO: Update firebase username after the register is complete ( Alexandra Ciocoiu )
@@ -100,32 +83,15 @@ class RegisterActivity : TopNavViewActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             Log.d("create", "createUserWithEmail:success")
-                            val userr: MutableMap<String, Any> =
-                                HashMap()
-                            userr.put("username",ussname)
+                            val profileUpdates =
+                                UserProfileChangeRequest.Builder()
+                                    .setDisplayName(ussname).build()
 
-
-// Add a new document with a generated ID
-
-// Add a new document with a generated ID
-                            db.collection("users") 
-                                .add(userr)
-                                .addOnSuccessListener(OnSuccessListener<DocumentReference> { documentReference ->
-                                    Log.d(
-                                        tag,
-                                        "DocumentSnapshot added with ID: " + documentReference.id
-                                    )
-                                })
-                                .addOnFailureListener(OnFailureListener { e ->
-                                    Log.w(
-                                        tag,
-                                        "Error adding document",
-                                        e
-                                    )
-                                })
+                            val user: FirebaseUser? = mAuth.currentUser
+                            user?.updateProfile(profileUpdates)
                             val intent = Intent(this, HomeActivity::class.java)
                             startActivity(intent)
-                            val user = mAuth.currentUser
+
 
                         } else {
 

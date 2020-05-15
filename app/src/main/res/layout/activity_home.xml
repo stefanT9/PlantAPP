@@ -40,7 +40,6 @@
         app:srcCompat="@drawable/uploadbtn" />
 
     <TextView
-        android:id="@+id/textView2"
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

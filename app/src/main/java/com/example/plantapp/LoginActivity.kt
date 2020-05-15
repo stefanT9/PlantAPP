@@ -49,16 +49,16 @@ class LoginActivity : TopNavViewActivity() {
             30,
             Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
-        sign_up_textView.text = mSpannableString
+        Sign_up_textview.text = mSpannableString
 
 
         mAuth = FirebaseAuth.getInstance()
-        emailID = email_textView
-        password = password_editText
-        buttonSignIn = email_login_button
+        emailID = EmailId
+        password = PasswordId
+        buttonSignIn = btn_login
         auth = FirebaseAuth.getInstance()
 
-        sign_up_textView.setOnClickListener {
+        Sign_up_textview.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }

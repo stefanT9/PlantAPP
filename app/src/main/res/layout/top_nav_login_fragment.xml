@@ -15,7 +15,7 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/image_prophile_photo"
+        android:id="@+id/Profile_photo"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="48dp"
@@ -32,7 +32,7 @@
         android:layout_marginStart="14dp"
         android:layout_marginTop="5dp"
         android:text="@string/username_username"
-        app:layout_constraintStart_toEndOf="@+id/image_prophile_photo"
+        app:layout_constraintStart_toEndOf="@+id/Profile_photo"
         app:layout_constraintTop_toTopOf="@+id/nav_view_btns"
         tools:layout_editor_absoluteY="16dp" />
 
@@ -44,6 +44,6 @@
         android:layout_marginBottom="5dp"
         android:text="@string/mail_mail_com"
         app:layout_constraintBottom_toBottomOf="@+id/nav_view_btns"
-        app:layout_constraintStart_toEndOf="@+id/image_prophile_photo" />
+        app:layout_constraintStart_toEndOf="@+id/Profile_photo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

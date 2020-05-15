@@ -50,7 +50,7 @@ class TakePhotoActivity : AppCompatActivity() {
             initFotoapparat()
         }
 
-        gallery_button.setOnClickListener {
+        btn_gallery.setOnClickListener {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if(ContextCompat.checkSelfPermission(this,
                         android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
@@ -69,7 +69,7 @@ class TakePhotoActivity : AppCompatActivity() {
             }
         }
 
-        photo_button.setOnClickListener {
+        btn_photo.setOnClickListener {
             fotoapparat!!.takePicture().toBitmap().whenAvailable {
                 if (it != null) {
                     val intent=Intent(this,PhotoTakenActivity::class.java)

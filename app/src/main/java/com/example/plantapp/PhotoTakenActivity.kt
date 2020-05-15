@@ -1,16 +1,22 @@
 package com.example.plantapp
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
 import android.media.ExifInterface
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.example.plantapp.HomeActivity.Companion.PERMISSION_CODE
 import io.fotoapparat.result.BitmapPhoto
+import io.fotoapparat.result.Photo
 import kotlinx.android.synthetic.main.activity_photo_taken.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
 import plantToTextAPI.getPlantName
@@ -34,7 +40,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
 
 
         this.layoutInflater.inflate(R.layout.activity_photo_taken, mainLayout)
-        seeresult.isClickable = true
+        SeeResult.isClickable = true
         progressBar.visibility = View.GONE
 
         val bitmap = BitmapFactory.decodeStream(this.openFileInput("myImage"))
@@ -48,10 +54,11 @@ class PhotoTakenActivity : TopNavViewActivity() {
             retakephoto.visibility = View.GONE
 
             uploadAnotherPhoto.setOnClickListener {
-                finish()
-            }
 
-        }else if(intentFrom == "TakePhotoActivity"){
+               
+            }
+        }
+            else if(intentFrom == "TakePhotoActivity"){
 
             uploadAnotherPhoto.visibility = View.GONE
 
@@ -61,7 +68,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
 
         }
 
-        seeresult.setOnClickListener {
+        SeeResult.setOnClickListener {
             Toast.makeText(this, "See result pressed!", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.VISIBLE
             val intent = Intent(this, DataVisualisationActivity::class.java)
