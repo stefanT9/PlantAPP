@@ -49,7 +49,8 @@ class DataVisualisationActivity : TopNavViewActivity() {
             val src = extras.getString("photoUrl")
 
             // TODO: scale the photo that comes from picasso before showing it ( Daniel Bicu )
-            Picasso.get().load(src).into(plant_image);
+
+            Picasso.get().load(src).fit().into(plant_image);
 
             latinName = extras.getString("latinName")!!
             descriptionText = extras.getString("description")!!
