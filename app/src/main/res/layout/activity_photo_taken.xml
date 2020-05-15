@@ -38,38 +38,51 @@
 
     </RelativeLayout>
 
-    <ImageButton
-        android:id="@+id/seeresult"
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/seeresult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:layout_weight="1"
+            android:background="@color/black"
+            app:srcCompat="@drawable/ic_seeresult"
+            tools:ignore="MissingConstraints,VectorDrawableCompat" />
+    </RelativeLayout>
+
+<!-- TODO: Fixed retakePhoto btn and uploadPhoto btn ( Robert Zahariea )-->
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:background="@color/black"
-        android:layout_marginTop="40dp"
-        android:layout_gravity="center"
-        app:srcCompat="@drawable/ic_seeresult"
-        tools:ignore="MissingConstraints,VectorDrawableCompat" />
+        android:layout_marginTop="10dp">
 
-    <ImageButton
-        android:id="@+id/retakephoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:layout_marginTop="20sp"
-        android:background="@color/black"
-        app:srcCompat="@drawable/ic_retakephoto"
-        tools:ignore="VectorDrawableCompat"
-        />
+        <ImageButton
+            android:id="@+id/uploadAnotherPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="20sp"
 
-    <ImageButton
-        android:id="@+id/uploadAnotherPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20sp"
+            android:background="#000000"
+            app:srcCompat="@drawable/ic_upload_another_photo"
+            tools:ignore="VectorDrawableCompat" />
 
-        android:background="#000000"
-        app:srcCompat="@drawable/ic_upload_another_photo"
-        tools:ignore="VectorDrawableCompat"
-        />
+        <ImageButton
+            android:id="@+id/retakephoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginTop="20sp"
+            android:layout_weight="1"
+            android:background="@color/black"
+            app:srcCompat="@drawable/ic_retakephoto"
+            tools:ignore="VectorDrawableCompat" />
+    </RelativeLayout>
+
 </LinearLayout>

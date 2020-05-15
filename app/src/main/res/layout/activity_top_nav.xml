@@ -97,7 +97,7 @@
                     android:layout_height="?android:actionBarSize"
                     android:layout_marginStart="50dp"
                     android:fontFamily="@font/salsa"
-                    android:text="@string/plants"
+                    android:text="Quick scan"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                     android:textColor="@color/grey"
                     app:chipBackgroundColor="@color/white"

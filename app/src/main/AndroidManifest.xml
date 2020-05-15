@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <!-- TODO: Make it shure that landscape mode is blocked ( Robert Zahariea ) -->
+    <!-- TODO: Make it sure that landscape mode is blocked ( Robert Zahariea ) -->
 
     <application
         android:allowBackup="true"
@@ -16,17 +16,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".TopNavViewActivity" />
-        <activity android:name=".HomeActivity">
+        <activity android:name=".TopNavViewActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".HomeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PhotoTakenActivity"/>
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".DataVisualisationActivity" />
-        <activity android:name=".LoginActivity" />
+        <activity android:name=".PhotoTakenActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <!--       ^^^Maybe this can be changed in the future ^^^-->
+
+        <activity android:name=".RegisterActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".DataVisualisationActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
+        <!--       ^^^Maybe this can be changed in the future ^^^-->
+
+        <activity android:name=".LoginActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"/>
         <activity android:name=".TakePhotoActivity" />
 
         <provider
