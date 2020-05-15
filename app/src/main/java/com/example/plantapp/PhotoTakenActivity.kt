@@ -14,9 +14,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.example.plantapp.HomeActivity.Companion.PERMISSION_CODE
 import io.fotoapparat.result.BitmapPhoto
-import io.fotoapparat.result.Photo
 import kotlinx.android.synthetic.main.activity_photo_taken.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
 import plantToTextAPI.getPlantName
@@ -54,11 +52,28 @@ class PhotoTakenActivity : TopNavViewActivity() {
             retakephoto.visibility = View.GONE
 
             uploadAnotherPhoto.setOnClickListener {
-
-               
+                // TODO: Make this go to the gallery instead of the home activity ( Alexandra Ciocoiu )
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if(ContextCompat.checkSelfPermission(this,
+                            android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
+                        //permission denied
+                        ActivityCompat.requestPermissions(this,
+                            arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+                            HomeActivity.PERMISSION_CODE
+                        )
+                    }
+                    else {
+                        //permission already granted
+                        pickImageFromGallery()
+                    }
+                }
+                else {
+                    //system OS is < Marshmallow
+                    pickImageFromGallery()
+                }
             }
-        }
-            else if(intentFrom == "TakePhotoActivity"){
+
+        }else if(intentFrom == "TakePhotoActivity"){
 
             uploadAnotherPhoto.visibility = View.GONE
 
@@ -74,6 +89,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
             val intent = Intent(this, DataVisualisationActivity::class.java)
 
             /// TODO: Make threads stop when the activity is exited on back button press sau retake photo/ upload another photo ( Robert Zahariea )
+            /// TODO: Replace the threads with the afferent tasks ( Cosmin Aftanase )
             val t1 = Thread {
                 val plantName = getPlantName((photoBitmap))
                 println("plantname finished")
@@ -127,10 +143,31 @@ class PhotoTakenActivity : TopNavViewActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        /// TODO: De verificat sa se intoarka in photo taken sau in home ( Robert Zahariea )
+    private fun pickImageFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        startActivityForResult(intent, HomeActivity.IMAGE_PICK_CODE)
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode){
+            HomeActivity.PERMISSION_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED) {
+                    pickImageFromGallery()
+                }
+                else {
+                    Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
+        }
     }
 
-}
+
 
