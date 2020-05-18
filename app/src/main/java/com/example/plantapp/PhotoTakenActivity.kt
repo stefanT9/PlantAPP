@@ -5,17 +5,16 @@ import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import io.fotoapparat.result.BitmapPhoto
 import kotlinx.android.synthetic.main.activity_photo_taken.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
-import plantToTextAPI.OcrTask
 import plantToTextAPI.OnTaskEventListener
 import plantToTextAPI.PlantTask1
 import plantToTextAPI.PlantTask2
-import wikiapi.wikiapi
+import wikiapi.WikiapiTask
+import java.util.*
 
 @Volatile
 var done: Boolean = false
@@ -28,7 +27,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
     lateinit var plantTask2: AsyncTask<BitmapPhoto, Int?, String?>
     lateinit var ocrTask: AsyncTask<BitmapPhoto, Int?, String?>
     private var failNumber : Int = 0
-    private var numberOfTasks : Int = 3
+    private var numberOfTasks : Int = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,8 +70,6 @@ class PhotoTakenActivity : TopNavViewActivity() {
             Toast.makeText(this, "See result pressed!", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.VISIBLE
             var intent = Intent(this, DataVisualisationActivity::class.java)
-
-            /// TODO: Make threads stop when the activity is exited on back button press sau retake photo/ upload another photo ( Robert Zahariea )
             failNumber = 0
 
             plantTask1 = PlantTask1(object : OnTaskEventListener<String> {
@@ -115,26 +112,44 @@ class PhotoTakenActivity : TopNavViewActivity() {
 
 
     fun successFunction(plantName: String, intent: Intent){
-        Thread {
-            val res = wikiapi(plantName)
-            println("wikiapi finished")
-            if (res != null) {
+        val context = this;
+        WikiapiTask (object : OnTaskEventListener<Hashtable<String, String>>{
+            override fun onSuccess(res: Hashtable<String, String>) {
                 intent.putExtra("description", res["description"])
                 intent.putExtra("table", res["table"])
                 intent.putExtra("latinName", plantName)
                 intent.putExtra("photoUrl", res["image"])
                 startActivity(intent)
-            } else {
+            }
+            override fun onFailure(e: Exception?) {
                 println("Something went wrong with wikiapi")
                 failNumber++
                 if (failNumber == numberOfTasks)
-                    Toast.makeText(this, "Try to take another picture", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Try to take another picture", Toast.LENGTH_SHORT).show()
             }
-        }.start()
+        }).execute(plantName)
+
+        //old way: to be removed, only used as explanation
+//        Thread {
+//            val res = wikiapi(plantName)
+//            println("wikiapi finished")
+//            if (res != null) {
+//                intent.putExtra("description", res["description"])
+//                intent.putExtra("table", res["table"])
+//                intent.putExtra("latinName", plantName)
+//                intent.putExtra("photoUrl", res["image"])
+//                startActivity(intent)
+//            } else {
+//                println("Something went wrong with wikiapi")
+//                failNumber++
+//                if (failNumber == numberOfTasks)
+//                    Toast.makeText(this, "Try to take another picture", Toast.LENGTH_SHORT).show()
+//            }
+//        }.start()
     }
 
     fun failureFunction(e : Exception){
-        //If both tasks have failed, ask user for another photo
+        //If all tasks have failed, ask user for another photo
         failNumber++
         if (failNumber == numberOfTasks)
             Toast.makeText(this, "Try to take another picture", Toast.LENGTH_SHORT).show()

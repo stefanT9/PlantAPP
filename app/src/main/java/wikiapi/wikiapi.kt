@@ -1,11 +1,39 @@
 package wikiapi
 
+import android.os.AsyncTask
+import android.util.Log
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
+import plantToTextAPI.OnTaskEventListener
 import java.util.*
 
+
+class WikiapiTask(callback: OnTaskEventListener<Hashtable<String, String>>) : AsyncTask<String?, Int?, Hashtable<String, String>?>() {
+    private var mCallBack: OnTaskEventListener<Hashtable<String, String>> = callback
+
+    override fun onPreExecute() {
+        super.onPreExecute()
+        Log.d("Wikiapi", "Wikiapi started")
+    }
+
+    override fun doInBackground(vararg params: String?): Hashtable<String, String>? {
+        //Get bitmap from parameters
+        val plantName = params[0]
+        return wikiapi(plantName)
+    }
+
+    override fun onPostExecute(result: Hashtable<String, String>?) {
+        super.onPostExecute(result);
+        if (result != null) {
+            mCallBack?.onSuccess(result);
+        } else {
+            mCallBack?.onFailure(java.lang.Exception("Wikiapi failed"));
+        }
+        Log.d("Wikiapi", "Wikiapi finished!")
+    }
+}
 
 fun wikiapi(name: String? ): Hashtable<String, String>? {
     if(name==null)
