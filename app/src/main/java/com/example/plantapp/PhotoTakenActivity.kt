@@ -1,20 +1,16 @@
 package com.example.plantapp
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.Matrix
 import android.graphics.drawable.BitmapDrawable
-import android.media.ExifInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import io.fotoapparat.result.BitmapPhoto
 import kotlinx.android.synthetic.main.activity_photo_taken.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
 import plantToTextAPI.getPlantName
-import plantToTextAPI.ocrFunction
 import wikiapi.wikiapi
 
 @Volatile
@@ -41,30 +37,6 @@ class PhotoTakenActivity : TopNavViewActivity() {
 
         plant_photo.setImageDrawable(BitmapDrawable(resources, photoBitmap.bitmap))
 
-        val t1 = Thread {
-            val plantName = getPlantName((photoBitmap))
-            println("plantname finished")
-            val res = wikiapi(plantName)
-            println("wikiapi finished")
-            if (res != null) {
-                intent.putExtra("description", res["description"])
-                intent.putExtra("table", res["table"])
-                intent.putExtra("latinName", plantName)
-                intent.putExtra("photoUrl", res["image"])
-                if (!done) {
-                    done = true
-                    startActivity(intent)
-                }
-            } else {
-                if (!failed) {
-                    failed = true
-                } else {
-                    println("something happened")
-                    Toast.makeText(this, "Try to make another picture", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-
         if(intentFrom == "UploadPhoto") {
 
             retakephoto.visibility = View.GONE
@@ -86,11 +58,36 @@ class PhotoTakenActivity : TopNavViewActivity() {
         seeresult.setOnClickListener {
             Toast.makeText(this, "See result pressed!", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.VISIBLE
+
+//            TODO: Stop speep mode while processing a result (Z. Robert)
+            this.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
+
             val intent = Intent(this, DataVisualisationActivity::class.java)
+            val t1 = Thread {
+                val plantName = getPlantName((photoBitmap))
+                println("plantname finished")
+                val res = wikiapi(plantName)
+                println("wikiapi finished")
+                if (res != null) {
+                    intent.putExtra("description", res["description"])
+                    intent.putExtra("table", res["table"])
+                    intent.putExtra("latinName", plantName)
+                    intent.putExtra("photoUrl", res["image"])
+                    if (!done) {
+                        done = true
+                        startActivity(intent)
+                    }
+                } else {
+                    if (!failed) {
+                        failed = true
+                    } else {
+                        println("something happened")
+                        Toast.makeText(this, "Try to make another picture", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }.start()
 
             /// TODO: Make threads stop when the activity is exited on back button press sau retake photo/ upload another photo ( Robert Zahariea )
-
-            t1.start()
 
 // TODO: Repair this (the ocr from plat to TextAPI) ( Cosim Aftanase )
 //            val t2 = Thread {
