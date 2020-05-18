@@ -26,6 +26,7 @@ class RegisterActivity : TopNavViewActivity() {
     private val rcSignIn: Int = 1
 
     private var tag = "thisLOGIN"
+    private var errorText = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,45 +39,19 @@ class RegisterActivity : TopNavViewActivity() {
             val email: String = regEmail.text.toString()
             val pass: String = regPassword.text.toString()
 
-            // TODO: make all validation into a validate input function ( Cosmin Aftanase)
-
             val ussname = editText.text.toString()
             if(ussname.isEmpty())
             {
                 regEmail.error = "Username Required";
                 regEmail.requestFocus();
             }
-            if (email.isEmpty()) {
-                regEmail.error = "Please enter email id";
+            if (!isValidEmail(email)) {
+                regEmail.error = errorText
                 regEmail.requestFocus();
             }
-            else if ( !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                regEmail.error = "Please enter a valid email"
-                regEmail.requestFocus()
-            }
-            else if (pass.isEmpty()) {
-                regPassword.error = "Please enter your password";
-                regPassword.requestFocus();
-            }
-            else if ( pass.length < 5) {
-                regPassword.error = "Password must have at least 5 characters";
-                regPassword.requestFocus();
-            }
-            else if ( pass == pass.toLowerCase()) {
-                regPassword.error = "Password should have at least 1 uppercase";
-                regPassword.requestFocus();
-            }
-            else if ( pass == pass.toUpperCase()) {
-                regPassword.error = "Password should have at least 1 lowercase";
-                regPassword.requestFocus();
-            }
-            else if( Pattern.compile("(.)*(\\\\d)(.)*").matcher(pass).matches() ) {
-                regPassword.error = "Password should have at least 1 digit";
-                regPassword.requestFocus();
-            }
-            else if( !Pattern.compile("(.)*([\$&+,:;=\\\\\\\\?@#|/'<>.^*()%!-])(.)*").matcher(pass).matches() ){
-                regPassword.error = "Password should have at least 1 special character";
-                regPassword.requestFocus();
+            else if (!isValidPassword(pass)){
+                regPassword.error = errorText
+                regPassword.requestFocus()
             }
             else {
                 mAuth.createUserWithEmailAndPassword(email, pass)
@@ -174,6 +149,56 @@ class RegisterActivity : TopNavViewActivity() {
                     ).show()
                 }
             }
+    }
+
+    private fun isValidPassword(pass: String? ) : Boolean{
+        val digitRegex = "(.)*(\\\\d)(.)*"
+        val specialCharRegex = "(.)*([\$&+,:;=\\\\\\\\?@#|/'<>.^*()%!-])(.)*"
+        val passLength = 5;
+
+        if (pass == null || pass.isEmpty()) {
+            errorText = "Please enter your password"
+            return false
+        }
+
+        if ( pass.length < passLength) {
+            errorText = "Password must have at least $passLength characters"
+            return false
+        }
+
+        if ( pass == pass.toLowerCase()) {
+            errorText = "Password should have at least 1 uppercase"
+            return false
+        }
+
+        if ( pass == pass.toUpperCase()) {
+            errorText = "Password should have at least 1 lowercase"
+            return false
+        }
+
+        if( Pattern.compile(digitRegex).matcher(pass).matches() ) {
+            errorText = "Password should have at least 1 digit"
+            return false
+        }
+
+        if( !Pattern.compile(specialCharRegex).matcher(pass).matches() ){
+            errorText = "Password should have at least 1 special character"
+            return false
+        }
+
+        return true
+    }
+
+    private fun isValidEmail(email: String?) : Boolean{
+        if (email == null || email.isEmpty()) {
+            errorText = "Please enter email id";
+            return false
+        }
+        else if ( !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            errorText = "Please enter a valid email"
+            return false
+        }
+        return true
     }
 }
 
