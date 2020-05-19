@@ -9,7 +9,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -28,7 +27,7 @@ class HomeActivity : TopNavViewActivity() {
         super.onCreate(savedInstanceState)
         this.layoutInflater.inflate(R.layout.activity_home,mainLayout)
 
-        foto.visibility = View.GONE
+        //foto.visibility = View.GONE
 
         scanPlant_imgButton.setOnClickListener {
             val intent= Intent(this,TakePhotoActivity::class.java)

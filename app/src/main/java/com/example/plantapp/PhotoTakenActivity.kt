@@ -7,11 +7,9 @@ import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.AsyncTask
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import android.widget.Toast
 import com.google.android.gms.location.LocationServices
 import io.fotoapparat.result.BitmapPhoto
@@ -23,8 +21,6 @@ import plantToTextAPI.PlantTask1
 import plantToTextAPI.PlantTask2
 import wikiapi.WikiapiTask
 import java.util.*
-import plantToTextAPI.getPlantName
-import wikiapi.wikiapi
 
 class PhotoTakenActivity : TopNavViewActivity() {
     private var seeResultsTimes: Int = 0

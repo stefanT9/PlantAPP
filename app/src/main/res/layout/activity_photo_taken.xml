@@ -62,8 +62,7 @@
         android:layout_marginTop="20sp"
         android:background="@color/black"
         app:srcCompat="@drawable/ic_upload_another_photo"
-        tools:ignore="VectorDrawableCompat"
-        android:layout_marginTop="10dp">
+        tools:ignore="VectorDrawableCompat">
 
         <ImageButton
             android:id="@+id/uploadAnotherPhoto"
