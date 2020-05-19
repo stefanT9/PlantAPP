@@ -24,8 +24,8 @@
     <string name="please_enter_email_id">Please enter your email id</string>
     <string name="please_enter_your_password">Please enter your password</string>
 
-    <string name="account"><font color="@color/grey">Already have an account? </font><b><font color="@color/primaryColor">Sign in</font></b></string>
-    <string name="don_t_have_an_account_sign_up"><font color="@color/grey">Don\'t have an account? </font><b><font color="@color/primaryColor">Sign up!</font></b></string>
+    <string name="account"><font color="@color/grey">Already have an account? <b>Sign in</b></font></string>
+    <string name="don_t_have_an_account_sign_up"><font color="@color/grey">Don\'t have an account? <b>Sign up!</b></font></string>
 
     <string name="username_username">username.username</string>
     <string name="mail_mail_com">mail@mail.com</string>
