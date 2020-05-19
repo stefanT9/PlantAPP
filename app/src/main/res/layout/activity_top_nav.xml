@@ -19,6 +19,10 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
 
             <androidx.appcompat.widget.Toolbar
                 android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
@@ -30,7 +34,21 @@
                 app:subtitleTextColor="@color/white"
                 app:titleTextColor="@color/white">
 
+                <ImageButton
+                    android:id="@+id/foto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/ic_camera"
+                    android:background="@color/primaryColor"
+                    android:layout_marginLeft="250dp"
+                    />
             </androidx.appcompat.widget.Toolbar>
+
+
+            </RelativeLayout>
+
+
+
         </com.google.android.material.appbar.AppBarLayout>
     </LinearLayout>
 

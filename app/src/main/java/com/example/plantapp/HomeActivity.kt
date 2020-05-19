@@ -23,8 +23,12 @@ import java.io.IOException
 class HomeActivity : TopNavViewActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         this.layoutInflater.inflate(R.layout.activity_home,mainLayout)
+
+        foto.visibility = View.GONE
+
         scanPlant_imgButton.setOnClickListener {
             val intent= Intent(this,TakePhotoActivity::class.java)
             startActivity(intent)

@@ -1,6 +1,7 @@
 package com.example.plantapp
 
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
@@ -30,6 +31,12 @@ class DataVisualisationActivity : TopNavViewActivity() {
         super.onCreate(savedInstanceState)
         this.layoutInflater.inflate(R.layout.activity_data_visualisation, mainLayout)
 
+
+        foto.setOnClickListener {
+            val intent = Intent(this, TakePhotoActivity::class.java)
+            startActivity(intent)
+        }
+
         read_more_anchor.setOnClickListener {
             if (read_more_anchor.text == "Read more") {
                 description_text_view.text = descriptionText
@@ -49,7 +56,8 @@ class DataVisualisationActivity : TopNavViewActivity() {
             val src = extras.getString("photoUrl")
 
             // TODO: scale the photo that comes from picasso before showing it ( Daniel Bicu )
-            Picasso.get().load(src).into(plant_image);
+
+            Picasso.get().load(src).fit().into(plant_image);
 
             latinName = extras.getString("latinName")!!
             descriptionText = extras.getString("description")!!
