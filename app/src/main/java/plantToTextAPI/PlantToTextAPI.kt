@@ -1,5 +1,7 @@
 package plantToTextAPI
 
+import Util.getLatCoordinate
+import Util.getLongCoordinate
 import android.graphics.Bitmap
 import android.os.AsyncTask
 import android.util.Base64
@@ -16,7 +18,6 @@ import cz.msebera.android.httpclient.util.EntityUtils
 import io.fotoapparat.result.BitmapPhoto
 import org.json.JSONArray
 import org.json.JSONObject
-import wikiapi.wikiapi
 import java.io.*
 import java.lang.Exception
 import java.net.HttpURLConnection
@@ -42,12 +43,12 @@ class PlantTask1(callback: OnTaskEventListener<String>) : AsyncTask<BitmapPhoto,
 
         //Call api no. 1
         val plantList1 = apiPlant1(bitmap)
+        Log.d("PlantTask1", "PlantTask1 found $plantList1")
 
         //Check if first api returned something good
-        for (i in plantList1.indices){
-            result1 = wikiapi(plantList1[i])
-            if (result1 != null) {
-                return plantList1[i]
+        for (plant in plantList1){
+            if (validatePlantLocation(plant)) {
+                return plant
             }
         }
 
@@ -81,12 +82,12 @@ class PlantTask2(callback: OnTaskEventListener<String>) : AsyncTask<BitmapPhoto,
 
         //Call api no. 2
         val plantList2 = apiPlant2(bitmap)
+        Log.d("PlantTask2", "PlantTask2 found $plantList2")
 
         //Check if second api returned something good
-        for (i in plantList2.indices) {
-            result2 = wikiapi(plantList2[i])
-            if (result2 != null) {
-                return plantList2[i]
+        for (plant in plantList2) {
+            if (validatePlantLocation(plant)) {
+                return plant
             }
         }
 
@@ -115,6 +116,7 @@ class OcrTask(callback: OnTaskEventListener<String>) : AsyncTask<BitmapPhoto, In
     override fun doInBackground(vararg params: BitmapPhoto): String? {
         //Get bitmap from parameters
         val bitmap = params[0].bitmap
+        val plantList = getPlantByLocation()
 
         //Make all steps from firebase api
         var returnedText: String? = null
@@ -123,27 +125,48 @@ class OcrTask(callback: OnTaskEventListener<String>) : AsyncTask<BitmapPhoto, In
         val task = detector.processImage(image)
             .addOnSuccessListener { firebaseVisionText ->
                 returnedText = firebaseVisionText.text
-                Log.e("OcrTask","Ocr recognized: $returnedText !")
-                mCallBack?.onSuccess(returnedText!!);
+                Log.d("OcrTask","Ocr recognized: $returnedText !")
+
+                val allText = returnedText!!.split("\n")
+
+                for (text in allText){
+                    //Check if text is actually plant name
+                    if (plantList.contains(text))
+                        mCallBack.onSuccess(text);
+                }
+
+                mCallBack.onFailure(Exception("No plant found!"))
             }
             .addOnFailureListener { e ->
                 Log.e("OcrTask", "Ocr Recognition error")
-                mCallBack?.onFailure(Exception("No text found!"))
+                mCallBack.onFailure(Exception("No plant found!"))
             }
         return null;
     }
 }
 
 
-fun validatePlantLocation(latinName: String, latitude: Double, longitude: Double): Boolean {
-
+fun validatePlantLocation(latinName: String): Boolean {
+    //Preparing post parameters
     val params = JSONObject()
-    params.put("lat", latitude)
-    params.put("long", longitude)
+    params.put("lat", getLatCoordinate())
+    params.put("long", getLongCoordinate())
 
+    //Making post request
     val response = sendPostRequest("https://us-central1-locationip-31d6f.cloudfunctions.net/plants", params, null)
 
+    Log.d("validatePlantLocation", "Checking if $latinName is in $response")
     return response.contains(latinName)
+}
+
+fun getPlantByLocation(): String {
+    //Preparing post parameters
+    val params = JSONObject()
+    params.put("lat", getLatCoordinate())
+    params.put("long", getLongCoordinate())
+
+    //Making post request
+    return sendPostRequest("https://us-central1-locationip-31d6f.cloudfunctions.net/plants", params, null)
 }
 
 ///AUXILIARY FUNCTIONS BELOW

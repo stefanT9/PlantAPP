@@ -1,38 +1,39 @@
 package com.example.plantapp
 
+import Util.getLastLocation
+import Util.initializeLocationData
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.os.AsyncTask
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.google.android.gms.location.LocationServices
 import io.fotoapparat.result.BitmapPhoto
 import kotlinx.android.synthetic.main.activity_photo_taken.*
 import kotlinx.android.synthetic.main.activity_top_nav.*
+import plantToTextAPI.OcrTask
 import plantToTextAPI.OnTaskEventListener
 import plantToTextAPI.PlantTask1
 import plantToTextAPI.PlantTask2
 import wikiapi.WikiapiTask
 import java.util.*
 
-@Volatile
-var done: Boolean = false
-
-@Volatile
-var failed: Boolean = false
-
 class PhotoTakenActivity : TopNavViewActivity() {
-    lateinit var plantTask1: AsyncTask<BitmapPhoto, Int?, String?>
-    lateinit var plantTask2: AsyncTask<BitmapPhoto, Int?, String?>
-    lateinit var ocrTask: AsyncTask<BitmapPhoto, Int?, String?>
+    private var seeResultsTimes: Int = 0
+
+    private lateinit var plantTask1: AsyncTask<BitmapPhoto, Int?, String?>
+    private lateinit var plantTask2: AsyncTask<BitmapPhoto, Int?, String?>
+    private lateinit var ocrTask: AsyncTask<BitmapPhoto, Int?, String?>
+
     private var failNumber : Int = 0
-    private var numberOfTasks : Int = 2
+    private var numberOfTasks : Int = 3
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        done = false
-        failed = false
 
         val intentFrom: String? = intent.getStringExtra("From")
 
@@ -66,16 +67,27 @@ class PhotoTakenActivity : TopNavViewActivity() {
 
         }
 
+        seeResultsTimes = 0
+
         seeresult.setOnClickListener {
+            //Check if it was pressed only once
+            seeResultsTimes++
+            if (seeResultsTimes > 1)
+            {
+                Toast.makeText(this, "Please wait while image is being processed", Toast.LENGTH_SHORT).show()
+            }
+            else {
             Toast.makeText(this, "See result pressed!", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.VISIBLE
             var intent = Intent(this, DataVisualisationActivity::class.java)
+
+            initializeLocationData(this, this, LocationServices.getFusedLocationProviderClient(this))
+            getLastLocation()
             failNumber = 0
 
             plantTask1 = PlantTask1(object : OnTaskEventListener<String> {
                 override fun onSuccess(result: String) {
-                   // ocrTask.cancel(true)
-                    plantTask2.cancel(true)
+                    cancelOtherTasks(plantTask1)
                     successFunction(result, intent)
                 }
 
@@ -86,8 +98,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
 
             plantTask2 = PlantTask2(object : OnTaskEventListener<String> {
                 override fun onSuccess(result: String) {
-                  //  ocrTask.cancel(true)
-                    plantTask1.cancel(true)
+                    cancelOtherTasks(plantTask2)
                     successFunction(result, intent)
                 }
 
@@ -96,17 +107,17 @@ class PhotoTakenActivity : TopNavViewActivity() {
                 }
             }).execute(photoBitmap)
 
-//            ocrTask = OcrTask(object : OnTaskEventListener<String> {
-//                override fun onSuccess(result: String) {
-//                    plantNameTask.cancel(true)
-//                    successFunction(result, intent)
-//                }
-//
-//                override fun onFailure(e: Exception?) {
-//                   failureFunction(Exception("Ocr didn't find any text"))
-//                }
-//            }).execute(photoBitmap)
+            ocrTask = OcrTask(object : OnTaskEventListener<String> {
+                override fun onSuccess(result: String) {
+                    cancelOtherTasks(ocrTask)
+                    successFunction(result, intent)
+                }
 
+                override fun onFailure(e: Exception?) {
+                   failureFunction(Exception("Ocr didn't find any text"))
+                }
+            }).execute(photoBitmap)
+            }
         }
     }
 
@@ -128,24 +139,6 @@ class PhotoTakenActivity : TopNavViewActivity() {
                     Toast.makeText(context, "Try to take another picture", Toast.LENGTH_SHORT).show()
             }
         }).execute(plantName)
-
-        //old way: to be removed, only used as explanation
-//        Thread {
-//            val res = wikiapi(plantName)
-//            println("wikiapi finished")
-//            if (res != null) {
-//                intent.putExtra("description", res["description"])
-//                intent.putExtra("table", res["table"])
-//                intent.putExtra("latinName", plantName)
-//                intent.putExtra("photoUrl", res["image"])
-//                startActivity(intent)
-//            } else {
-//                println("Something went wrong with wikiapi")
-//                failNumber++
-//                if (failNumber == numberOfTasks)
-//                    Toast.makeText(this, "Try to take another picture", Toast.LENGTH_SHORT).show()
-//            }
-//        }.start()
     }
 
     fun failureFunction(e : Exception){
@@ -156,10 +149,28 @@ class PhotoTakenActivity : TopNavViewActivity() {
         println(e)
     }
 
-    override fun onResume() {
-        super.onResume()
-        /// TODO: De verificat sa se intoarka in photo taken sau in home ( Robert Zahariea )
+    fun cancelOtherTasks(thisTask: AsyncTask<BitmapPhoto, Int?, String?>?){
+        Log.d("cancelOtherTasks", "cancelling the tasks")
+        var taskList = listOf(plantTask1, plantTask2, ocrTask)
+        for (task in taskList)
+        {
+            if (task == thisTask)
+                continue;
+            if (!task.isCancelled)
+                task.cancel(true)
+        }
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        if (requestCode == 200) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                getLastLocation()
+            }
+        }
+    }
 }
 
