@@ -177,7 +177,7 @@ fun apiPlant1(bitmap: Bitmap): List<String>{
     //Prepare request
     val base64Img = bitmapToBase64(bitmap)
     val plantIdUrl = "https://api.plant.id/v2/identify"
-    val plantIdToken = "UNMFzRR5vGyf7upPyKuKbTiPLvMq7BJTSxpKpOBoGget5HY950"
+    val plantIdToken = "QrM9R3K2gsLjdTYLwreOA7xIvCI46CqspB777vG9Jkidpq2Us2"
     val params = JSONObject()
     params.put("images", JSONArray().put(base64Img))
     params.put("modifiers",  JSONArray().put("similar_images"))
