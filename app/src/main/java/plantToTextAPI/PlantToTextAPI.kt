@@ -152,6 +152,8 @@ fun validatePlantLocation(latinName: String): Boolean {
     params.put("lat", getLatCoordinate())
     params.put("long", getLongCoordinate())
 
+    Log.d("validatePlantLocation", "your location is ${getLatCoordinate()} ${getLongCoordinate()}")
+
     //Making post request
     val response = sendPostRequest("https://us-central1-locationip-31d6f.cloudfunctions.net/plants", params, null)
 
