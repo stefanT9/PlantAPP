@@ -1,6 +1,5 @@
 package com.example.plantapp
 
-<<<<<<< HEAD
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.Context
@@ -10,9 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
-=======
 import android.content.Intent
->>>>>>> ac7a17b6e271f1907b8799b319f48d9fc18e738c
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -31,32 +28,15 @@ class HomeActivity : TopNavViewActivity() {
         super.onCreate(savedInstanceState)
         this.layoutInflater.inflate(R.layout.activity_home,mainLayout)
 
-<<<<<<< HEAD
         foto.visibility = View.GONE
 
         scanPlant_imgButton.setOnClickListener {
             val intent= Intent(this,TakePhotoActivity::class.java)
             startActivity(intent)
-=======
-        hamburgerMenu_imgButton.setOnClickListener {
-
-//            val intent = Intent(this@HomeActivity, TopNavBarActivity::class.java)
-//            startActivity(intent)
-
-            Toast.makeText(this@HomeActivity, "the button works!", Toast.LENGTH_SHORT).show()
-        }
-
-        scanPlant_imgButton.setOnClickListener {
-
-            val intent = Intent(this@HomeActivity, TakePhotoActivity::class.java)
-            startActivity(intent)
-
->>>>>>> ac7a17b6e271f1907b8799b319f48d9fc18e738c
         }
 
         uploadPhoto_imgButton.setOnClickListener {
 
-<<<<<<< HEAD
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if(ContextCompat.checkSelfPermission(this,
                         android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_DENIED) {
@@ -73,12 +53,6 @@ class HomeActivity : TopNavViewActivity() {
                 //system OS is < Marshmallow
                 pickImageFromGallery()
             }
-=======
-//            val intent = Intent(this@HomeActivity, UploadPhotoActivity::class.java)
-//            startActivity(intent)
-
-            Toast.makeText(this@HomeActivity, "Upload a photo!", Toast.LENGTH_SHORT).show()
->>>>>>> ac7a17b6e271f1907b8799b319f48d9fc18e738c
         }
     }
 
