@@ -142,8 +142,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
             override fun onFailure(e: Exception?) {
                 println("Something went wrong with wikiapi")
                 failNumber++
-                if (failNumber == numberOfTasks)
-                    Toast.makeText(context, "Try to take another picture", Toast.LENGTH_LONG).show()
+                Toast.makeText(context, "Try to take another picture", Toast.LENGTH_LONG).show()
             }
         }).execute(plantName)
     }
