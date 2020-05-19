@@ -254,7 +254,8 @@ fun apiPlant2(bitmap: Bitmap): List<String>{
     try {
         httpResponse = client.execute(request)
         response = EntityUtils.toString(httpResponse.entity)
-    } catch (e: IOException) {
+    } catch (e: Exception) {
+        Log.e("PlantTask", "API for url $plantNetUrl$plantIdToken&include-related-images=true couldn't get a positive response!")
         response = "error"
     }
 
@@ -344,7 +345,7 @@ fun sendPostRequest(urlName:String, params: JSONObject, token: String?): String 
             }
         }
         catch(e:Exception){
-            Log.e("PlantTask","API for url $urlName couldn't get a positive response! (error : ${e.message})")
+            Log.e("PlantTask","API for url $urlName couldn't get a positive response!")
             System.err.println(e)
         }
         return ret
