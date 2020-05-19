@@ -25,7 +25,7 @@ import java.net.URL
 import java.util.*
 
 
-var MIN_CONFIDENCE_LEVEL = 0.25
+var MIN_CONFIDENCE_LEVEL = 0
 
 class PlantTask1(callback: OnTaskEventListener<String>) : AsyncTask<BitmapPhoto, Int?, String?>() {
 
@@ -331,14 +331,22 @@ fun sendPostRequest(urlName:String, params: JSONObject, token: String?): String 
         wr.write(params.toString())
         wr.flush()
 
-        BufferedReader(InputStreamReader(inputStream)).use {
-            val response = StringBuffer()
-            var inputLine = it.readLine()
-            while (inputLine != null) {
-                response.append(inputLine)
-                inputLine = it.readLine()
+        var ret:String = ""
+        try {
+            BufferedReader(InputStreamReader(inputStream)).use {
+                val response = StringBuffer()
+                var inputLine = it.readLine()
+                while (inputLine != null) {
+                    response.append(inputLine)
+                    inputLine = it.readLine()
+                }
+                ret = response.toString()
             }
-            return response.toString()
         }
+        catch(e:Exception){
+            Log.e("PlantTask","API for url $urlName couldn't get a positive response! (error : ${e.message})")
+            System.err.println(e)
+        }
+        return ret
     }
 }

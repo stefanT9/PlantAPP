@@ -2,6 +2,7 @@ package com.example.plantapp
 
 import Util.getLastLocation
 import Util.initializeLocationData
+import Util.isLocationEnabled
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
@@ -68,18 +69,26 @@ class PhotoTakenActivity : TopNavViewActivity() {
         seeResultsTimes = 0
 
         seeresult.setOnClickListener {
-            //Check if it was pressed only once
-            seeResultsTimes++
-            if (seeResultsTimes > 1)
+            initializeLocationData(this, this, LocationServices.getFusedLocationProviderClient(this))
+
+            //Check if location is activated
+            if (!isLocationEnabled())
             {
-                Toast.makeText(this, "Please wait while image is being processed", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please turn location on before!", Toast.LENGTH_SHORT).show()
             }
+
+            //Check if it was pressed only once
+            else if (seeResultsTimes > 0)
+            {
+                Toast.makeText(this, "Please wait while image is being processed", Toast.LENGTH_LONG).show()
+            }
+
             else {
+            seeResultsTimes++
             Toast.makeText(this, "See result pressed!", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.VISIBLE
             var intent = Intent(this, DataVisualisationActivity::class.java)
 
-            initializeLocationData(this, this, LocationServices.getFusedLocationProviderClient(this))
             getLastLocation()
             failNumber = 0
 
@@ -134,7 +143,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
                 println("Something went wrong with wikiapi")
                 failNumber++
                 if (failNumber == numberOfTasks)
-                    Toast.makeText(context, "Try to take another picture", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Try to take another picture", Toast.LENGTH_LONG).show()
             }
         }).execute(plantName)
     }
@@ -143,7 +152,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
         //If all tasks have failed, ask user for another photo
         failNumber++
         if (failNumber == numberOfTasks)
-            Toast.makeText(this, "Try to take another picture", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Try to take another picture", Toast.LENGTH_LONG).show()
         println(e)
     }
 
