@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:outlineAmbientShadowColor="#0000001C"
-    android:layout_marginVertical="10dp"
+    android:layout_marginTop="10dp"
     android:layout_gravity="center"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,14 +16,15 @@
             android:layout_gravity="top"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:elevation="2dp"
+            android:elevation="11dp"
+            android:background="@drawable/shadow_data_visualisation"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_marginTop="3dp"
-                android:background="#00b33c" />
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="5dp"-->
+<!--                android:layout_marginTop="3dp"-->
+<!--                android:background="#00b33c" />-->
 
             <TextView
                 android:id="@+id/plantname"
@@ -72,7 +73,8 @@
                 android:textColor="#1D5833"
                 android:background="#FFFF"
                 android:text="@string/read_more"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:layout_marginBottom="10dp"/>
 
             <TableLayout
                 android:id="@+id/description_table"
@@ -80,6 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
+                android:layout_marginBottom="10dp"
                 android:stretchColumns="1">
 
             </TableLayout>
