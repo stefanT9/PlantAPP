@@ -59,37 +59,37 @@ class PhotoTakenActivity : TopNavViewActivity() {
             Toast.makeText(this, "See result pressed!", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.VISIBLE
 
-//            TODO: Stop speep mode while processing a result (Z. Robert)
+//            TODO: Stop speep mode while processing a result (Zahariea Robert, Urasche Rares)
             this.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
             val intent = Intent(this, DataVisualisationActivity::class.java)
-            val t1 = Thread {
-                val plantName = getPlantName((photoBitmap))
-                println("plantname finished")
-                val res = wikiapi(plantName)
-                println("wikiapi finished")
-                if (res != null) {
-                    intent.putExtra("description", res["description"])
-                    intent.putExtra("table", res["table"])
-                    intent.putExtra("latinName", plantName)
-                    intent.putExtra("photoUrl", res["image"])
-                    if (!done) {
-                        done = true
-                        startActivity(intent)
-                    }
-                } else {
-                    if (!failed) {
-                        failed = true
-                    } else {
-                        println("something happened")
-                        Toast.makeText(this, "Try to make another picture", Toast.LENGTH_SHORT).show()
-                    }
-                }
-            }.start()
-
-            /// TODO: Make threads stop when the activity is exited on back button press sau retake photo/ upload another photo ( Robert Zahariea )
+//            val t1 = Thread {
+//                val plantName = getPlantName((photoBitmap))
+//                println("plantname finished")
+//                val res = wikiapi(plantName)
+//                println("wikiapi finished")
+//                if (res != null) {
+//                    intent.putExtra("description", res["description"])
+//                    intent.putExtra("table", res["table"])
+//                    intent.putExtra("latinName", plantName)
+//                    intent.putExtra("photoUrl", res["image"])
+//                    if (!done) {
+//                        done = true
+//                        startActivity(intent)
+//                    }
+//                } else {
+//                    if (!failed) {
+//                        failed = true
+//                    } else {
+//                        println("something happened")
+//                        Toast.makeText(this, "Try to make another picture", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            }.start()
+            startActivity(intent)
 
 // TODO: Repair this (the ocr from plat to TextAPI) ( Cosim Aftanase )
+
 //            val t2 = Thread {
 //                val plantName = ocrFunction((photoBitmap))
 //                println("plantname finished")
@@ -118,7 +118,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
 }
 
     override fun onPause() {
-        /// TODO: Make progress bar gone after the picture has been sended ( Robert Zahariea )
+        /// TODO: Make progress bar gone after the picture has been sended ( Robert Zahariea, Rares Ursache )
         super.onPause()
         progressBar.visibility = View.GONE
     }
@@ -127,7 +127,6 @@ class PhotoTakenActivity : TopNavViewActivity() {
         super.onResume()
         //t1.interrupt()
         //t2.stop()
-        /// TODO: De verificat sa se intoarca in photo taken sau in home ( Robert Zahariea )
 
     }
 }
