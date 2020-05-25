@@ -29,6 +29,7 @@
 
     <string name="username_username">username.username</string>
     <string name="mail_mail_com">mail@mail.com</string>
+    <string name="hamburger_clicked">hamburger_clicked</string>
 
     <!--
     <string name="openNavView">Navigation view open</string>
