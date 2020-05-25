@@ -19,30 +19,24 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
 
-            <androidx.appcompat.widget.Toolbar
-                android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
-                android:id="@+id/topNavViewLogged"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                app:collapseIcon="@drawable/ic_bars_solid"
-                app:navigationIcon="@drawable/ic_bars_solid"
-                app:subtitleTextColor="@color/white"
-                app:titleTextColor="@color/white">
-
-                <ImageButton
-                    android:id="@+id/foto"
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/topNavViewLogged"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    app:srcCompat="@drawable/ic_camera"
-                    android:background="@color/primaryColor"
-                    android:layout_marginLeft="250dp"
-                    />
-            </androidx.appcompat.widget.Toolbar>
+                    android:layout_height="?android:attr/actionBarSize"
+                    android:theme="@style/ThemeOverlay.MaterialComponents.Dark"
+                    app:collapseIcon="@drawable/ic_bars_solid"
+                    app:navigationIcon="@drawable/ic_bars_solid"
+                    app:subtitleTextColor="@color/white"
+                    app:titleTextColor="@color/white">
+
+
+                </androidx.appcompat.widget.Toolbar>
 
 
             </RelativeLayout>

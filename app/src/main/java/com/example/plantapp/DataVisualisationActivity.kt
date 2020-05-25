@@ -32,10 +32,10 @@ class DataVisualisationActivity : TopNavViewActivity() {
         this.layoutInflater.inflate(R.layout.activity_data_visualisation, mainLayout)
 
 
-        foto.setOnClickListener {
+/*        foto.setOnClickListener {
             val intent = Intent(this, TakePhotoActivity::class.java)
             startActivity(intent)
-        }
+        }*/
 
         read_more_anchor.setOnClickListener {
             if (read_more_anchor.text == "Read more") {

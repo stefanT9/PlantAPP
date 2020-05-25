@@ -11,8 +11,8 @@ import java.util.*
 
 class WikiapiKtTest : TestCase() {
 
-    val actualOutput: ActivityTestRule< wikiapi > = ActivityTestRule(
-        wikiapi::class.java)
+/*    val actualOutput: ActivityTestRule< wikiapi > = ActivityTestRule(
+        wikiapi::class.java)*/
 
 
     val excpectedOutput: String = "table=\n" +
