@@ -238,10 +238,7 @@ fun apiPlant2(bitmap: Bitmap): List<String>{
     val plantIdToken: String = "2a10vXHb74WyFBZaR6fQYdF6u"
 
     //Transform bitmap into file body
-    val baos = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-    val imageBytes = baos.toByteArray()
-    val encodedImage =  Base64.encodeToString(imageBytes, Base64.DEFAULT)
+    val encodedImage =  bitmapToBase64(bitmap)
     val fileBody = FileBody(File(encodedImage))
 
     //Prepare post
@@ -306,25 +303,31 @@ fun apiPlant2(bitmap: Bitmap): List<String>{
     return finalNames
 }
 
-fun getResizedBitmap(image: Bitmap, maxSize: Int): Bitmap? {
-    var width = image.width
-    var height = image.height
-    val bitmapRatio = width.toFloat() / height.toFloat()
-    if (bitmapRatio > 1) {
-        width = maxSize
-        height = (width / bitmapRatio).toInt()
-    } else {
-        height = maxSize
-        width = (height * bitmapRatio).toInt()
-    }
-    return Bitmap.createScaledBitmap(image, width, height, true)
-}
-
 fun bitmapToBase64(bitmap: Bitmap): String {
 
     val bitmapSize = bitmap.byteCount
-    val resizedBitmap = getResizedBitmap(bitmap, (bitmapSize * 0.5).toInt())
-
+    var resizedBitmap: Bitmap? = null
+    var width = bitmap.width
+    var height = bitmap.height
+    val bitmapRatio = width.toFloat() / height.toFloat()
+    if (bitmapRatio > 1) {
+        width = (bitmapSize * 0.5).toInt()
+        height = (width / bitmapRatio).toInt()
+    } else {
+        height = (bitmapSize * 0.5).toInt()
+        width = (height * bitmapRatio).toInt()
+    }
+    try {
+        resizedBitmap =  Bitmap.createScaledBitmap(
+            bitmap,
+            600,
+            600,
+            false
+        )
+    }
+    catch (e:Exception){
+        return ""
+    }
     //Create output stream and compress bitmap
     val outputStream = ByteArrayOutputStream()
     if (resizedBitmap != null) {

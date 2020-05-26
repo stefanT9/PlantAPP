@@ -11,6 +11,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import com.google.android.gms.location.LocationServices
 import io.fotoapparat.result.BitmapPhoto
@@ -40,6 +41,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
 
         this.layoutInflater.inflate(R.layout.activity_photo_taken, mainLayout)
         seeresult.isClickable = true
+        this.window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         progressBar.visibility = View.GONE
         foto.visibility = View.GONE
         val bitmap = BitmapFactory.decodeStream(this.openFileInput("myImage"))
@@ -143,6 +145,7 @@ class PhotoTakenActivity : TopNavViewActivity() {
                 println("Something went wrong with wikiapi")
                 failNumber++
                 Toast.makeText(context, "Try to take another picture", Toast.LENGTH_LONG).show()
+                progressBar.visibility = View.GONE
             }
         }).execute(plantName)
     }
@@ -150,8 +153,10 @@ class PhotoTakenActivity : TopNavViewActivity() {
     fun failureFunction(e : Exception){
         //If all tasks have failed, ask user for another photo
         failNumber++
-        if (failNumber == numberOfTasks)
+        if (failNumber == numberOfTasks) {
             Toast.makeText(this, "Try to take another picture", Toast.LENGTH_LONG).show()
+            progressBar.visibility = View.GONE
+        }
         println(e)
     }
 
@@ -167,8 +172,9 @@ class PhotoTakenActivity : TopNavViewActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onPause() {
+        super.onPause()
+        progressBar.visibility = View.GONE
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
