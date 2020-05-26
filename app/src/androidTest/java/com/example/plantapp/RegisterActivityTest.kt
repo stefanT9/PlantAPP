@@ -1,13 +1,20 @@
 package com.example.plantapp
 
-import androidx.test.espresso.Espresso.*
+import android.app.Activity
+import androidx.test.espresso.Espresso.closeSoftKeyboard
+import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.intent.Intents
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.ActivityTestRule
+import junit.framework.Assert.assertFalse
+import junit.framework.Assert.assertTrue
 import org.hamcrest.Matchers.*
 import org.junit.Before
 import org.junit.Rule
@@ -30,6 +37,7 @@ class RegisterActivityTest {
     @Before
     fun setupContext(){
         val contextApplication = InstrumentationRegistry.getInstrumentation().context
+
     }
 
     @Test
@@ -53,16 +61,17 @@ class RegisterActivityTest {
         onView(withId(R.id.editText)).perform(typeText("testfirstname"))
         onView(withId(R.id.regEmail)).perform(typeText("testareip@yahoo.com"))
         closeSoftKeyboard();
-        onView(withId(R.id.regPassword)).perform(typeText("parolaTest123"))
+        onView(withId(R.id.regPassword)).perform(typeText("parolaTest123;;"))
         closeSoftKeyboard();
         onView(withId(R.id.btn_Register)).perform(click())
 
-
-        onView(withText(startsWith("Signed up successfully!"))).inRoot(
+        onView(withText(startsWith("Authen"))).inRoot(
             withDecorView(
                 not(`is`(rule.activity.window.decorView))
             )
         ).check(matches(isDisplayed()))
+
+
     }
 
     @Test
@@ -76,11 +85,9 @@ class RegisterActivityTest {
         onView(withId(R.id.btn_Register)).perform(click())
 
 
-        onView(withText(startsWith("Signed up successfully!"))).inRoot(
-            withDecorView(
-                not(`is`(rule.activity.window.decorView))
-            )
-        ).check(matches(isDisplayed()))
+        Intents.init()
+        Thread.sleep(2000);
+        intended(hasComponent(RegisterActivity::class.java.getName()))
     }
 
     @Test
@@ -94,11 +101,9 @@ class RegisterActivityTest {
         onView(withId(R.id.btn_Register)).perform(click())
 
 
-        onView(withText(startsWith("Signed up successfully!"))).inRoot(
-            withDecorView(
-                not(`is`(rule.activity.window.decorView))
-            )
-        ).check(matches(isDisplayed()))
+        Intents.init()
+        Thread.sleep(2000);
+        intended(hasComponent(RegisterActivity::class.java.getName()))
     }
 
 
@@ -112,12 +117,10 @@ class RegisterActivityTest {
         closeSoftKeyboard();
         onView(withId(R.id.btn_Register)).perform(click())
 
+        Intents.init()
+        Thread.sleep(2000);
+        intended(hasComponent(RegisterActivity::class.java.getName()))
 
-        onView(withText(startsWith("Signed up successfully!"))).inRoot(
-            withDecorView(
-                not(`is`(rule.activity.window.decorView))
-            )
-        ).check(matches(isDisplayed()))
     }
 
 
@@ -127,18 +130,17 @@ class RegisterActivityTest {
     fun registerSuccessfuly(){
 
         onView(withId(R.id.editText)).perform(typeText("testfirstname"))
-        onView(withId(R.id.regEmail)).perform(typeText("cont.test3@yahoo.com"))
+        onView(withId(R.id.regEmail)).perform(typeText("cont.test12@yahoo.com"))
         closeSoftKeyboard();
-        onView(withId(R.id.regPassword)).perform(typeText("parolaTest123"))
+        onView(withId(R.id.regPassword)).perform(typeText("parolaTest123;;"))
         closeSoftKeyboard();
         onView(withId(R.id.btn_Register)).perform(click())
 
+        Intents.init()
+        Thread.sleep(2000);
+        intended(hasComponent(HomeActivity::class.java.getName()))
+     //   assertCurrentActivityIsInstanceOf(HomeActivity::class.java)
 
-        onView(withText(startsWith("Signed up successfully!"))).inRoot(
-            withDecorView(
-                not(`is`(rule.activity.window.decorView))
-            )
-        ).check(matches(isDisplayed()))
     }
 
 }
