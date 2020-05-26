@@ -6,6 +6,8 @@ import android.graphics.Bitmap
 import android.os.AsyncTask
 import android.util.Base64
 import android.util.Log
+import android.widget.Toast
+import com.example.plantapp.PhotoTakenActivity
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import cz.msebera.android.httpclient.HttpResponse
@@ -236,10 +238,7 @@ fun apiPlant2(bitmap: Bitmap): List<String>{
     val plantIdToken: String = "2a10vXHb74WyFBZaR6fQYdF6u"
 
     //Transform bitmap into file body
-    val baos = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-    val imageBytes = baos.toByteArray()
-    val encodedImage =  Base64.encodeToString(imageBytes, Base64.DEFAULT)
+    val encodedImage =  bitmapToBase64(bitmap)
     val fileBody = FileBody(File(encodedImage))
 
     //Prepare post
@@ -305,17 +304,44 @@ fun apiPlant2(bitmap: Bitmap): List<String>{
 }
 
 fun bitmapToBase64(bitmap: Bitmap): String {
+
+    val bitmapSize = bitmap.byteCount
+    var resizedBitmap: Bitmap? = null
+    var width = bitmap.width
+    var height = bitmap.height
+    val bitmapRatio = width.toFloat() / height.toFloat()
+    if (bitmapRatio > 1) {
+        width = (bitmapSize * 0.5).toInt()
+        height = (width / bitmapRatio).toInt()
+    } else {
+        height = (bitmapSize * 0.5).toInt()
+        width = (height * bitmapRatio).toInt()
+    }
+    try {
+        resizedBitmap =  Bitmap.createScaledBitmap(
+            bitmap,
+            600,
+            600,
+            false
+        )
+    }
+    catch (e:Exception){
+        return ""
+    }
     //Create output stream and compress bitmap
     val outputStream = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+    if (resizedBitmap != null) {
+        resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        //Encode
+        val returnedString = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
 
-    //Encode
-    val returnedString = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
-
-    //Clean up
-    outputStream.flush()
-    outputStream.close()
-    return returnedString
+        //Clean up
+        outputStream.flush()
+        outputStream.close()
+        return returnedString
+    } else {
+        return "";
+    }
 }
 
 fun sendPostRequest(urlName:String, params: JSONObject, token: String?): String {
