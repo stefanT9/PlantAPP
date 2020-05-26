@@ -29,6 +29,8 @@
 
     <string name="username_username">username.username</string>
     <string name="mail_mail_com">mail@mail.com</string>
+    <string name="please_enter_email">Please enter email</string>
+    <string name="please_enter_valid_email">Please enter a valid email</string>
 
     <!--
     <string name="openNavView">Navigation view open</string>

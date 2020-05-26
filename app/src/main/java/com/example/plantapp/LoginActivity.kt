@@ -71,15 +71,17 @@ class LoginActivity : TopNavViewActivity() {
             val pwd: String = password.text.toString()
 
             if (email.isEmpty()) {
-                emailID.error = "Please enter email"
+                emailID.error = getString(R.string.please_enter_email)
+                message_edit_text_email.text = getString(R.string.please_enter_email)
                 emailID.requestFocus()
-
             }
             else if ( !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 emailID.error = "Please enter a valid email"
+                message2.text = getString(R.string.please_enter_valid_email)
                 emailID.requestFocus()
             }
             else if (pwd.isEmpty()) {
+                message_edit_text_password.text = getString(R.string.please_enter_your_password)
                 password.error = "Please enter your password"
                 password.requestFocus()
             } else if (email.isEmpty() && pwd.isEmpty()) {
