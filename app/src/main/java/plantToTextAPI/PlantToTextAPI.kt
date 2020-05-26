@@ -6,6 +6,8 @@ import android.graphics.Bitmap
 import android.os.AsyncTask
 import android.util.Base64
 import android.util.Log
+import android.widget.Toast
+import com.example.plantapp.PhotoTakenActivity
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import cz.msebera.android.httpclient.HttpResponse
@@ -304,18 +306,39 @@ fun apiPlant2(bitmap: Bitmap): List<String>{
     return finalNames
 }
 
+fun getResizedBitmap(image: Bitmap, maxSize: Int): Bitmap? {
+    var width = image.width
+    var height = image.height
+    val bitmapRatio = width.toFloat() / height.toFloat()
+    if (bitmapRatio > 1) {
+        width = maxSize
+        height = (width / bitmapRatio).toInt()
+    } else {
+        height = maxSize
+        width = (height * bitmapRatio).toInt()
+    }
+    return Bitmap.createScaledBitmap(image, width, height, true)
+}
+
 fun bitmapToBase64(bitmap: Bitmap): String {
+
+    val bitmapSize = bitmap.byteCount
+    val resizedBitmap = getResizedBitmap(bitmap, (bitmapSize * 0.5).toInt())
+
     //Create output stream and compress bitmap
     val outputStream = ByteArrayOutputStream()
-    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+    if (resizedBitmap != null) {
+        resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+        //Encode
+        val returnedString = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
 
-    //Encode
-    val returnedString = Base64.encodeToString(outputStream.toByteArray(), Base64.DEFAULT)
-
-    //Clean up
-    outputStream.flush()
-    outputStream.close()
-    return returnedString
+        //Clean up
+        outputStream.flush()
+        outputStream.close()
+        return returnedString
+    } else {
+        return "";
+    }
 }
 
 fun sendPostRequest(urlName:String, params: JSONObject, token: String?): String {
